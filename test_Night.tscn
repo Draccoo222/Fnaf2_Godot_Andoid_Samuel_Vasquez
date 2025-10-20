@@ -1,0 +1,366 @@
+[gd_scene load_steps=44 format=3 uid="uid://hhckpc7kcygg"]
+
+[ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
+[ext_resource type="Texture2D" uid="uid://c6n2iyi8f3bh1" path="res://Assets/Office/officeNormal.png" id="2_htt5u"]
+[ext_resource type="Shader" uid="uid://dojmgscp3hgb8" path="res:// cam_effect.gdshader" id="3_lntdq"]
+[ext_resource type="Texture2D" uid="uid://dd1uyfrfbc0mk" path="res://Assets/Office/officeLeftVentEmpty.png" id="3_xs7ii"]
+[ext_resource type="Texture2D" uid="uid://bhployudbm6s0" path="res://Assets/Office/desk1.png" id="4_q0ib7"]
+[ext_resource type="Texture2D" uid="uid://r4aauvef7hm3" path="res://Assets/Office/officeRightVentEmpty.png" id="4_t8eq0"]
+[ext_resource type="Texture2D" uid="uid://cvsl6x5qlrpp6" path="res://Assets/Office/officeHallEmpty.png" id="5_hdvqv"]
+[ext_resource type="Texture2D" uid="uid://b3dq78gpf3nvw" path="res://Assets/Office/desk2.png" id="5_mm21g"]
+[ext_resource type="Texture2D" uid="uid://6jmgiyeyitxc" path="res://Assets/Office/desk3.png" id="6_7ak10"]
+[ext_resource type="Texture2D" uid="uid://kaww7oukllge" path="res://Assets/Office/desk4.png" id="7_tsma6"]
+[ext_resource type="Texture2D" uid="uid://c50oxjd0dn35n" path="res://Assets/Office/maskoff.png" id="8_wgl0g"]
+[ext_resource type="Texture2D" uid="uid://blureufklxnoh" path="res://Assets/Office/mask1.png" id="9_44eb8"]
+[ext_resource type="Texture2D" uid="uid://dirfijt3ohwhf" path="res://Assets/Office/mask2.png" id="10_4keav"]
+[ext_resource type="Texture2D" uid="uid://bon6bhsrmglgx" path="res://Assets/Office/mask3.png" id="11_kmhi6"]
+[ext_resource type="Texture2D" uid="uid://bqxv21h2hfy8x" path="res://Assets/Office/mask4.png" id="12_4cr4s"]
+[ext_resource type="Texture2D" uid="uid://bvlulm3skpdpt" path="res://Assets/Office/mask5.png" id="13_u70v0"]
+[ext_resource type="Texture2D" uid="uid://tfq2urxpnmaa" path="res://Assets/Office/mask6.png" id="14_xs7ii"]
+[ext_resource type="Texture2D" uid="uid://b5ld41ygy0l4t" path="res://Assets/Office/hallLight.png" id="15_fyhlp"]
+[ext_resource type="Texture2D" uid="uid://bmbe8ua6j6usy" path="res://Assets/Office/mask7.png" id="15_t8eq0"]
+[ext_resource type="Texture2D" uid="uid://g06mh28v7ju3" path="res://Assets/Office/mask8.png" id="16_hdvqv"]
+[ext_resource type="Texture2D" uid="uid://bt7igrd8eofj0" path="res://Assets/Cameras/Monitor/95.png" id="17_3frok"]
+[ext_resource type="Texture2D" uid="uid://cfy0q4ws1a6h2" path="res://Assets/Office/maskFinal.png" id="17_fyhlp"]
+[ext_resource type="Texture2D" uid="uid://wufa1p4o0njy" path="res://Assets/Office/mask9.png" id="18_3frok"]
+[ext_resource type="Texture2D" uid="uid://c17nhauht5tm6" path="res://Assets/Office/119.png" id="19_1cyro"]
+[ext_resource type="Texture2D" uid="uid://dmhx0q7gn50o3" path="res://Assets/Office/90.png" id="20_4cr4s"]
+[ext_resource type="Texture2D" uid="uid://c1q8km8rjgpdr" path="res://Assets/Office/91.png" id="21_u70v0"]
+[ext_resource type="Texture2D" uid="uid://dioeagjdjsvfb" path="res://Assets/Office/98.png" id="22_xs7ii"]
+[ext_resource type="Texture2D" uid="uid://cygl85d08pfs6" path="res://Assets/Office/93.png" id="23_t8eq0"]
+[ext_resource type="Texture2D" uid="uid://3icbka7varrr" path="res://Assets/Cameras/Monitor/113.png" id="29_e186w"]
+[ext_resource type="Texture2D" uid="uid://cm8mkqd3y8rgo" path="res://Assets/Cameras/Monitor/112.png" id="30_3s3h7"]
+[ext_resource type="Texture2D" uid="uid://bqxmhsjn54dit" path="res://Assets/Cameras/Monitor/110.png" id="31_e1p4m"]
+[ext_resource type="Texture2D" uid="uid://dpq3sx1yaong" path="res://Assets/Cameras/Monitor/106.png" id="32_o3q44"]
+[ext_resource type="Texture2D" uid="uid://cuu0aquqgijus" path="res://Assets/Cameras/Monitor/105.png" id="33_pl064"]
+[ext_resource type="Texture2D" uid="uid://c1cs3ckp0mbk4" path="res://Assets/Cameras/Monitor/104.png" id="34_6t1gg"]
+[ext_resource type="Texture2D" uid="uid://nvxkm185s7kx" path="res://Assets/Cameras/Monitor/103.png" id="35_snyrv"]
+[ext_resource type="Texture2D" uid="uid://5gsuvwvdt1wq" path="res://Assets/Cameras/Monitor/99.png" id="36_gq7md"]
+[ext_resource type="Texture2D" uid="uid://d1nc5bd8gsq2m" path="res://Assets/Cameras/Monitor/116.png" id="37_wc4i2"]
+[ext_resource type="Texture2D" uid="uid://nlewvl52xyc7" path="res://Assets/Cameras/Monitor/97.png" id="38_h7edf"]
+[ext_resource type="Texture2D" uid="uid://b0e60rnit82mc" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
+shader = ExtResource("3_lntdq")
+shader_parameter/barrel_power = 0.10000000475
+shader_parameter/vignette_intensity = 0.800000038
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3cpb0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q0ib7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mm21g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7ak10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_tsma6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ik11a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_wgl0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_44eb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4keav")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_kmhi6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_4cr4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_u70v0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xs7ii")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_t8eq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hdvqv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_fyhlp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_3frok")
+}],
+"loop": false,
+"name": &"activate",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_3frok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_fyhlp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hdvqv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_t8eq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xs7ii")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_u70v0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_4cr4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_kmhi6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4keav")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_44eb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wgl0g")
+}],
+"loop": false,
+"name": &"deactivate",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_3frok")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 30.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yavs6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("29_e186w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_3s3h7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_e1p4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_o3q44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_pl064")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_6t1gg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_snyrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_gq7md")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wc4i2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_h7edf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_3x0mc")
+}],
+"loop": false,
+"name": &"monitorOff",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("39_3x0mc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_h7edf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wc4i2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_gq7md")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_snyrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_6t1gg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_pl064")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_o3q44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_e1p4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_3s3h7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_e186w")
+}],
+"loop": false,
+"name": &"monitorOn",
+"speed": 30.0
+}]
+
+[node name="Office" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_htt5u")
+desk_offset_x = 1000.0
+parralax_factor_desk = 1.1
+idle_amplitude_x = 12.0
+idle_amplitude_y = 6.0
+idle_speed = 1.2
+default_ofc = ExtResource("2_htt5u")
+leftON = ExtResource("3_xs7ii")
+rightON = ExtResource("4_t8eq0")
+hallON = ExtResource("5_hdvqv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_cn4xo")
+offset_right = 1152.0
+offset_bottom = 649.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.23529412)
+
+[node name="MaskView" type="Control" parent="."]
+clip_children = 2
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 644.0
+
+[node name="OfficeBG" type="TextureRect" parent="MaskView"]
+layout_mode = 0
+offset_top = -35.0
+offset_right = 1600.0
+offset_bottom = 733.0
+texture = ExtResource("2_htt5u")
+
+[node name="desk" type="AnimatedSprite2D" parent="MaskView"]
+position = Vector2(870, 455)
+sprite_frames = SubResource("SpriteFrames_3cpb0")
+frame_progress = 0.72190934
+
+[node name="LeftMove" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 568.0
+grow_vertical = 2
+
+[node name="RightMove" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -566.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="LeftLight" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 325.0
+offset_right = 175.0
+offset_bottom = 466.0
+texture_normal = ExtResource("20_4cr4s")
+texture_pressed = ExtResource("21_u70v0")
+
+[node name="RightLight" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1432.0
+offset_top = 325.0
+offset_right = 1524.0
+offset_bottom = 466.0
+texture_normal = ExtResource("22_xs7ii")
+texture_pressed = ExtResource("23_t8eq0")
+
+[node name="HallLight" type="TextureButton" parent="."]
+modulate = Color(1, 1, 1, 0.6745098)
+layout_mode = 0
+offset_left = 508.0
+offset_top = 132.0
+offset_right = 930.0
+offset_bottom = 459.0
+texture_normal = ExtResource("15_fyhlp")
+
+[node name="MaskButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.000001
+offset_top = -57.99994
+offset_right = -650.0
+offset_bottom = -17.999939
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.15, 1.15)
+texture_normal = ExtResource("19_1cyro")
+
+[node name="CameraToggle" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 575.0
+offset_top = 589.0
+offset_right = 1075.0
+offset_bottom = 635.0869
+scale = Vector2(1.15, 1.15)
+texture_normal = ExtResource("17_3frok")
+
+[node name="FreddyMask" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(572, 350)
+sprite_frames = SubResource("SpriteFrames_ik11a")
+animation = &"idle"
+
+[node name="Monitor" type="AnimatedSprite2D" parent="."]
+position = Vector2(579, 349)
+sprite_frames = SubResource("SpriteFrames_yavs6")
+animation = &"monitorOn"
+
+[connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
+[connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]
+[connection signal="button_down" from="RightLight" to="." method="_on_right_light_button_down"]
+[connection signal="button_up" from="RightLight" to="." method="_on_right_light_button_up"]
+[connection signal="button_down" from="HallLight" to="." method="_on_hall_light_button_down"]
+[connection signal="button_up" from="HallLight" to="." method="_on_hall_light_button_up"]
+[connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
+[connection signal="pressed" from="CameraToggle" to="." method="_on_camera_toggle_pressed"]
+[connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]

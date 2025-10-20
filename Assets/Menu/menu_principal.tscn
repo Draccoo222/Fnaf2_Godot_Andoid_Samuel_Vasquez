@@ -1,0 +1,129 @@
+[gd_scene load_steps=16 format=3 uid="uid://kkhju4tg4o8i"]
+
+[ext_resource type="Script" uid="uid://dtkbqkhf3vvr0" path="res://Assets/Menu/control.gd" id="1_7t57t"]
+[ext_resource type="Texture2D" uid="uid://cim000mf6oe87" path="res://Assets/Menu/321.png" id="1_qj1us"]
+[ext_resource type="Texture2D" uid="uid://dv3y0e3l38j3a" path="res://Assets/Menu/469.png" id="2_qai0k"]
+[ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="2_vbdqu"]
+[ext_resource type="Texture2D" uid="uid://dmdftxaaqmxy8" path="res://Assets/Menu/329.png" id="3_7t57t"]
+[ext_resource type="Texture2D" uid="uid://bp2y8xxbn0gc0" path="res://Assets/Menu/470.png" id="3_dhldw"]
+[ext_resource type="Texture2D" uid="uid://dc3rc0uok4ch1" path="res://Assets/Menu/362.png" id="4_ahb2d"]
+[ext_resource type="Texture2D" uid="uid://dbs0rg1ae5tdx" path="res://Assets/Menu/330.png" id="4_i5swx"]
+[ext_resource type="Texture2D" uid="uid://ux337aomw000" path="res://Assets/Menu/331.png" id="5_h8r1u"]
+[ext_resource type="Texture2D" uid="uid://c08aajj8a6rmy" path="res://Assets/Menu/215.png" id="5_mshha"]
+[ext_resource type="Texture2D" uid="uid://ca8fw8aw6yrov" path="res://Assets/Menu/332.png" id="6_dhldw"]
+[ext_resource type="Texture2D" uid="uid://dxh4pymv16inq" path="res://Assets/Menu/334.png" id="7_ahb2d"]
+[ext_resource type="Texture2D" uid="uid://b2j87scwigv1x" path="res://Assets/Menu/301.png" id="13_ahb2d"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mshha"]
+animations = [{
+"frames": [{
+"duration": 0.51,
+"texture": ExtResource("2_vbdqu")
+}, {
+"duration": 0.51,
+"texture": ExtResource("3_7t57t")
+}, {
+"duration": 0.51,
+"texture": ExtResource("4_i5swx")
+}, {
+"duration": 0.51,
+"texture": ExtResource("5_h8r1u")
+}, {
+"duration": 0.51,
+"texture": ExtResource("6_dhldw")
+}, {
+"duration": 0.51,
+"texture": ExtResource("7_ahb2d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_831ug"]
+
+[node name="MenuPrincipal" type="Node2D"]
+position = Vector2(-5, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_7t57t")
+
+[node name="AnimsPlaceHolder" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_qj1us")
+
+[node name="AnimatronicsChica" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 1097.0
+offset_bottom = 768.0
+texture = ExtResource("3_dhldw")
+
+[node name="AnimatronicsFreddy" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 1097.0
+offset_bottom = 768.0
+texture = ExtResource("5_mshha")
+
+[node name="AnimatronicsBunny" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 1097.0
+offset_bottom = 768.0
+texture = ExtResource("4_ahb2d")
+
+[node name="Animatronics" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 1097.0
+offset_bottom = 768.0
+texture = ExtResource("1_qj1us")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0.6)
+clip_children = 2
+z_index = 1
+position = Vector2(586, 379)
+sprite_frames = SubResource("SpriteFrames_mshha")
+
+[node name="Timer" type="Timer" parent="Control"]
+wait_time = 3.0
+one_shot = true
+ignore_time_scale = true
+
+[node name="Title" type="TextureRect" parent="Control"]
+z_index = 2
+layout_mode = 0
+offset_left = 106.0
+offset_top = 9.0
+offset_right = 406.0
+offset_bottom = 289.0
+texture = ExtResource("2_qai0k")
+
+[node name="New Game" type="TextureButton" parent="Control"]
+z_index = 1
+layout_mode = 0
+offset_left = 105.0
+offset_top = 380.0
+offset_right = 327.0
+offset_bottom = 420.0
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_831ug")
+texture_normal = ExtResource("13_ahb2d")
+
+[node name="Timer2" type="Timer" parent="Control"]
+wait_time = 3.1999999999999997
+one_shot = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="Control/Timer" to="Control" method="_on_timer_timeout"]
+[connection signal="timeout" from="Control/Timer2" to="Control" method="_on_timer_2_timeout"]

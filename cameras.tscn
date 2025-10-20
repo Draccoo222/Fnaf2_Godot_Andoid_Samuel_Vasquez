@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://bwlpk1p08i7ku"]
+
+[ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
+[ext_resource type="Texture2D" uid="uid://dmdftxaaqmxy8" path="res://Assets/Menu/329.png" id="2_fenfo"]
+[ext_resource type="Texture2D" uid="uid://dbs0rg1ae5tdx" path="res://Assets/Menu/330.png" id="3_lxq8y"]
+[ext_resource type="Texture2D" uid="uid://ux337aomw000" path="res://Assets/Menu/331.png" id="4_7gcl1"]
+[ext_resource type="Texture2D" uid="uid://ca8fw8aw6yrov" path="res://Assets/Menu/332.png" id="5_7tyt0"]
+[ext_resource type="Texture2D" uid="uid://dxh4pymv16inq" path="res://Assets/Menu/334.png" id="6_rutrv"]
+[ext_resource type="Texture2D" uid="uid://jwvdoqjl4q1r" path="res://Assets/Cameras/Buttons/frame.png" id="7_txgws"]
+[ext_resource type="Texture2D" uid="uid://di7jw8s76ju47" path="res://Assets/Cameras/Buttons/map.png" id="8_lypys"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ctxfh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_fenfo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lxq8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7gcl1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7tyt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rutrv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="Cameras" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Static" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.44705883)
+position = Vector2(575.5, 326)
+scale = Vector2(1.1240233, 0.8385417)
+sprite_frames = SubResource("SpriteFrames_15ilk")
+frame_progress = 0.9484427
+
+[node name="frame" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1151.0
+offset_bottom = 810.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("7_txgws")
+
+[node name="map" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 680.0
+offset_top = 290.0
+offset_right = 1096.0
+offset_bottom = 602.0
+texture = ExtResource("8_lypys")
