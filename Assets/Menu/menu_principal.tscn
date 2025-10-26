@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://kkhju4tg4o8i"]
+[gd_scene load_steps=17 format=3 uid="uid://kkhju4tg4o8i"]
 
 [ext_resource type="Script" uid="uid://dtkbqkhf3vvr0" path="res://Assets/Menu/control.gd" id="1_7t57t"]
 [ext_resource type="Texture2D" uid="uid://cim000mf6oe87" path="res://Assets/Menu/321.png" id="1_qj1us"]
@@ -39,6 +39,8 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ahb2d"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_831ug"]
 
@@ -93,6 +95,9 @@ clip_children = 2
 z_index = 1
 position = Vector2(586, 379)
 sprite_frames = SubResource("SpriteFrames_mshha")
+
+[node name="Glitch" type="AnimatedSprite2D" parent="Control"]
+sprite_frames = SubResource("SpriteFrames_ahb2d")
 
 [node name="Timer" type="Timer" parent="Control"]
 wait_time = 3.0
