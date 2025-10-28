@@ -6,6 +6,7 @@ extends Control
 @onready var desk = $MaskView/desk
 @onready var maskAnim = $FreddyMask
 @onready var monitorAnim = $Monitor
+@onready var camera_system = $Cameras
 
 
 @export var desk_offset_x: float = 0.0
@@ -119,6 +120,19 @@ func _on_camera_toggle_pressed() -> void:
 			var scale_tween = create_tween()
 			scale_tween.tween_property(monitorAnim, "scale:x", 1.2, 0.25)
 		else:
+			camera_system.hide()
 			monitorAnim.play("monitorOff")
 			var scale_tween = create_tween()
 			scale_tween.tween_property(monitorAnim, "scale:x", 1, 0.2)
+	else:
+		CAM_ON = false
+
+
+func _on_monitor_animation_finished() -> void:
+	if CAM_ON and monitorAnim.animation == "monitorOn":
+		camera_system.show()
+		
+		
+	elif not CAM_ON and monitorAnim.animation == "monitorOff":
+	
+		monitorAnim.hide()

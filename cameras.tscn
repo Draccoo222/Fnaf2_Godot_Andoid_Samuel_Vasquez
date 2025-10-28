@@ -1,50 +1,110 @@
-[gd_scene load_steps=47 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=108 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
 [ext_resource type="Texture2D" uid="uid://dyvkxqbkp3c67" path="res://Assets/Cameras/partyRoom1.png" id="2_1xfvf"]
 [ext_resource type="Texture2D" uid="uid://dmdftxaaqmxy8" path="res://Assets/Menu/329.png" id="2_fenfo"]
 [ext_resource type="Texture2D" uid="uid://dbs0rg1ae5tdx" path="res://Assets/Menu/330.png" id="3_lxq8y"]
+[ext_resource type="Texture2D" uid="uid://lkoc5lkmy207" path="res://Assets/Cameras/partyRoom1_On.png" id="3_n2yf6"]
 [ext_resource type="Texture2D" uid="uid://b2qpl1aaa7y1s" path="res://Assets/Cameras/partyRoom2.png" id="3_uiven"]
 [ext_resource type="Texture2D" uid="uid://ux337aomw000" path="res://Assets/Menu/331.png" id="4_7gcl1"]
+[ext_resource type="Texture2D" uid="uid://brcbblyuktqyv" path="res://Assets/Cameras/partyRoom1_bonnie.png" id="4_fhall"]
 [ext_resource type="Texture2D" uid="uid://bhkn3twuepqpj" path="res://Assets/Cameras/partyRoom3.png" id="4_mjrih"]
 [ext_resource type="Texture2D" uid="uid://ca8fw8aw6yrov" path="res://Assets/Menu/332.png" id="5_7tyt0"]
 [ext_resource type="Texture2D" uid="uid://c71km1pmwhthi" path="res://Assets/Cameras/partyRoom4.png" id="5_m66v0"]
+[ext_resource type="Texture2D" uid="uid://dk67ofvi0n52i" path="res://Assets/Cameras/partyRoom1_toyChica.png" id="5_t0b7i"]
 [ext_resource type="Texture2D" uid="uid://bspg20k3jbkhr" path="res://Assets/Cameras/Vents/left_vent.png" id="6_2miyr"]
 [ext_resource type="Texture2D" uid="uid://dxh4pymv16inq" path="res://Assets/Menu/334.png" id="6_rutrv"]
 [ext_resource type="Texture2D" uid="uid://k1o67lp4pqua" path="res://Assets/Cameras/Vents/right_vent.png" id="7_hifw2"]
+[ext_resource type="Texture2D" uid="uid://bq37f6d1e1jk4" path="res://Assets/Cameras/partyRoom2_On.png" id="7_qayg5"]
 [ext_resource type="Texture2D" uid="uid://jwvdoqjl4q1r" path="res://Assets/Cameras/Buttons/frame.png" id="7_txgws"]
 [ext_resource type="Texture2D" uid="uid://cbat0ymxx85r5" path="res://Assets/Cameras/mainHall.png" id="8_lscov"]
 [ext_resource type="Texture2D" uid="uid://di7jw8s76ju47" path="res://Assets/Cameras/Buttons/map.png" id="8_lypys"]
+[ext_resource type="Texture2D" uid="uid://2a4kjtqm2shy" path="res://Assets/Cameras/partyRoom2_chica.png" id="8_v4vdh"]
+[ext_resource type="Texture2D" uid="uid://b4a1epo8rif17" path="res://Assets/Cameras/partyRoom2_chica_On.png" id="9_ipk4i"]
 [ext_resource type="Texture2D" uid="uid://cdu1moqnxwrjb" path="res://Assets/Cameras/parts-service.png" id="9_v3sgr"]
 [ext_resource type="Texture2D" uid="uid://b8g2yh3qiuod0" path="res://Assets/Cameras/showStage.png" id="10_1qyx6"]
+[ext_resource type="Texture2D" uid="uid://bvim8lby1s2ho" path="res://Assets/Cameras/partyRoom2_toyBonie.png" id="10_v7bjf"]
 [ext_resource type="Texture2D" uid="uid://bibqrl70syie5" path="res://Assets/Cameras/prizeCorner.png" id="11_aipis"]
+[ext_resource type="Texture2D" uid="uid://dv4bt6kolpopc" path="res://Assets/Cameras/gameArea.png" id="11_bqhd7"]
 [ext_resource type="Texture2D" uid="uid://bf54cp0eoyhnp" path="res://Assets/Cameras/kidsCorner.png" id="12_hj0gf"]
+[ext_resource type="Texture2D" uid="uid://cpwi8hmt0rhvu" path="res://Assets/Cameras/partyRoom3_On.png" id="12_qjg6m"]
+[ext_resource type="Texture2D" uid="uid://nayh7457mc4t" path="res://Assets/Cameras/partyRoom3_freddy.png" id="13_qqt2p"]
+[ext_resource type="Texture2D" uid="uid://dmwy4gmi842r8" path="res://Assets/Cameras/partyRoom3_freddy_On.png" id="14_jart7"]
+[ext_resource type="Texture2D" uid="uid://g63ymidraqqg" path="res://Assets/Cameras/partyRoom3_toyBonnie.png" id="15_srito"]
+[ext_resource type="Texture2D" uid="uid://qw4346s3p5kp" path="res://Assets/Cameras/partyRoom4_On.png" id="17_e2vaa"]
+[ext_resource type="Texture2D" uid="uid://bne1yb7oa4ht6" path="res://Assets/Cameras/partyRoom4_toyChica.png" id="18_0w1dw"]
+[ext_resource type="Texture2D" uid="uid://bt2eni15d2d28" path="res://Assets/Cameras/partyRoom4_chica.png" id="19_51h30"]
+[ext_resource type="Texture2D" uid="uid://dar3s86oh36ly" path="res://Assets/Menu/67.png" id="19_bqhd7"]
+[ext_resource type="Texture2D" uid="uid://bfu4g74t6w0si" path="res://Assets/Cameras/partyRoom4_toyBonie.png" id="20_lmywf"]
+[ext_resource type="Texture2D" uid="uid://b2vai8dytd6ub" path="res://Assets/Cameras/partyRoom4_toyBonnie_On.png" id="21_0g5yw"]
 [ext_resource type="Texture2D" uid="uid://cln1n45slaa6q" path="res://Assets/Cameras/CamLabels/CAM01.png" id="21_1xfvf"]
+[ext_resource type="Texture2D" uid="uid://cjr4ep2p4wdv7" path="res://Assets/Menu/64.png" id="21_jppxx"]
 [ext_resource type="ButtonGroup" uid="uid://dr0ats3tp22d7" path="res://cam_button_group.tres" id="21_nbqgc"]
+[ext_resource type="Texture2D" uid="uid://is1bhmdimv1r" path="res://Assets/Menu/66.png" id="22_n2yf6"]
 [ext_resource type="Texture2D" uid="uid://k5x4ir2ctojf" path="res://Assets/Cameras/CamLabels/CAM01_ON.png" id="22_uiven"]
+[ext_resource type="Texture2D" uid="uid://dtn1bg338ewsk" path="res://Assets/Menu/70.png" id="23_fhall"]
 [ext_resource type="Texture2D" uid="uid://d1npb7sfk1egl" path="res://Assets/Cameras/CamLabels/CAM02.png" id="23_hj0gf"]
+[ext_resource type="Texture2D" uid="uid://bwgjyonv2xqkl" path="res://Assets/Cameras/Vents/left_ventOn.png" id="23_qqt2p"]
+[ext_resource type="Texture2D" uid="uid://bglvjewufilhq" path="res://Assets/Cameras/Vents/vent_toychica.png" id="24_jart7"]
 [ext_resource type="Texture2D" uid="uid://c8ntxyplm2ha1" path="res://Assets/Cameras/CamLabels/CAM02_ON.png" id="24_l2smc"]
+[ext_resource type="Texture2D" uid="uid://b3eq4vum7bbms" path="res://Assets/Menu/68.png" id="24_t0b7i"]
 [ext_resource type="Texture2D" uid="uid://d4nnoxotutfpk" path="res://Assets/Cameras/CamLabels/CAM03.png" id="25_6co6i"]
+[ext_resource type="Texture2D" uid="uid://drylvbkng4mgm" path="res://Assets/Cameras/Vents/vent_bonnie.png" id="25_srito"]
+[ext_resource type="Texture2D" uid="uid://4upf1mkpkmhx" path="res://Assets/Cameras/Vents/vent_bb.png" id="26_e2vaa"]
 [ext_resource type="Texture2D" uid="uid://so8pvgxpv47y" path="res://Assets/Cameras/CamLabels/CAM03_ON.png" id="26_pi3mq"]
+[ext_resource type="Texture2D" uid="uid://0ggt2ivldsu3" path="res://Assets/Cameras/Vents/vent_endo.png" id="27_0w1dw"]
 [ext_resource type="Texture2D" uid="uid://qlu7ow70msky" path="res://Assets/Cameras/CamLabels/CAM04.png" id="27_rwsmw"]
 [ext_resource type="Texture2D" uid="uid://cd7vtnxnsg4l3" path="res://Assets/Cameras/CamLabels/CAM04_ON.png" id="28_8xmeo"]
+[ext_resource type="Texture2D" uid="uid://bq021lucim85e" path="res://Assets/Cameras/Vents/right_ventOn.png" id="29_0w1dw"]
 [ext_resource type="Texture2D" uid="uid://dwxuh53fw2kjj" path="res://Assets/Cameras/CamLabels/CAM05.png" id="29_ees0y"]
 [ext_resource type="Texture2D" uid="uid://bip3ibghcymld" path="res://Assets/Cameras/CamLabels/CAM05_ON.png" id="30_4vkad"]
+[ext_resource type="Texture2D" uid="uid://du5h5nhftx3q1" path="res://Assets/Cameras/Vents/vent_toybonnie.png" id="30_51h30"]
+[ext_resource type="Texture2D" uid="uid://blmwlmrxcnsi1" path="res://Assets/Cameras/Vents/vent_mangle.png" id="31_lmywf"]
 [ext_resource type="Texture2D" uid="uid://fl7eun2ixrst" path="res://Assets/Cameras/CamLabels/CAM06.png" id="31_xr0mg"]
+[ext_resource type="Texture2D" uid="uid://b0bho3t4oato6" path="res://Assets/Cameras/Vents/vent_chica.png" id="32_0g5yw"]
 [ext_resource type="Texture2D" uid="uid://brta4cd64vl76" path="res://Assets/Cameras/CamLabels/CAM06_ON.png" id="32_ncsrf"]
+[ext_resource type="Texture2D" uid="uid://bx3k4olagpiro" path="res://Assets/Cameras/mainHall_On.png" id="34_u6mjy"]
 [ext_resource type="Texture2D" uid="uid://bt3brqulhghqw" path="res://Assets/Cameras/CamLabels/CAM07.png" id="34_y0lei"]
 [ext_resource type="Texture2D" uid="uid://ti1kpcumcxok" path="res://Assets/Cameras/CamLabels/CAM07_ON.png" id="35_6ecyb"]
+[ext_resource type="Texture2D" uid="uid://bdrpekev2bads" path="res://Assets/Cameras/mainHall_toyChica.png" id="35_6tsvq"]
 [ext_resource type="Texture2D" uid="uid://d2cprjtxsig8p" path="res://Assets/Cameras/CamLabels/CAM08.png" id="36_4s16d"]
+[ext_resource type="Texture2D" uid="uid://cmqo040mrwu2e" path="res://Assets/Cameras/mainHall_toyChica_On.png" id="36_go65d"]
+[ext_resource type="Texture2D" uid="uid://cx20puf03s7yj" path="res://Assets/Cameras/mainHall_bonnie.png" id="37_a1g32"]
 [ext_resource type="Texture2D" uid="uid://dx2eb5dioriiv" path="res://Assets/Cameras/CamLabels/CAM08_ON.png" id="37_ccdhh"]
 [ext_resource type="Texture2D" uid="uid://bjfm0p7gx2bc4" path="res://Assets/Cameras/CamLabels/CAM09.png" id="38_6afvd"]
+[ext_resource type="Texture2D" uid="uid://c66sb8pmvps37" path="res://Assets/Cameras/mainHall_Freddy.png" id="38_mr7y4"]
 [ext_resource type="Texture2D" uid="uid://0rc4s10pgv48" path="res://Assets/Cameras/CamLabels/CAM09_ON.png" id="39_bqhd7"]
 [ext_resource type="Texture2D" uid="uid://b62jx5nnhb6r0" path="res://Assets/Cameras/CamLabels/CAM10.png" id="40_b5lph"]
+[ext_resource type="Texture2D" uid="uid://csk8q74k6kfp8" path="res://Assets/Cameras/parts-service_On.png" id="40_rvc3b"]
 [ext_resource type="Texture2D" uid="uid://bpeaowtewopxy" path="res://Assets/Cameras/CamLabels/CAM10_ON.png" id="41_jppxx"]
+[ext_resource type="Texture2D" uid="uid://gm76yaudjqh6" path="res://Assets/Cameras/parts-service_bonnie_chica.png" id="41_qab00"]
+[ext_resource type="Texture2D" uid="uid://dcnrcgvajcijl" path="res://Assets/Cameras/parts-service_bonnie.png" id="42_gw0wy"]
 [ext_resource type="Texture2D" uid="uid://p2vd2e0enql" path="res://Assets/Cameras/CamLabels/CAM11.png" id="42_n2yf6"]
+[ext_resource type="Texture2D" uid="uid://dl37tdc7fcwfv" path="res://Assets/Cameras/parts-service_all.png" id="43_2j5x0"]
 [ext_resource type="Texture2D" uid="uid://ckur5qrrd1dc1" path="res://Assets/Cameras/CamLabels/CAM11_ON.png" id="43_fhall"]
+[ext_resource type="Texture2D" uid="uid://dl45n4lg7wglc" path="res://Assets/Cameras/parts-service_foxy.png" id="44_h6inl"]
 [ext_resource type="Texture2D" uid="uid://bvncfd6jihknk" path="res://Assets/Cameras/CamLabels/CAM12.png" id="44_t0b7i"]
 [ext_resource type="Texture2D" uid="uid://davsj1uluo222" path="res://Assets/Cameras/CamLabels/CAM12_ON.png" id="45_3m6fg"]
+[ext_resource type="Texture2D" uid="uid://c1ss20eyblpjb" path="res://Assets/Cameras/parts-service_shadowFreddy.png" id="45_g4yw8"]
+[ext_resource type="Texture2D" uid="uid://cgkbokore0ql5" path="res://Assets/Cameras/showStage_On.png" id="47_qab00"]
+[ext_resource type="Texture2D" uid="uid://c0ui6dk6dx8ee" path="res://Assets/Cameras/showStage_toyBonnie.png" id="48_gw0wy"]
+[ext_resource type="Texture2D" uid="uid://cgnf43d66uxyn" path="res://Assets/Cameras/showStage_toyBonnie_On.png" id="49_2j5x0"]
+[ext_resource type="Texture2D" uid="uid://bk1o4md7uuogr" path="res://Assets/Cameras/showStage_toyBonnie_chica.png" id="50_h6inl"]
+[ext_resource type="Texture2D" uid="uid://nw0xswqjvlr7" path="res://Assets/Cameras/showStage_toyBonnie_chica_On.png" id="51_g4yw8"]
+[ext_resource type="Texture2D" uid="uid://cae50e4gugheg" path="res://Assets/Cameras/showStage_All.png" id="52_m6tls"]
+[ext_resource type="Texture2D" uid="uid://b8maqaqdai51c" path="res://Assets/Cameras/gameArea_On.png" id="54_clg2d"]
+[ext_resource type="Texture2D" uid="uid://c2h18fxeaej8b" path="res://Assets/Cameras/gameArea_empty.png" id="55_l5gvo"]
+[ext_resource type="Texture2D" uid="uid://chr0x3s8osovh" path="res://Assets/Cameras/gameArea_ToyFreddy_bb.png" id="57_up2is"]
+[ext_resource type="Texture2D" uid="uid://bx8fmwgswejry" path="res://Assets/Cameras/gameArea_toyFreddy.png" id="58_bpe78"]
+[ext_resource type="Texture2D" uid="uid://d2to8grvxoy76" path="res://Assets/Cameras/prizerCorner_On.png" id="60_2vax5"]
+[ext_resource type="Texture2D" uid="uid://bg1m13aug2f78" path="res://Assets/Cameras/prizeCorner_puppet1.png" id="61_llqln"]
+[ext_resource type="Texture2D" uid="uid://y2n6ch3ot6xy" path="res://Assets/Cameras/prizeCorner_puppet2.png" id="62_wv4n2"]
+[ext_resource type="Texture2D" uid="uid://occyog22f5gr" path="res://Assets/Cameras/prizeCorner_puppetFinal.png" id="63_pvvsk"]
+[ext_resource type="Texture2D" uid="uid://dbgtkic8gl1m1" path="res://Assets/Cameras/prizeCorner_endo.png" id="64_cio6e"]
+[ext_resource type="Texture2D" uid="uid://dritpk7s1p8hr" path="res://Assets/Cameras/kidsCorner_On.png" id="66_dh2te"]
+[ext_resource type="Texture2D" uid="uid://btwaa1hvkh3ks" path="res://Assets/Cameras/kidsCorner_empty.png" id="67_nglqp"]
+[ext_resource type="Texture2D" uid="uid://b5ld41ygy0l4t" path="res://Assets/Office/hallLight.png" id="105_clg2d"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
 animations = [{
@@ -72,6 +132,29 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_3m6fg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_t0b7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_jppxx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_fhall")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_n2yf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_bqhd7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
 [node name="Cameras" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -80,6 +163,72 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fenfo")
+pan_value = -10.0
+cam01_dark_empty = ExtResource("2_1xfvf")
+cam01_lit_empty = ExtResource("3_n2yf6")
+cam01_lit_bonnie = ExtResource("4_fhall")
+cam01_lit_toychica = ExtResource("5_t0b7i")
+cam02_dark_empty = ExtResource("3_uiven")
+cam02_lit_empty = ExtResource("7_qayg5")
+cam02_dark_chica = ExtResource("8_v4vdh")
+cam02_lit_chica = ExtResource("9_ipk4i")
+cam02_lit_toybonnie = ExtResource("10_v7bjf")
+cam03_dark_empty = ExtResource("4_mjrih")
+cam03_lit_empty = ExtResource("12_qjg6m")
+cam03_dark_freddy = ExtResource("13_qqt2p")
+cam03_lit_freddy = ExtResource("14_jart7")
+cam03_lit_toybonnie = ExtResource("15_srito")
+cam04_dark_empty = ExtResource("5_m66v0")
+cam04_lit_empty = ExtResource("17_e2vaa")
+cam04_lit_toychica = ExtResource("18_0w1dw")
+cam04_lit_chica = ExtResource("19_51h30")
+cam04_dark_toybonnie = ExtResource("20_lmywf")
+cam04_lit_toybonnie = ExtResource("21_0g5yw")
+cam05_dark_empty = ExtResource("6_2miyr")
+cam05_lit_empty = ExtResource("23_qqt2p")
+cam05_lit_toychica = ExtResource("24_jart7")
+cam05_lit_bonnie = ExtResource("25_srito")
+cam05_lit_bb = ExtResource("26_e2vaa")
+cam05_lit_endo = ExtResource("27_0w1dw")
+cam06_dark_empty = ExtResource("7_hifw2")
+cam06_lit_empty = ExtResource("29_0w1dw")
+cam06_lit_toybonnie = ExtResource("30_51h30")
+cam06_lit_mangle = ExtResource("31_lmywf")
+cam06_lit_chica = ExtResource("32_0g5yw")
+cam07_dark_empty = ExtResource("8_lscov")
+cam07_lit_empty = ExtResource("34_u6mjy")
+cam07_dark_toychica = ExtResource("35_6tsvq")
+cam07_lit_toychica = ExtResource("36_go65d")
+cam07_lit_bonnie = ExtResource("37_a1g32")
+cam07_lit_freddy = ExtResource("38_mr7y4")
+cam08_dark_empty = ExtResource("9_v3sgr")
+cam08_lit_empty = ExtResource("40_rvc3b")
+cam08_lit_chica = ExtResource("41_qab00")
+cam08_lit_bonnie = ExtResource("42_gw0wy")
+cam08_lit_freddy = ExtResource("43_2j5x0")
+cam08_lit_foxy = ExtResource("44_h6inl")
+cam08_lit_shadowfreddy = ExtResource("45_g4yw8")
+cam09_dark_empty = ExtResource("10_1qyx6")
+cam09_lit_empty = ExtResource("47_qab00")
+cam09_dark_toybonnie = ExtResource("48_gw0wy")
+cam09_lit_toybonnie = ExtResource("49_2j5x0")
+cam09_dark_toychica = ExtResource("50_h6inl")
+cam09_lit_toychica = ExtResource("51_g4yw8")
+cam09_dark_toyfreddy = ExtResource("52_m6tls")
+cam10_dark_empty = ExtResource("11_bqhd7")
+cam10_lit_empty = ExtResource("54_clg2d")
+cam10_dark_bb = ExtResource("55_l5gvo")
+cam10_lit_toyfreddybb = ExtResource("57_up2is")
+cam10_lit_toyfreddy = ExtResource("58_bpe78")
+cam11_dark_empty = ExtResource("11_aipis")
+cam11_lit_empty = ExtResource("60_2vax5")
+cam11_lit_puppet1 = ExtResource("61_llqln")
+cam11_lit_puppet2 = ExtResource("62_wv4n2")
+cam11_lit_puppetFinal = ExtResource("63_pvvsk")
+cam11_lit_endo = ExtResource("64_cio6e")
+cam12_dark_empty = ExtResource("12_hj0gf")
+cam12_lit_empty = ExtResource("66_dh2te")
+cam12_lit_mangle = ExtResource("67_nglqp")
 
 [node name="CamViews" type="Control" parent="."]
 anchors_preset = 0
@@ -87,95 +236,146 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CAM_01" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
-offset_left = 4.0
-offset_right = 1149.0
-offset_bottom = 768.0
+offset_top = -20.000008
+offset_right = 1440.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("2_1xfvf")
+expand_mode = 1
 
 [node name="CAM_02" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
-offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1440.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("3_uiven")
+expand_mode = 1
 
 [node name="CAM_03" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
-offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1440.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("4_mjrih")
+expand_mode = 1
 
 [node name="CAM_04" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
-offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1440.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("5_m66v0")
+expand_mode = 1
 
 [node name="CAM_05" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1439.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("6_2miyr")
+expand_mode = 1
 
 [node name="CAM_06" type="TextureRect" parent="CamViews"]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.000002
+offset_right = 1437.75
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("7_hifw2")
+expand_mode = 1
 
-[node name="CAM_07" type="TextureRect" parent="CamViews"]
+[node name="CAM_07" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("8_lscov")
+expand_mode = 1
 
-[node name="CAM_08" type="TextureRect" parent="CamViews"]
+[node name="CAM_08" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("9_v3sgr")
+expand_mode = 1
 
-[node name="CAM_09" type="TextureRect" parent="CamViews"]
+[node name="CAM_09" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("10_1qyx6")
+expand_mode = 1
 
-[node name="CAM_10" type="TextureRect" parent="CamViews"]
+[node name="CAM_10" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
-texture = ExtResource("7_hifw2")
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
+texture = ExtResource("11_bqhd7")
+expand_mode = 1
 
-[node name="CAM_11" type="TextureRect" parent="CamViews"]
+[node name="CAM_11" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("11_aipis")
+expand_mode = 1
 
-[node name="CAM_12" type="TextureRect" parent="CamViews"]
+[node name="CAM_12" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
-offset_right = 1152.0
-offset_bottom = 768.0
+offset_top = -20.0
+offset_right = 1604.0
+offset_bottom = 748.0
+scale = Vector2(0.8, 0.9)
 texture = ExtResource("12_hj0gf")
+expand_mode = 1
 
 [node name="Static" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.23529412)
-position = Vector2(575.5, 326)
-scale = Vector2(1.1240233, 0.8385417)
+position = Vector2(576, 326)
+scale = Vector2(1.1249999, 0.8385417)
 sprite_frames = SubResource("SpriteFrames_15ilk")
 frame_progress = 0.9484427
+
+[node name="Static2" type="AnimatedSprite2D" parent="."]
+position = Vector2(576, 321.5)
+scale = Vector2(1.1230469, 0.84244794)
+sprite_frames = SubResource("SpriteFrames_3m6fg")
+frame = 4
+frame_progress = 1.0
 
 [node name="CamUI" type="Control" parent="."]
 anchors_preset = 0
@@ -193,9 +393,9 @@ texture = ExtResource("7_txgws")
 [node name="map" type="TextureRect" parent="CamUI"]
 layout_mode = 0
 offset_left = 680.0
-offset_top = 290.0
+offset_top = 251.0
 offset_right = 1096.0
-offset_bottom = 602.0
+offset_bottom = 563.0
 texture = ExtResource("8_lypys")
 
 [node name="CamButtons" type="Control" parent="."]
@@ -206,9 +406,9 @@ offset_bottom = 40.0
 [node name="CAM_01" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 707.0
-offset_top = 482.0
+offset_top = 443.0
 offset_right = 767.0
-offset_bottom = 522.0
+offset_bottom = 483.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("21_1xfvf")
@@ -217,9 +417,9 @@ texture_pressed = ExtResource("22_uiven")
 [node name="CAM_02" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 839.0
-offset_top = 482.0
+offset_top = 443.0
 offset_right = 899.0
-offset_bottom = 522.0
+offset_bottom = 483.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("23_hj0gf")
@@ -228,9 +428,9 @@ texture_pressed = ExtResource("24_l2smc")
 [node name="CAM_03" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 707.0
-offset_top = 416.0
+offset_top = 377.0
 offset_right = 767.0
-offset_bottom = 456.0
+offset_bottom = 417.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("25_6co6i")
@@ -239,9 +439,9 @@ texture_pressed = ExtResource("26_pi3mq")
 [node name="CAM_04" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 839.0
-offset_top = 416.0
+offset_top = 377.0
 offset_right = 899.0
-offset_bottom = 456.0
+offset_bottom = 417.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("27_rwsmw")
@@ -250,9 +450,9 @@ texture_pressed = ExtResource("28_8xmeo")
 [node name="CAM_05" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 710.0
-offset_top = 577.0
+offset_top = 538.0
 offset_right = 770.0
-offset_bottom = 617.0
+offset_bottom = 578.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("29_ees0y")
@@ -261,9 +461,9 @@ texture_pressed = ExtResource("30_4vkad")
 [node name="CAM_06" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 835.0
-offset_top = 577.0
+offset_top = 538.0
 offset_right = 895.0
-offset_bottom = 617.0
+offset_bottom = 578.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("31_xr0mg")
@@ -272,9 +472,9 @@ texture_pressed = ExtResource("32_ncsrf")
 [node name="CAM_07" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 860.0
-offset_top = 355.0
+offset_top = 316.0
 offset_right = 920.0
-offset_bottom = 395.0
+offset_bottom = 356.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("34_y0lei")
@@ -283,9 +483,9 @@ texture_pressed = ExtResource("35_6ecyb")
 [node name="CAM_08" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 710.0
-offset_top = 345.0
+offset_top = 306.0
 offset_right = 770.0
-offset_bottom = 385.0
+offset_bottom = 346.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("36_4s16d")
@@ -294,9 +494,9 @@ texture_pressed = ExtResource("37_ccdhh")
 [node name="CAM_09" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 1020.0
-offset_top = 315.0
+offset_top = 276.0
 offset_right = 1080.0
-offset_bottom = 355.0
+offset_bottom = 316.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("38_6afvd")
@@ -305,9 +505,9 @@ texture_pressed = ExtResource("39_bqhd7")
 [node name="CAM_10" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 955.0
-offset_top = 430.0
+offset_top = 391.0
 offset_right = 1015.0
-offset_bottom = 470.0
+offset_bottom = 431.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("40_b5lph")
@@ -316,9 +516,9 @@ texture_pressed = ExtResource("41_jppxx")
 [node name="CAM_11" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 1057.0
-offset_top = 385.0
+offset_top = 346.0
 offset_right = 1117.0
-offset_bottom = 425.0
+offset_bottom = 386.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("42_n2yf6")
@@ -327,10 +527,21 @@ texture_pressed = ExtResource("43_fhall")
 [node name="CAM_12" type="TextureButton" parent="CamButtons"]
 layout_mode = 0
 offset_left = 1038.0
-offset_top = 482.0
+offset_top = 443.0
 offset_right = 1098.0
-offset_bottom = 522.0
+offset_bottom = 483.0
 toggle_mode = true
 button_group = ExtResource("21_nbqgc")
 texture_normal = ExtResource("44_t0b7i")
 texture_pressed = ExtResource("45_3m6fg")
+
+[node name="FlashLight" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 60.0
+offset_right = 542.0
+offset_bottom = 387.0
+texture_normal = ExtResource("105_clg2d")
+
+[connection signal="button_down" from="FlashLight" to="." method="_on_flash_light_button_down"]
+[connection signal="button_up" from="FlashLight" to="." method="_on_flash_light_button_up"]

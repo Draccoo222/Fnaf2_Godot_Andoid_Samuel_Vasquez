@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=45 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://c6n2iyi8f3bh1" path="res://Assets/Office/officeNormal.png" id="2_htt5u"]
@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b5ld41ygy0l4t" path="res://Assets/Office/hallLight.png" id="15_fyhlp"]
 [ext_resource type="Texture2D" uid="uid://bmbe8ua6j6usy" path="res://Assets/Office/mask7.png" id="15_t8eq0"]
 [ext_resource type="Texture2D" uid="uid://g06mh28v7ju3" path="res://Assets/Office/mask8.png" id="16_hdvqv"]
-[ext_resource type="Texture2D" uid="uid://bt7igrd8eofj0" path="res://Assets/Cameras/Monitor/95.png" id="17_3frok"]
+[ext_resource type="Texture2D" uid="uid://c05xrsgq72ylf" path="res://Assets/Cameras/Monitor/95.png" id="17_3frok"]
 [ext_resource type="Texture2D" uid="uid://cfy0q4ws1a6h2" path="res://Assets/Office/maskFinal.png" id="17_fyhlp"]
 [ext_resource type="Texture2D" uid="uid://wufa1p4o0njy" path="res://Assets/Office/mask9.png" id="18_3frok"]
 [ext_resource type="Texture2D" uid="uid://c17nhauht5tm6" path="res://Assets/Office/119.png" id="19_1cyro"]
@@ -28,17 +28,18 @@
 [ext_resource type="Texture2D" uid="uid://c1q8km8rjgpdr" path="res://Assets/Office/91.png" id="21_u70v0"]
 [ext_resource type="Texture2D" uid="uid://dioeagjdjsvfb" path="res://Assets/Office/98.png" id="22_xs7ii"]
 [ext_resource type="Texture2D" uid="uid://cygl85d08pfs6" path="res://Assets/Office/93.png" id="23_t8eq0"]
-[ext_resource type="Texture2D" uid="uid://3icbka7varrr" path="res://Assets/Cameras/Monitor/113.png" id="29_e186w"]
-[ext_resource type="Texture2D" uid="uid://cm8mkqd3y8rgo" path="res://Assets/Cameras/Monitor/112.png" id="30_3s3h7"]
-[ext_resource type="Texture2D" uid="uid://bqxmhsjn54dit" path="res://Assets/Cameras/Monitor/110.png" id="31_e1p4m"]
-[ext_resource type="Texture2D" uid="uid://dpq3sx1yaong" path="res://Assets/Cameras/Monitor/106.png" id="32_o3q44"]
-[ext_resource type="Texture2D" uid="uid://cuu0aquqgijus" path="res://Assets/Cameras/Monitor/105.png" id="33_pl064"]
-[ext_resource type="Texture2D" uid="uid://c1cs3ckp0mbk4" path="res://Assets/Cameras/Monitor/104.png" id="34_6t1gg"]
-[ext_resource type="Texture2D" uid="uid://nvxkm185s7kx" path="res://Assets/Cameras/Monitor/103.png" id="35_snyrv"]
-[ext_resource type="Texture2D" uid="uid://5gsuvwvdt1wq" path="res://Assets/Cameras/Monitor/99.png" id="36_gq7md"]
-[ext_resource type="Texture2D" uid="uid://d1nc5bd8gsq2m" path="res://Assets/Cameras/Monitor/116.png" id="37_wc4i2"]
-[ext_resource type="Texture2D" uid="uid://nlewvl52xyc7" path="res://Assets/Cameras/Monitor/97.png" id="38_h7edf"]
-[ext_resource type="Texture2D" uid="uid://b0e60rnit82mc" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
+[ext_resource type="Texture2D" uid="uid://djehngccrfahr" path="res://Assets/Cameras/Monitor/113.png" id="29_e186w"]
+[ext_resource type="Texture2D" uid="uid://cmsu150v0wa8m" path="res://Assets/Cameras/Monitor/112.png" id="30_3s3h7"]
+[ext_resource type="Texture2D" uid="uid://bnuopa1blcfyf" path="res://Assets/Cameras/Monitor/110.png" id="31_e1p4m"]
+[ext_resource type="Texture2D" uid="uid://cafpc800wikmb" path="res://Assets/Cameras/Monitor/106.png" id="32_o3q44"]
+[ext_resource type="Texture2D" uid="uid://co78up67dg1xl" path="res://Assets/Cameras/Monitor/105.png" id="33_pl064"]
+[ext_resource type="Texture2D" uid="uid://cjt7cuw6l7pip" path="res://Assets/Cameras/Monitor/104.png" id="34_6t1gg"]
+[ext_resource type="Texture2D" uid="uid://u70v8kjet80i" path="res://Assets/Cameras/Monitor/103.png" id="35_snyrv"]
+[ext_resource type="Texture2D" uid="uid://b0ma1j4deflof" path="res://Assets/Cameras/Monitor/99.png" id="36_gq7md"]
+[ext_resource type="Texture2D" uid="uid://cr624cban0ai0" path="res://Assets/Cameras/Monitor/116.png" id="37_wc4i2"]
+[ext_resource type="Texture2D" uid="uid://4jf25jqlj02q" path="res://Assets/Cameras/Monitor/97.png" id="38_h7edf"]
+[ext_resource type="Texture2D" uid="uid://bfttjxeeeaylb" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
+[ext_resource type="PackedScene" uid="uid://bwlpk1p08i7ku" path="res://cameras.tscn" id="40_3s3h7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -250,6 +251,7 @@ rightON = ExtResource("4_t8eq0")
 hallON = ExtResource("5_hdvqv")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cn4xo")
@@ -327,22 +329,13 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.000001
-offset_top = -57.99994
+offset_top = -45.99994
 offset_right = -650.0
-offset_bottom = -17.999939
+offset_bottom = -5.999939
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("19_1cyro")
-
-[node name="CameraToggle" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 575.0
-offset_top = 589.0
-offset_right = 1075.0
-offset_bottom = 635.0869
-scale = Vector2(1.15, 1.15)
-texture_normal = ExtResource("17_3frok")
 
 [node name="FreddyMask" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -351,9 +344,22 @@ sprite_frames = SubResource("SpriteFrames_ik11a")
 animation = &"idle"
 
 [node name="Monitor" type="AnimatedSprite2D" parent="."]
-position = Vector2(579, 349)
+position = Vector2(579, 350)
 sprite_frames = SubResource("SpriteFrames_yavs6")
 animation = &"monitorOn"
+
+[node name="Cameras" parent="." instance=ExtResource("40_3s3h7")]
+visible = false
+layout_mode = 1
+
+[node name="CameraToggle" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 575.0
+offset_top = 602.00006
+offset_right = 1075.0
+offset_bottom = 642.00006
+scale = Vector2(1.15, 1.15)
+texture_normal = ExtResource("17_3frok")
 
 [connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
 [connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]
@@ -362,5 +368,6 @@ animation = &"monitorOn"
 [connection signal="button_down" from="HallLight" to="." method="_on_hall_light_button_down"]
 [connection signal="button_up" from="HallLight" to="." method="_on_hall_light_button_up"]
 [connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
-[connection signal="pressed" from="CameraToggle" to="." method="_on_camera_toggle_pressed"]
 [connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]
+[connection signal="animation_finished" from="Monitor" to="." method="_on_monitor_animation_finished"]
+[connection signal="pressed" from="CameraToggle" to="." method="_on_camera_toggle_pressed"]
