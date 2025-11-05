@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=60 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://c6n2iyi8f3bh1" path="res://Assets/Office/officeNormal.png" id="2_htt5u"]
@@ -8,22 +8,37 @@
 [ext_resource type="Texture2D" uid="uid://r4aauvef7hm3" path="res://Assets/Office/officeRightVentEmpty.png" id="4_t8eq0"]
 [ext_resource type="Texture2D" uid="uid://cvsl6x5qlrpp6" path="res://Assets/Office/officeHallEmpty.png" id="5_hdvqv"]
 [ext_resource type="Texture2D" uid="uid://b3dq78gpf3nvw" path="res://Assets/Office/desk2.png" id="5_mm21g"]
+[ext_resource type="Texture2D" uid="uid://dfds3wpnmkb40" path="res://Assets/Office/OfficeBlockedLight.png" id="6_5shf0"]
 [ext_resource type="Texture2D" uid="uid://6jmgiyeyitxc" path="res://Assets/Office/desk3.png" id="6_7ak10"]
+[ext_resource type="Texture2D" uid="uid://dxxfbl6d4bb5t" path="res://Assets/Office/officeHallToyFreddy1.png" id="6_o3q44"]
+[ext_resource type="Texture2D" uid="uid://cr4pyl3yelv68" path="res://Assets/Office/OfficeHallToyFreddy2.png" id="7_pl064"]
 [ext_resource type="Texture2D" uid="uid://kaww7oukllge" path="res://Assets/Office/desk4.png" id="7_tsma6"]
+[ext_resource type="Texture2D" uid="uid://pf78xp2f4std" path="res://Assets/Office/hall/OfficeHallFoxy.png" id="8_r5iua"]
 [ext_resource type="Texture2D" uid="uid://c50oxjd0dn35n" path="res://Assets/Office/maskoff.png" id="8_wgl0g"]
+[ext_resource type="Texture2D" uid="uid://i75yn7mg4yyd" path="res://Assets/Office/hall/OfficeHallMangle.png" id="9_5shf0"]
 [ext_resource type="Texture2D" uid="uid://blureufklxnoh" path="res://Assets/Office/mask1.png" id="9_44eb8"]
 [ext_resource type="Texture2D" uid="uid://dirfijt3ohwhf" path="res://Assets/Office/mask2.png" id="10_4keav"]
+[ext_resource type="Texture2D" uid="uid://bren1pvdskwbg" path="res://Assets/Office/Office_FoxyMangle.png" id="10_cv0at"]
 [ext_resource type="Texture2D" uid="uid://bon6bhsrmglgx" path="res://Assets/Office/mask3.png" id="11_kmhi6"]
+[ext_resource type="Texture2D" uid="uid://bqjr5jlioe2bo" path="res://Assets/Office/hall/OfficeHallWitheredBonnie.png" id="11_tse5j"]
 [ext_resource type="Texture2D" uid="uid://bqxv21h2hfy8x" path="res://Assets/Office/mask4.png" id="12_4cr4s"]
+[ext_resource type="Texture2D" uid="uid://bnmg5i8jhpjp1" path="res://Assets/Office/Office_FoxyBonnie.png" id="12_6tyjn"]
+[ext_resource type="Texture2D" uid="uid://jiujdxgts6ck" path="res://Assets/Office/OfficeFreddy.png" id="13_lal4i"]
 [ext_resource type="Texture2D" uid="uid://bvlulm3skpdpt" path="res://Assets/Office/mask5.png" id="13_u70v0"]
+[ext_resource type="Texture2D" uid="uid://qwvpkjvaq0ml" path="res://Assets/Office/officeHallToyChica.png" id="14_feyaa"]
 [ext_resource type="Texture2D" uid="uid://tfq2urxpnmaa" path="res://Assets/Office/mask6.png" id="14_xs7ii"]
+[ext_resource type="Texture2D" uid="uid://b44a5ewakr0pu" path="res://Assets/Office/Office_GoldenFreddy.png" id="15_ejlp1"]
 [ext_resource type="Texture2D" uid="uid://b5ld41ygy0l4t" path="res://Assets/Office/hallLight.png" id="15_fyhlp"]
 [ext_resource type="Texture2D" uid="uid://bmbe8ua6j6usy" path="res://Assets/Office/mask7.png" id="15_t8eq0"]
+[ext_resource type="Texture2D" uid="uid://bxyv0vx2p0l2i" path="res://Assets/Office/office_toyChica.png" id="16_1gvqh"]
 [ext_resource type="Texture2D" uid="uid://g06mh28v7ju3" path="res://Assets/Office/mask8.png" id="16_hdvqv"]
 [ext_resource type="Texture2D" uid="uid://c05xrsgq72ylf" path="res://Assets/Cameras/Monitor/95.png" id="17_3frok"]
+[ext_resource type="Texture2D" uid="uid://ciflwfrrhh0um" path="res://Assets/Office/Office_BB.png" id="17_8a8fy"]
 [ext_resource type="Texture2D" uid="uid://cfy0q4ws1a6h2" path="res://Assets/Office/maskFinal.png" id="17_fyhlp"]
 [ext_resource type="Texture2D" uid="uid://wufa1p4o0njy" path="res://Assets/Office/mask9.png" id="18_3frok"]
+[ext_resource type="Texture2D" uid="uid://dv4suv0bxs3lk" path="res://Assets/Office/office_toyBonnie.png" id="18_6dkcs"]
 [ext_resource type="Texture2D" uid="uid://c17nhauht5tm6" path="res://Assets/Office/119.png" id="19_1cyro"]
+[ext_resource type="Texture2D" uid="uid://dyaeklgq8ger3" path="res://Assets/Office/Office_Mangle.png" id="19_iepxu"]
 [ext_resource type="Texture2D" uid="uid://dmhx0q7gn50o3" path="res://Assets/Office/90.png" id="20_4cr4s"]
 [ext_resource type="Texture2D" uid="uid://c1q8km8rjgpdr" path="res://Assets/Office/91.png" id="21_u70v0"]
 [ext_resource type="Texture2D" uid="uid://dioeagjdjsvfb" path="res://Assets/Office/98.png" id="22_xs7ii"]
@@ -44,7 +59,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
 shader_parameter/barrel_power = 0.10000000475
-shader_parameter/vignette_intensity = 0.800000038
+shader_parameter/vignette_intensity = 0.8170000388075
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3cpb0"]
 animations = [{
@@ -249,16 +264,33 @@ default_ofc = ExtResource("2_htt5u")
 leftON = ExtResource("3_xs7ii")
 rightON = ExtResource("4_t8eq0")
 hallON = ExtResource("5_hdvqv")
+office_lit_hall_empty = ExtResource("5_hdvqv")
+office_lit_hall_fail = ExtResource("6_5shf0")
+office_lit_hall_toyfreddy = ExtResource("6_o3q44")
+office_lit_hall_toyfreddy2 = ExtResource("7_pl064")
+office_lit_hall_foxy = ExtResource("8_r5iua")
+office_lit_hall_mangle = ExtResource("9_5shf0")
+office_lit_hall_foxy_mangle = ExtResource("10_cv0at")
+office_lit_hall_witheredbonnie = ExtResource("11_tse5j")
+office_lit_hall_witheredbonnie_foxy = ExtResource("12_6tyjn")
+office_lit_hall_witheredfreddy = ExtResource("13_lal4i")
+office_lit_hall_toyChica = ExtResource("14_feyaa")
+office_lit_hall_goldenFreddy = ExtResource("15_ejlp1")
+office_lit_left_empty = ExtResource("3_xs7ii")
+office_lit_left_toychica = ExtResource("16_1gvqh")
+office_lit_left_bb = ExtResource("17_8a8fy")
+office_lit_right_empty = ExtResource("4_t8eq0")
+office_lit_right_toybonnie = ExtResource("18_6dkcs")
+office_lit_right_mangle = ExtResource("19_iepxu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cn4xo")
 offset_right = 1152.0
 offset_bottom = 649.0
 mouse_filter = 2
-color = Color(1, 1, 1, 0.23529412)
+color = Color(1, 1, 1, 0.12156863)
 
 [node name="MaskView" type="Control" parent="."]
 clip_children = 2

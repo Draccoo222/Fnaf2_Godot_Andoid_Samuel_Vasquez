@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=147 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
@@ -103,8 +103,46 @@
 [ext_resource type="Texture2D" uid="uid://occyog22f5gr" path="res://Assets/Cameras/prizeCorner_puppetFinal.png" id="63_pvvsk"]
 [ext_resource type="Texture2D" uid="uid://dbgtkic8gl1m1" path="res://Assets/Cameras/prizeCorner_endo.png" id="64_cio6e"]
 [ext_resource type="Texture2D" uid="uid://dritpk7s1p8hr" path="res://Assets/Cameras/kidsCorner_On.png" id="66_dh2te"]
+[ext_resource type="Texture2D" uid="uid://it24ejj4cadb" path="res://Assets/Cameras/CamNames/46.png" id="67_cunx7"]
 [ext_resource type="Texture2D" uid="uid://btwaa1hvkh3ks" path="res://Assets/Cameras/kidsCorner_empty.png" id="67_nglqp"]
+[ext_resource type="Texture2D" uid="uid://bl41bsfmq8vco" path="res://Assets/Cameras/CamNames/47.png" id="68_f4ycq"]
+[ext_resource type="Texture2D" uid="uid://c5kh6uifajspo" path="res://Assets/Cameras/CamNames/48.png" id="69_mfkd4"]
+[ext_resource type="Texture2D" uid="uid://b7ehcj4vuoi08" path="res://Assets/Cameras/CamNames/49.png" id="70_j0y18"]
+[ext_resource type="Texture2D" uid="uid://chip3ibn3mf25" path="res://Assets/Cameras/CamNames/52.png" id="71_chenw"]
+[ext_resource type="Texture2D" uid="uid://b7qj0gfafd5hi" path="res://Assets/Cameras/CamNames/53.png" id="72_8i41e"]
+[ext_resource type="Texture2D" uid="uid://ysylipo7qi73" path="res://Assets/Cameras/CamNames/54.png" id="73_q87jb"]
+[ext_resource type="Texture2D" uid="uid://hyqnmkc6mppl" path="res://Assets/Cameras/CamNames/55.png" id="74_pca42"]
+[ext_resource type="Texture2D" uid="uid://6ehu74bik6pl" path="res://Assets/Cameras/CamNames/56.png" id="75_jstu1"]
+[ext_resource type="Texture2D" uid="uid://6qos4mwsh5aa" path="res://Assets/Cameras/CamNames/57.png" id="76_qekr6"]
+[ext_resource type="Texture2D" uid="uid://baiwc3w88h5u1" path="res://Assets/Cameras/CamNames/60.png" id="77_otgl3"]
+[ext_resource type="Texture2D" uid="uid://bplewq2yko4bv" path="res://Assets/Cameras/CamNames/61.png" id="78_bujwu"]
+[ext_resource type="Texture2D" uid="uid://cpnunrptr742x" path="res://Assets/Cameras/Buttons/recDot.png" id="80_l5gvo"]
+[ext_resource type="Texture2D" uid="uid://bbrbcs5h7jyd0" path="res://Assets/Cameras/musicBox/545.png" id="93_hkwls"]
+[ext_resource type="Texture2D" uid="uid://5kmns2gcuh7y" path="res://Assets/Cameras/musicBox/544.png" id="94_6ygg2"]
+[ext_resource type="Texture2D" uid="uid://dmwoxf63rspac" path="res://Assets/Cameras/musicBox/543.png" id="95_0vbsk"]
+[ext_resource type="Texture2D" uid="uid://cg1pha1155n4e" path="res://Assets/Cameras/musicBox/542.png" id="96_l7n41"]
+[ext_resource type="Texture2D" uid="uid://cmq6aw72p8rg" path="res://Assets/Cameras/musicBox/541.png" id="97_tciy0"]
+[ext_resource type="Texture2D" uid="uid://clknxs4snda7v" path="res://Assets/Cameras/musicBox/540.png" id="98_jdv0g"]
+[ext_resource type="Texture2D" uid="uid://cenxprbvi5fpf" path="res://Assets/Cameras/musicBox/539.png" id="99_2tn2j"]
+[ext_resource type="Texture2D" uid="uid://bf8i83v7q2r7p" path="res://Assets/Cameras/musicBox/538.png" id="100_0g1a3"]
+[ext_resource type="Texture2D" uid="uid://brvf13wfl8514" path="res://Assets/Cameras/musicBox/537.png" id="101_iwodp"]
+[ext_resource type="Texture2D" uid="uid://s3q3bpb1n6g5" path="res://Assets/Cameras/musicBox/536.png" id="102_wv576"]
+[ext_resource type="Texture2D" uid="uid://bwvadrqx57io2" path="res://Assets/Cameras/musicBox/535.png" id="103_hadlr"]
+[ext_resource type="Texture2D" uid="uid://c4w74e6fhay1u" path="res://Assets/Cameras/musicBox/534.png" id="104_vaejf"]
 [ext_resource type="Texture2D" uid="uid://b5ld41ygy0l4t" path="res://Assets/Office/hallLight.png" id="105_clg2d"]
+[ext_resource type="Texture2D" uid="uid://lholqxsflt2s" path="res://Assets/Cameras/musicBox/533.png" id="105_yf6dx"]
+[ext_resource type="Texture2D" uid="uid://cuk8u56nsdiqg" path="res://Assets/Cameras/musicBox/532.png" id="106_6exl0"]
+[ext_resource type="Texture2D" uid="uid://h60nldhjp1cp" path="res://Assets/Cameras/musicBox/531.png" id="107_knndu"]
+[ext_resource type="Texture2D" uid="uid://djbmjxk1rc2wf" path="res://Assets/Cameras/musicBox/530.png" id="108_e3q5h"]
+[ext_resource type="Texture2D" uid="uid://w8g6emnarpbm" path="res://Assets/Cameras/musicBox/529.png" id="109_la3bp"]
+[ext_resource type="Texture2D" uid="uid://c6dari7ifrydk" path="res://Assets/Cameras/musicBox/528.png" id="110_cftqn"]
+[ext_resource type="Texture2D" uid="uid://byvc8gfu8u8pc" path="res://Assets/Cameras/musicBox/527.png" id="111_510xb"]
+[ext_resource type="Texture2D" uid="uid://cahjxxyl0l7g1" path="res://Assets/Cameras/musicBox/526.png" id="112_p8jqg"]
+[ext_resource type="Texture2D" uid="uid://85n8u6dkl7tg" path="res://Assets/Cameras/musicBox/525.png" id="113_si63y"]
+[ext_resource type="Texture2D" uid="uid://dlqr1w6hate2m" path="res://Assets/Cameras/musicBox/boxButton.png" id="114_sk7b8"]
+[ext_resource type="Texture2D" uid="uid://bgdw0salf37ln" path="res://Assets/Cameras/musicBox/boxButtonR.png" id="115_6ygg2"]
+[ext_resource type="Texture2D" uid="uid://ysw2ekx1i28h" path="res://Assets/Cameras/musicBox/494.png" id="116_l7n41"]
+[ext_resource type="Texture2D" uid="uid://cfganuu8nkj3o" path="res://Assets/Cameras/musicBox/496.png" id="117_tciy0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
 animations = [{
@@ -153,6 +191,145 @@ animations = [{
 "loop": false,
 "name": &"default",
 "speed": 30.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bo10g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("93_hkwls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_6ygg2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_0vbsk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_l7n41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_tciy0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_jdv0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_2tn2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_0g1a3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_iwodp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_wv576")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_hadlr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_vaejf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_yf6dx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_6exl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_knndu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_e3q5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_la3bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_cftqn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_510xb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_p8jqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_si63y")
+}],
+"loop": false,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("113_si63y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_p8jqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_510xb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_cftqn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_la3bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_e3q5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_knndu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_6exl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_yf6dx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_vaejf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_hadlr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_wv576")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_iwodp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_0g1a3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_2tn2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_jdv0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_tciy0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_l7n41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_0vbsk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_6ygg2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_hkwls")
+}],
+"loop": false,
+"name": &"reload",
+"speed": 0.0
 }]
 
 [node name="Cameras" type="Control"]
@@ -229,6 +406,20 @@ cam11_lit_endo = ExtResource("64_cio6e")
 cam12_dark_empty = ExtResource("12_hj0gf")
 cam12_lit_empty = ExtResource("66_dh2te")
 cam12_lit_mangle = ExtResource("67_nglqp")
+name_img_cam01 = ExtResource("67_cunx7")
+name_img_cam02 = ExtResource("68_f4ycq")
+name_img_cam03 = ExtResource("69_mfkd4")
+name_img_cam04 = ExtResource("70_j0y18")
+name_img_cam05 = ExtResource("71_chenw")
+name_img_cam06 = ExtResource("72_8i41e")
+name_img_cam07 = ExtResource("73_q87jb")
+name_img_cam08 = ExtResource("74_pca42")
+name_img_cam09 = ExtResource("75_jstu1")
+name_img_cam10 = ExtResource("76_qekr6")
+name_img_cam11 = ExtResource("77_otgl3")
+name_img_cam12 = ExtResource("78_bujwu")
+drain_rate = 8.0
+wind_rate = 15.0
 
 [node name="CamViews" type="Control" parent="."]
 anchors_preset = 0
@@ -320,7 +511,6 @@ texture = ExtResource("9_v3sgr")
 expand_mode = 1
 
 [node name="CAM_09" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
-visible = false
 layout_mode = 0
 offset_left = 4.0
 offset_top = -20.0
@@ -371,6 +561,7 @@ sprite_frames = SubResource("SpriteFrames_15ilk")
 frame_progress = 0.9484427
 
 [node name="Static2" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(576, 321.5)
 scale = Vector2(1.1230469, 0.84244794)
 sprite_frames = SubResource("SpriteFrames_3m6fg")
@@ -397,6 +588,81 @@ offset_top = 251.0
 offset_right = 1096.0
 offset_bottom = 563.0
 texture = ExtResource("8_lypys")
+
+[node name="RecDot" type="TextureRect" parent="CamUI"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 64.0
+offset_right = 84.0
+offset_bottom = 107.0
+texture = ExtResource("80_l5gvo")
+
+[node name="RecTimer" type="Timer" parent="CamUI"]
+wait_time = 0.5
+autostart = true
+
+[node name="CameraNameLabel" type="TextureRect" parent="CamUI"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 205.0
+offset_right = 888.0
+offset_bottom = 235.0
+texture = ExtResource("75_jstu1")
+expand_mode = 1
+
+[node name="MusicBoxCircle" type="AnimatedSprite2D" parent="CamUI"]
+position = Vector2(305, 498.24997)
+scale = Vector2(1.4074072, 1.1574067)
+sprite_frames = SubResource("SpriteFrames_bo10g")
+animation = &"reload"
+
+[node name="MusicBoxButton" type="TextureButton" parent="CamUI"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 466.0
+offset_right = 536.0
+offset_bottom = 531.0
+texture_normal = ExtResource("114_sk7b8")
+texture_pressed = ExtResource("115_6ygg2")
+
+[node name="MusicBoxBar" type="ProgressBar" parent="CamUI"]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="WarningSign1" type="TextureRect" parent="CamUI"]
+layout_mode = 0
+offset_left = 1016.0
+offset_top = 348.0
+offset_right = 1054.0
+offset_bottom = 383.0
+texture = ExtResource("116_l7n41")
+expand_mode = 1
+
+[node name="WarningSign2" type="TextureRect" parent="CamUI"]
+layout_mode = 0
+offset_left = 1016.0
+offset_top = 348.0
+offset_right = 1054.0
+offset_bottom = 383.0
+texture = ExtResource("117_tciy0")
+expand_mode = 1
+
+[node name="WarningTimer1" type="Timer" parent="CamUI"]
+wait_time = 0.5
+
+[node name="WarningTimer2" type="Timer" parent="CamUI"]
+wait_time = 0.2
+
+[node name="WarningDelayTimer1" type="Timer" parent="CamUI"]
+one_shot = true
+
+[node name="WarningDelayTimer2" type="Timer" parent="CamUI"]
+wait_time = 0.5
+one_shot = true
+
+[node name="GracePeriodTimer" type="Timer" parent="CamUI"]
+one_shot = true
 
 [node name="CamButtons" type="Control" parent="."]
 anchors_preset = 0
@@ -538,10 +804,11 @@ texture_pressed = ExtResource("45_3m6fg")
 [node name="FlashLight" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 120.0
-offset_top = 60.0
+offset_top = 80.0
 offset_right = 542.0
-offset_bottom = 387.0
+offset_bottom = 407.0
 texture_normal = ExtResource("105_clg2d")
 
+[connection signal="timeout" from="CamUI/RecTimer" to="." method="_on_rec_timer_timeout"]
 [connection signal="button_down" from="FlashLight" to="." method="_on_flash_light_button_down"]
 [connection signal="button_up" from="FlashLight" to="." method="_on_flash_light_button_up"]

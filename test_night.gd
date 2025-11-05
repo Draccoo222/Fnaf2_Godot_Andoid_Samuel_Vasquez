@@ -23,6 +23,37 @@ extends Control
 @export var rightON = Texture2D
 @export var hallON = Texture2D
 
+@export_group("Office Light Textures")
+@export var office_lit_hall_empty: Texture2D
+@export var office_lit_hall_fail: Texture2D
+@export var office_lit_hall_toyfreddy: Texture2D
+@export var office_lit_hall_toyfreddy2: Texture2D
+@export var office_lit_hall_foxy: Texture2D
+@export var office_lit_hall_mangle: Texture2D
+@export var office_lit_hall_foxy_mangle: Texture2D
+@export var office_lit_hall_witheredbonnie: Texture2D
+@export var office_lit_hall_witheredbonnie_foxy: Texture2D
+@export var office_lit_hall_witheredfreddy: Texture2D
+@export var office_lit_hall_toyChica: Texture2D
+@export var office_lit_hall_goldenFreddy: Texture2D
+
+# --- Ventilación Izquierda ---
+@export var office_lit_left_empty: Texture2D
+@export var office_lit_left_toychica: Texture2D
+@export var office_lit_left_bb: Texture2D
+
+# --- Ventilación Derecha ---
+@export var office_lit_right_empty: Texture2D
+@export var office_lit_right_toybonnie: Texture2D
+@export var office_lit_right_mangle: Texture2D
+
+
+
+
+var hall_light_textures = {}
+var left_vent_light_textures = {}
+var right_vent_light_textures = {}
+
 
 var widthScreen: float
 var movementLim: float
@@ -43,6 +74,35 @@ func _ready():
 	if movementLim <= 0:
 		movementLim = 0
 	desk.play("default")
+	
+	hall_light_textures = {
+		"Empty": office_lit_hall_empty,
+		"ToyFreddy": office_lit_hall_toyfreddy,
+		"ToyFreddy2": office_lit_hall_toyfreddy2,
+		"Foxy": office_lit_hall_foxy,
+		"Mangle": office_lit_hall_mangle,
+		"Foxy_Mangle": office_lit_hall_foxy_mangle,
+		"WitheredBonnie": office_lit_hall_witheredbonnie,
+		"WitheredBonnie_Foxy": office_lit_hall_witheredbonnie_foxy,
+		"WitheredFreddy": office_lit_hall_witheredfreddy,
+		"ToyChica": office_lit_hall_toyChica,
+		"GoldenFreddy": office_lit_hall_goldenFreddy
+	}
+	
+	left_vent_light_textures = {
+		"Empty": office_lit_left_empty,
+		"ToyChica": office_lit_left_toychica,
+		"BB": office_lit_left_bb
+	}
+	
+	right_vent_light_textures = {
+		"Empty": office_lit_right_empty,
+		"ToyBonnie": office_lit_right_toybonnie,
+		"Mangle": office_lit_right_mangle
+	}
+	
+	if officeBG:
+		officeBG.texture = default_ofc
 	
 	initial_mask_pos = maskAnim.position
 
@@ -77,7 +137,7 @@ func _on_mask_button_pressed() -> void:
 			maskAnim.position = initial_mask_pos 
 			maskAnim.play("deactivate")
 			var scale_tween = create_tween()
-			scale_tween.tween_property(maskAnim, "scale:x", 1.0, 0.2)
+			scale_tween.tween_property(maskAnim, "scale:x", 1.0, 0.25)
 
 func _on_freddy_mask_animation_finished() -> void:
 	if MASK_ON:

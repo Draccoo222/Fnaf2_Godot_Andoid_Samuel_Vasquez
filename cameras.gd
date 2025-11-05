@@ -1,6 +1,16 @@
 extends Control
 
 @onready var camViews = $CamViews
+@onready var cam_ui_root = $CamUI
+@onready var camera_name_display = $CamUI/CameraNameLabel
+@onready var rec_dot = $CamUI/RecDot
+@onready var music_box_bar = $CamUI/MusicBoxBar
+@onready var music_box_circle = $CamUI/MusicBoxCircle
+@onready var music_box_button = $CamUI/MusicBoxButton
+@onready var static_overlay = $Static
+@onready var static_transition = $Static2
+@onready var cam_buttons_root = $CamButtons
+@onready var grace_period_timer = $CamUI/GracePeriodTimer
 var curCam: TextureRect
 
 @export_group("Camera Panning")
@@ -117,19 +127,74 @@ var camera_content = {
 @export var cam12_lit_empty: Texture2D
 @export var cam12_lit_mangle: Texture2D
 
+@export_group("Camera Name Textures")
+@export var name_img_cam01: Texture2D
+@export var name_img_cam02: Texture2D
+@export var name_img_cam03: Texture2D
+@export var name_img_cam04: Texture2D
+@export var name_img_cam05: Texture2D
+@export var name_img_cam06: Texture2D
+@export var name_img_cam07: Texture2D
+@export var name_img_cam08: Texture2D
+@export var name_img_cam09: Texture2D
+@export var name_img_cam10: Texture2D
+@export var name_img_cam11: Texture2D
+@export var name_img_cam12: Texture2D
+
+@export_group("Music Box")
+@export var drain_rate: float = 0.2
+@export var wind_rate: float = 5.0
+
+@onready var warning_sign_1 = $CamUI/WarningSign1
+@onready var warning_sign_2 = $CamUI/WarningSign2
+@onready var warning_timer_1 = $CamUI/WarningTimer1
+@onready var warning_timer_2 = $CamUI/WarningTimer2
+
+@onready var warning_delay_timer_1 = $CamUI/WarningDelayTimer1
+@onready var warning_delay_timer_2 = $CamUI/WarningDelayTimer2
+
+var music_box_locked = false
+var is_warning_1_pending = false
+var is_warning_2_pending = false
+var is_in_grace_period = false
+signal puppet_is_loose
 
 
+var camera_name_textures = {}
 var camera_textures ={}
 var camTween: Tween;
 
 var is_flashlight_on = false;
 
 func _ready():
-	$Static2.show()
-	$Static.play()
-	$Static2.play()
+	static_overlay.play()
+	static_transition.hide() 
+	
 	var group: ButtonGroup = ButtonGroup.new()
 	group.pressed.connect(buttongroup_pressed)
+	
+	warning_timer_1.timeout.connect(_on_warning_timer_1_timeout)
+	warning_timer_2.timeout.connect(_on_warning_timer_2_timeout)
+	warning_delay_timer_1.timeout.connect(_on_warning_delay_timer_1_timeout)
+	warning_delay_timer_2.timeout.connect(_on_warning_delay_timer_2_timeout)
+	grace_period_timer.timeout.connect(_on_grace_period_timer_timeout)
+	
+	static_transition.animation_finished.connect(_on_static_2_animation_finished)
+	
+	camera_name_textures = {
+		"CAM_01": name_img_cam01,
+		"CAM_02": name_img_cam02,
+		"CAM_03": name_img_cam03,
+		"CAM_04": name_img_cam04,
+		"CAM_05": name_img_cam05,
+		"CAM_06": name_img_cam06,
+		"CAM_07": name_img_cam07,
+		"CAM_08": name_img_cam08,
+		"CAM_09": name_img_cam09,
+		"CAM_10": name_img_cam10,
+		"CAM_11": name_img_cam11,
+		"CAM_12": name_img_cam12
+	}
 	
 	camera_content = {
 		"CAM_01": "Empty",
@@ -240,8 +305,7 @@ func _ready():
 		}
 	}
 	
-	
-	for cams in $CamButtons.get_children():
+	for cams in cam_buttons_root.get_children():
 		cams.button_group = group
 
 	for cam_view in camViews.get_children():
@@ -255,20 +319,52 @@ func _ready():
 	
 	cambiar_vista_a("CAM_09")
 	
-	await $Static2.animation_finished
-	$Static2.hide()
+	music_box_bar.value = 100.0
+	
+	music_box_circle.play("reload") 
+	update_circle_animation()
+	
 
 func buttongroup_pressed(button : TextureButton):
 		cambiar_vista_a(button.name)
 
 func _process(delta):
+	if music_box_locked:
+		return
+
+	if music_box_button.is_pressed():
+
+		if is_in_grace_period:
+			grace_period_timer.stop()
+			is_in_grace_period = false
+		
+		music_box_bar.value += wind_rate * delta 
+		music_box_bar.value = clamp(music_box_bar.value, 0, 100)
+		
+	else:
+		music_box_bar.value -= drain_rate * delta
+	
+	music_box_bar.value = clamp(music_box_bar.value, 0, 100)
+
+	update_circle_animation()
+
+	if music_box_bar.value <= 0:
+		if not is_in_grace_period:
+			is_in_grace_period = true
+			grace_period_timer.start()
+			print("¡PERIODO DE GRACIA INICIADO!")
+	else:
+		if is_in_grace_period:
+			grace_period_timer.stop()
+			is_in_grace_period = false
+
 	if curCam and curCam.is_in_group("panning_cameras"):
 		curCam.position.x = pan_value
 
-
 func cambiar_vista_a(nombre_camara: String):
-	$Static2.show()
-	$Static2.play()
+	static_transition.show()
+	static_transition.play()
+	
 	if curCam:
 		curCam.hide()
 		curCam.position.x = 0
@@ -276,23 +372,44 @@ func cambiar_vista_a(nombre_camara: String):
 	curCam = camViews.get_node(nombre_camara)
 	curCam.show()
 	
+	update_camera_view()
+	
 	if curCam.is_in_group("panning_cameras"):
 		curCam.position.x = pan_value
 	else:
 		curCam.position.x = 0
 	
-	await $Static2.animation_finished
-	$Static2.hide()
+	if camera_name_textures.has(nombre_camara):
+		camera_name_display.texture = camera_name_textures[nombre_camara]
+	else:
+		camera_name_display.texture = null
+		
+	if nombre_camara == "CAM_11":
+		music_box_bar.visible = true
+		music_box_circle.visible = true
+		music_box_button.visible = true
+		music_box_button.disabled = false
+	else:
+		music_box_bar.visible = false
+		music_box_circle.visible = false
+		music_box_button.visible = false
+		music_box_button.disabled = true
 	
+func _on_static_2_animation_finished():
+	static_transition.hide()
+
+
 func update_camera_view():
 	if not curCam:
 		return
 
 	var cam_name = curCam.name
-	
 	var content = camera_content.get(cam_name, "Empty") 
-
 	var texture_to_show = null
+
+	if not camera_textures.has(cam_name):
+		print("¡ERROR GRAVE! La cámara '", cam_name, "' no existe en camera_textures.")
+		return
 	
 	if is_flashlight_on:
 		if camera_textures[cam_name].has("Lit_" + content):
@@ -309,13 +426,12 @@ func update_camera_view():
 		curCam.texture = texture_to_show
 	else:
 		print("¡ERROR! No se encontró textura para: ", cam_name, " con estado ", content)
-	
+		curCam.texture = camera_textures[cam_name]["Dark_Empty"]
 
 
 func _on_flash_light_button_down() -> void:
 	is_flashlight_on = true
 	update_camera_view()
-
 
 func _on_flash_light_button_up() -> void:
 	is_flashlight_on = false
@@ -323,6 +439,81 @@ func _on_flash_light_button_up() -> void:
 	
 func set_camera_content(camera_name: String, content: String):
 	camera_content[camera_name] = content
-
 	if curCam and curCam.name == camera_name:
 		update_camera_view()
+
+func update_circle_animation():
+	var current_value = music_box_bar.value
+	var total_frames = 20.0
+	var new_frame = int(round((current_value / 100.0) * total_frames))
+	
+	music_box_circle.frame = new_frame
+
+	if new_frame <= 2:
+		
+		if warning_delay_timer_2.is_stopped() and not is_warning_2_pending:
+			warning_delay_timer_2.start() 
+			is_warning_2_pending = true
+	else:
+		
+		warning_sign_2.hide()
+		warning_timer_2.stop()
+		warning_delay_timer_2.stop()
+		is_warning_2_pending = false
+
+	
+	if new_frame <= 8:
+		
+		if warning_delay_timer_1.is_stopped() and not is_warning_1_pending:
+			warning_delay_timer_1.start()
+			is_warning_1_pending = true
+	else:
+		
+		warning_sign_1.hide()
+		warning_timer_1.stop()
+		warning_delay_timer_1.stop()
+		is_warning_1_pending = false
+
+func _on_rec_timer_timeout() -> void:
+	rec_dot.visible = not rec_dot.visible
+
+func _on_warning_timer_1_timeout():
+	
+	warning_sign_1.visible = not warning_sign_1.visible
+
+func _on_warning_timer_2_timeout():
+	
+	warning_sign_2.visible = not warning_sign_2.visible
+func _on_warning_delay_timer_1_timeout():
+	is_warning_1_pending = false 
+
+	if music_box_bar.value <= (8.0 / 20.0) * 100.0 and not music_box_locked:
+		warning_timer_1.start() 
+
+func _on_warning_delay_timer_2_timeout():
+	is_warning_2_pending = false
+	if music_box_bar.value <= (2.0 / 20.0) * 100.0 and not music_box_locked:
+		warning_timer_2.start()
+
+func stop_all_warnings():
+	warning_sign_1.hide()
+	warning_timer_1.stop()
+	warning_delay_timer_1.stop()
+	is_warning_1_pending = false
+	
+	warning_sign_2.hide()
+	warning_timer_2.stop()
+	warning_delay_timer_2.stop()
+	is_warning_2_pending = false
+	
+func _on_grace_period_timer_timeout():
+	is_in_grace_period = false
+	
+	
+	if music_box_bar.value <= 0:
+		print("¡PERIODO DE GRACIA TERMINADO! Caja bloqueada.")
+		
+		
+		music_box_locked = true
+		emit_signal("puppet_is_loose")
+		stop_all_warnings()

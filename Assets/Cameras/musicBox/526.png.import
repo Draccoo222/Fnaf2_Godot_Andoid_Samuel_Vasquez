@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b46egvxa6irht"
-path="res://.godot/imported/Office_Foxy.png-1d6671bb29f940898c65ccc7aedc338d.ctex"
+uid="uid://cahjxxyl0l7g1"
+path="res://.godot/imported/526.png-e1981a2340c7486e080bae7b0256e445.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Office/Office_Foxy.png"
-dest_files=["res://.godot/imported/Office_Foxy.png-1d6671bb29f940898c65ccc7aedc338d.ctex"]
+source_file="res://Assets/Cameras/musicBox/526.png"
+dest_files=["res://.godot/imported/526.png-e1981a2340c7486e080bae7b0256e445.ctex"]
 
 [params]
 
