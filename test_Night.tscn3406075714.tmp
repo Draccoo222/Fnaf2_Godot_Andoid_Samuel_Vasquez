@@ -257,8 +257,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_htt5u")
-desk_offset_x = 1000.0
-parralax_factor_desk = 1.1
 toy_bonnie_slide_texture = ExtResource("2_cv0at")
 office_dark_default = ExtResource("2_htt5u")
 office_lit_hall_empty = ExtResource("5_hdvqv")
@@ -394,12 +392,6 @@ scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("17_3frok")
 
 [node name="FlashlightFailTimer" type="Timer" parent="."]
-
-[node name="Animatronic_Slide_View" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
 [connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]

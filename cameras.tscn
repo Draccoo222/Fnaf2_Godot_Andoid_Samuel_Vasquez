@@ -1,4 +1,4 @@
-[gd_scene load_steps=147 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=155 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
@@ -117,9 +117,15 @@
 [ext_resource type="Texture2D" uid="uid://baiwc3w88h5u1" path="res://Assets/Cameras/CamNames/60.png" id="77_otgl3"]
 [ext_resource type="Texture2D" uid="uid://bplewq2yko4bv" path="res://Assets/Cameras/CamNames/61.png" id="78_bujwu"]
 [ext_resource type="Texture2D" uid="uid://cpnunrptr742x" path="res://Assets/Cameras/Buttons/recDot.png" id="80_l5gvo"]
+[ext_resource type="Texture2D" uid="uid://d2o2enpn2gt4w" path="res://Assets/Cameras/Err/357.png" id="90_hadlr"]
+[ext_resource type="Texture2D" uid="uid://dpofb6ct70ajw" path="res://Assets/Cameras/Err/358.png" id="91_vaejf"]
+[ext_resource type="Texture2D" uid="uid://b4qdwvqsvt04c" path="res://Assets/Cameras/Err/359.png" id="92_yf6dx"]
+[ext_resource type="Texture2D" uid="uid://q7d8u2v7md7a" path="res://Assets/Cameras/Err/360.png" id="93_6exl0"]
 [ext_resource type="Texture2D" uid="uid://bbrbcs5h7jyd0" path="res://Assets/Cameras/musicBox/545.png" id="93_hkwls"]
 [ext_resource type="Texture2D" uid="uid://5kmns2gcuh7y" path="res://Assets/Cameras/musicBox/544.png" id="94_6ygg2"]
+[ext_resource type="Texture2D" uid="uid://bv35xrhkvu5ma" path="res://Assets/Cameras/Err/361.png" id="94_knndu"]
 [ext_resource type="Texture2D" uid="uid://dmwoxf63rspac" path="res://Assets/Cameras/musicBox/543.png" id="95_0vbsk"]
+[ext_resource type="Texture2D" uid="uid://b6phrcdlk5nfn" path="res://Assets/Cameras/Err/363.png" id="95_e3q5h"]
 [ext_resource type="Texture2D" uid="uid://cg1pha1155n4e" path="res://Assets/Cameras/musicBox/542.png" id="96_l7n41"]
 [ext_resource type="Texture2D" uid="uid://cmq6aw72p8rg" path="res://Assets/Cameras/musicBox/541.png" id="97_tciy0"]
 [ext_resource type="Texture2D" uid="uid://clknxs4snda7v" path="res://Assets/Cameras/musicBox/540.png" id="98_jdv0g"]
@@ -143,6 +149,7 @@
 [ext_resource type="Texture2D" uid="uid://bgdw0salf37ln" path="res://Assets/Cameras/musicBox/boxButtonR.png" id="115_6ygg2"]
 [ext_resource type="Texture2D" uid="uid://ysw2ekx1i28h" path="res://Assets/Cameras/musicBox/494.png" id="116_l7n41"]
 [ext_resource type="Texture2D" uid="uid://cfganuu8nkj3o" path="res://Assets/Cameras/musicBox/496.png" id="117_tciy0"]
+[ext_resource type="Texture2D" uid="uid://cnc6j4tl0oroo" path="res://Assets/Cameras/Err/223.png" id="150_la3bp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
 animations = [{
@@ -187,6 +194,32 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_bqhd7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cftqn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("90_hadlr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_vaejf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_yf6dx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_6exl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_knndu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_e3q5h")
 }],
 "loop": false,
 "name": &"default",
@@ -568,6 +601,14 @@ sprite_frames = SubResource("SpriteFrames_3m6fg")
 frame = 4
 frame_progress = 1.0
 
+[node name="StaticTransition" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(643.5, 365)
+scale = Vector2(1.2490234, 1)
+sprite_frames = SubResource("SpriteFrames_cftqn")
+frame = 5
+frame_progress = 1.0
+
 [node name="CamUI" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -808,6 +849,15 @@ offset_top = 80.0
 offset_right = 542.0
 offset_bottom = 407.0
 texture_normal = ExtResource("105_clg2d")
+
+[node name="SignalInterrupted" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 322.0
+offset_top = 25.0
+offset_right = 822.0
+offset_bottom = 60.0
+texture = ExtResource("150_la3bp")
 
 [connection signal="timeout" from="CamUI/RecTimer" to="." method="_on_rec_timer_timeout"]
 [connection signal="button_down" from="FlashLight" to="." method="_on_flash_light_button_down"]

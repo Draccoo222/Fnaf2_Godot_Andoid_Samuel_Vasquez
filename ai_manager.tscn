@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnsxn2e4j0nu5"]
+
+[ext_resource type="Script" uid="uid://b1hgo48tp08pk" path="res://aimanager.gd" id="1_fs0f7"]
+
+[node name="ai_manager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_fs0f7")
+
+[node name="AITickTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="RightVentAttackTimer" type="Timer" parent="."]
+
+[node name="LeftVentAttackTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="LeftVentAttackTimer" to="." method="_on_left_vent_attack_timer_timeout"]

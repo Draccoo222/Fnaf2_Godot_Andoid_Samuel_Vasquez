@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=61 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
@@ -56,7 +56,6 @@
 [ext_resource type="Texture2D" uid="uid://4jf25jqlj02q" path="res://Assets/Cameras/Monitor/97.png" id="38_h7edf"]
 [ext_resource type="Texture2D" uid="uid://bfttjxeeeaylb" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
 [ext_resource type="PackedScene" uid="uid://bwlpk1p08i7ku" path="res://cameras.tscn" id="40_3s3h7"]
-[ext_resource type="PackedScene" uid="uid://bnsxn2e4j0nu5" path="res://ai_manager.tscn" id="57_tse5j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -260,7 +259,13 @@ script = ExtResource("1_htt5u")
 desk_offset_x = 1000.0
 parralax_factor_desk = 1.1
 toy_bonnie_slide_texture = ExtResource("2_cv0at")
-office_dark_default = ExtResource("2_htt5u")
+idle_amplitude_x = 12.0
+idle_amplitude_y = 6.0
+idle_speed = 1.2
+default_ofc = ExtResource("2_htt5u")
+leftON = ExtResource("3_xs7ii")
+rightON = ExtResource("4_t8eq0")
+hallON = ExtResource("5_hdvqv")
 office_lit_hall_empty = ExtResource("5_hdvqv")
 office_lit_hall_fail = ExtResource("6_5shf0")
 office_lit_hall_toyfreddy = ExtResource("6_o3q44")
@@ -279,9 +284,6 @@ office_lit_left_bb = ExtResource("17_8a8fy")
 office_lit_right_empty = ExtResource("4_t8eq0")
 office_lit_right_toybonnie = ExtResource("18_6dkcs")
 office_lit_right_mangle = ExtResource("19_iepxu")
-
-[node name="ai_manager" parent="." instance=ExtResource("57_tse5j")]
-layout_mode = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -392,14 +394,6 @@ offset_right = 1075.0
 offset_bottom = 642.00006
 scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("17_3frok")
-
-[node name="FlashlightFailTimer" type="Timer" parent="."]
-
-[node name="Animatronic_Slide_View" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
 [connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]

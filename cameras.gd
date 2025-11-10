@@ -517,3 +517,15 @@ func _on_grace_period_timer_timeout():
 		music_box_locked = true
 		emit_signal("puppet_is_loose")
 		stop_all_warnings()
+		
+func on_animatronic_moved():
+	if not self.visible:
+		return 
+	$StaticTransition.show()
+	$StaticTransition.play()
+	$SignalInterrupted.show()
+	
+	if $StaticTransition.animation_finished:
+		$StaticTransition.hide()
+		$SignalInterrupted.hide()
+	
