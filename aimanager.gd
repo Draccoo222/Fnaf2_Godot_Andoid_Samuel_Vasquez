@@ -59,7 +59,6 @@ const PATHS = {
 func _ready():
 	ai_tick_timer.timeout.connect(_on_ai_tick_timer_timeout)
 	right_vent_attack_timer.timeout.connect(_on_right_vent_attack_timer_timeout)
-	left_vent_attack_timer.timeout.connect(_on_left_vent_attack_timer_timeout)
 
 func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	aggression_levels = levels

@@ -283,6 +283,14 @@ office_lit_right_mangle = ExtResource("19_iepxu")
 [node name="ai_manager" parent="." instance=ExtResource("57_tse5j")]
 layout_mode = 0
 
+[node name="OfficeDarkenOverlay" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -34.0
+offset_right = 1610.0
+offset_bottom = 740.0
+color = Color(0.007843138, 0, 0.08235294, 0.90588236)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
