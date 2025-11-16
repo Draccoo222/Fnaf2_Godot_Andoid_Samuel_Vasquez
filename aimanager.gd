@@ -4,9 +4,9 @@ extends Control
 signal jumpscare(animatronic_name)
 signal animatronic_moved 
 
-@onready var ai_tick_timer = $AITickTimer
-@onready var right_vent_attack_timer = $RightVentAttackTimer
-@onready var left_vent_attack_timer = $LeftVentAttackTimer
+@onready var ai_tick_timer = $AITickTimer  # Should be set to 5.01 seconds in editor
+@onready var right_vent_attack_timer = $RightVentAttackTimer  # Should be set to 17 seconds
+@onready var left_vent_attack_timer = $LeftVentAttackTimer  # Should be set to 17 seconds
 
 var camera_system: Control
 var office_node: Control 
@@ -45,7 +45,8 @@ const PATHS = {
 		"CAM_07": "CAM_05", 
 		"CAM_05": "CAM_03",
 		"CAM_03": "CAM_01", 
-		"CAM_01": "LeftVent", 
+		"CAM_01": "Hallway",
+		"Hallway": "LeftVent",
 		"LeftVent": "Office"
 	},
 	"ToyFreddy": {
@@ -77,6 +78,9 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 		"ToyChica": false,
 		"ToyFreddy": false
 	}
+	
+	toy_bonnie_attack_pending = false
+	toy_chica_attack_pending = false
 	
 	# Show all animatronics on stage initially
 	camera_system.set_camera_content("CAM_09", "All")
@@ -132,8 +136,10 @@ func attempt_move(name: String):
 	update_camera_visuals(current_loc, next_loc, name)
 	
 	# Notify office of animatronic positions
-	if next_loc == "LeftVent" or next_loc == "RightVent":
-		office_node.set_vent_occupant(next_loc, name)
+	if next_loc == "LeftVent":
+		office_node.set_vent_occupant("LeftVent", name)
+	elif next_loc == "RightVent":
+		office_node.set_vent_occupant("RightVent", name)
 	elif next_loc == "Hallway":
 		office_node.set_hall_occupant(name)
 	
@@ -144,32 +150,61 @@ func attempt_move(name: String):
 		left_vent_attack_timer.start()
 
 func update_camera_visuals(old_loc, new_loc, name):
-	# For CAM_09 (Show Stage), we need special logic
-	if old_loc == "CAM_09":
-		# Show who's LEFT on stage
-		var remaining = []
-		for anim_name in ["ToyBonnie", "ToyChica", "ToyFreddy"]:
-			if locations[anim_name] == "CAM_09":
-				remaining.append(anim_name)
-		
-		if remaining.size() == 3:
-			camera_system.set_camera_content("CAM_09", "All")
-		elif remaining.size() == 2:
-			# Show the two remaining
-			var content = remaining[0] + "_" + remaining[1]
-			camera_system.set_camera_content("CAM_09", content)
-		elif remaining.size() == 1:
-			camera_system.set_camera_content("CAM_09", remaining[0])
-		else:
-			camera_system.set_camera_content("CAM_09", "Empty")
+	print("DEBUG: Actualizando visuales - %s movió de %s a %s" % [name, old_loc, new_loc])
 	
-	# For other cameras, show who just ARRIVED
-	if new_loc != "CAM_09" and new_loc not in ["LeftVent", "RightVent", "Hallway", "Office"]:
-		camera_system.set_camera_content(new_loc, name)
+	# Clear old office notification FIRST if it was in a special location
+	if old_loc == "Hallway":
+		print("DEBUG: Limpiando Hallway de la oficina")
+		office_node.set_hall_occupant("Empty")
+	elif old_loc == "LeftVent":
+		print("DEBUG: Limpiando LeftVent de la oficina")
+		office_node.set_vent_occupant("LeftVent", "Empty")
+	elif old_loc == "RightVent":
+		print("DEBUG: Limpiando RightVent de la oficina")
+		office_node.set_vent_occupant("RightVent", "Empty")
 	
-	# Clear the old location (if not CAM_09)
+	# Clear old camera location (except CAM_09 and special locations)
 	if old_loc != "CAM_09" and old_loc not in ["LeftVent", "RightVent", "Hallway", "Office"]:
+		print("DEBUG: Limpiando cámara antigua: %s" % old_loc)
 		camera_system.set_camera_content(old_loc, "Empty")
+	
+	# Update CAM_09 (Show Stage) based on who's LEFT on stage
+	if old_loc == "CAM_09" or new_loc == "CAM_09":
+		update_show_stage()
+	
+	# Show animatronic at NEW location (if it's a camera)
+	if new_loc not in ["CAM_09", "LeftVent", "RightVent", "Hallway", "Office"]:
+		print("DEBUG: Mostrando %s en cámara: %s" % [name, new_loc])
+		camera_system.set_camera_content(new_loc, name)
+
+func update_show_stage():
+	# Determine what to show based on the EXACT order: All -> ToyBonnie Left -> ToyBonnie+ToyChica Left -> ToyFreddy Left -> Empty
+	var bonnie_on_stage = locations["ToyBonnie"] == "CAM_09"
+	var chica_on_stage = locations["ToyChica"] == "CAM_09"
+	var freddy_on_stage = locations["ToyFreddy"] == "CAM_09"
+	
+	print("DEBUG Show Stage: Bonnie=%s, Chica=%s, Freddy=%s" % [bonnie_on_stage, chica_on_stage, freddy_on_stage])
+	
+	if bonnie_on_stage and chica_on_stage and freddy_on_stage:
+		# All three on stage
+		print("DEBUG: Mostrando TODOS en el escenario")
+		camera_system.set_camera_content("CAM_09", "All")
+	elif not bonnie_on_stage and chica_on_stage and freddy_on_stage:
+		# Only Toy Bonnie left
+		print("DEBUG: Toy Bonnie se fue - Mostrando Chica+Freddy")
+		camera_system.set_camera_content("CAM_09", "ToyChica_ToyFreddy")
+	elif not bonnie_on_stage and not chica_on_stage and freddy_on_stage:
+		# Toy Bonnie AND Toy Chica left
+		print("DEBUG: Bonnie y Chica se fueron - Mostrando solo Freddy")
+		camera_system.set_camera_content("CAM_09", "ToyFreddy")
+	elif not bonnie_on_stage and not chica_on_stage and not freddy_on_stage:
+		# All gone
+		print("DEBUG: Todos se fueron - Escenario vacío")
+		camera_system.set_camera_content("CAM_09", "Empty")
+	else:
+		# Shouldn't happen with proper logic, but just in case
+		print("DEBUG: Estado inesperado - Mostrando vacío")
+		camera_system.set_camera_content("CAM_09", "Empty")
 
 func on_hall_flashlight_success(occupant_name: String):
 	print("AIManager: ¡El flash en %s funcionó!" % occupant_name)
@@ -179,7 +214,8 @@ func on_hall_flashlight_success(occupant_name: String):
 	
 	office_node.set_hall_occupant("Empty")
 	
-	update_camera_visuals("Hallway", "CAM_08", occupant_name)
+	camera_system.set_camera_content("Hallway", "Empty")
+	camera_system.set_camera_content("CAM_08", occupant_name)
 
 func _on_right_vent_attack_timer_timeout():
 	if location_locks["RightVent"] == "ToyBonnie":
@@ -192,21 +228,51 @@ func _on_left_vent_attack_timer_timeout():
 		toy_chica_attack_pending = true
 
 func reset_animatronic(name: String):
-	var old_loc = locations[name] 
+	print("AIManager: ===== RESETEANDO %s =====" % name)
+	var old_loc = locations[name]
+	print("AIManager: Ubicación antigua de %s: %s" % [name, old_loc])
 	
+	# IMPORTANT: Check if animatronic is actually in a vent/hallway
+	# If not, don't reset (prevents weird behavior)
+	if old_loc not in ["RightVent", "LeftVent", "Hallway"]:
+		print("AIManager: ADVERTENCIA - %s no está en una posición de ataque (%s), cancelando reset" % [name, old_loc])
+		return
+	
+	# FIRST: Update the location IMMEDIATELY
+	locations[name] = "CAM_09"
+	has_left_stage[name] = false
+	print("AIManager: %s ahora está en CAM_09 (locations actualizado)" % name)
+	
+	# SECOND: Clear the location lock
 	if location_locks.has(old_loc):
+		print("AIManager: Desbloqueando: %s" % old_loc)
 		location_locks[old_loc] = null
 	
-	locations[name] = "CAM_09"
+	# THIRD: Reset attack flags BEFORE clearing office
+	if name == "ToyBonnie":
+		print("AIManager: Reseteando flags de ataque de Toy Bonnie")
+		toy_bonnie_attack_pending = false
+		right_vent_attack_timer.stop()
+	elif name == "ToyChica":
+		print("AIManager: Reseteando flags de ataque de Toy Chica")
+		toy_chica_attack_pending = false
+		left_vent_attack_timer.stop()
 	
+	# FOURTH: Clear office notifications
 	if old_loc == "RightVent":
+		print("AIManager: Limpiando RightVent de la oficina")
 		office_node.set_vent_occupant("RightVent", "Empty")
 	elif old_loc == "LeftVent":
+		print("AIManager: Limpiando LeftVent de la oficina")
 		office_node.set_vent_occupant("LeftVent", "Empty")
 	elif old_loc == "Hallway":
+		print("AIManager: Limpiando Hallway de la oficina")
 		office_node.set_hall_occupant("Empty")
-
-	update_camera_visuals(old_loc, "CAM_09", name)
+	
+	# FINALLY: Update show stage display
+	print("AIManager: Actualizando Show Stage")
+	update_show_stage()
+	print("AIManager: ===== RESETEO COMPLETO =====")
 
 func on_cameras_lowered():
 	# Pause all attack timers
@@ -230,18 +296,23 @@ func on_cameras_raised():
 		left_vent_attack_timer.start()
 		
 func check_mask_and_attack(animatronic_name: String):
+	print("AIManager: ===== CHECK_MASK_AND_ATTACK para %s =====" % animatronic_name)
+	print("AIManager: Ubicación actual: %s" % locations[animatronic_name])
+	
 	# Ask office if mask is on AND if it works!
 	if office_node.is_mask_on(animatronic_name):
-		# SAVED!
+		# SAVED! Office will handle the reset
 		print("AIManager: ¡Ataque de %s bloqueado por la máscara!" % animatronic_name)
-		reset_animatronic(animatronic_name)
+		# Don't reset here - let the office/cinematic handle it
 	else:
 		# JUMPSCARE!
 		print("AIManager: ¡JUMPSCARE DE %s!" % animatronic_name)
 		emit_signal("jumpscare", animatronic_name)
 	
-	# Reset attack flag
+	# Reset attack flags
 	if animatronic_name == "ToyBonnie":
 		toy_bonnie_attack_pending = false
 	elif animatronic_name == "ToyChica":
 		toy_chica_attack_pending = false
+	
+	print("AIManager: ===== CHECK_MASK_AND_ATTACK COMPLETADO =====")

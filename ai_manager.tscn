@@ -8,10 +8,12 @@ anchors_preset = 0
 script = ExtResource("1_fs0f7")
 
 [node name="AITickTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.010000000000001
 
 [node name="RightVentAttackTimer" type="Timer" parent="."]
+wait_time = 17.0
 
 [node name="LeftVentAttackTimer" type="Timer" parent="."]
+wait_time = 17.0
 
 [connection signal="timeout" from="LeftVentAttackTimer" to="." method="_on_left_vent_attack_timer_timeout"]
