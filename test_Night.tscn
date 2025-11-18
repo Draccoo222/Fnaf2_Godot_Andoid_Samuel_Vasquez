@@ -1,8 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=91 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
 [ext_resource type="Texture2D" uid="uid://c6n2iyi8f3bh1" path="res://Assets/Office/officeNormal.png" id="2_htt5u"]
+[ext_resource type="Texture2D" uid="uid://wktkar54tqky" path="res://Assets/Office/animatronics/186.png" id="3_i1u5s"]
 [ext_resource type="Shader" uid="uid://dojmgscp3hgb8" path="res:// cam_effect.gdshader" id="3_lntdq"]
 [ext_resource type="Texture2D" uid="uid://dd1uyfrfbc0mk" path="res://Assets/Office/officeLeftVentEmpty.png" id="3_xs7ii"]
 [ext_resource type="Texture2D" uid="uid://bhployudbm6s0" path="res://Assets/Office/desk1.png" id="4_q0ib7"]
@@ -57,6 +58,33 @@
 [ext_resource type="Texture2D" uid="uid://bfttjxeeeaylb" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
 [ext_resource type="PackedScene" uid="uid://bwlpk1p08i7ku" path="res://cameras.tscn" id="40_3s3h7"]
 [ext_resource type="PackedScene" uid="uid://bnsxn2e4j0nu5" path="res://ai_manager.tscn" id="57_tse5j"]
+[ext_resource type="Texture2D" uid="uid://csc77wq2qvouk" path="res://Assets/Jumpscares/ToyBonnie/714.png" id="58_3cycd"]
+[ext_resource type="Texture2D" uid="uid://d1wk4xhslmsaq" path="res://Assets/Jumpscares/ToyBonnie/700.png" id="59_6k0f2"]
+[ext_resource type="Texture2D" uid="uid://bapl1ffe4f0re" path="res://Assets/Jumpscares/ToyBonnie/712.png" id="60_i1u5s"]
+[ext_resource type="Texture2D" uid="uid://i53l0h8n883s" path="res://Assets/Jumpscares/ToyBonnie/702.png" id="61_jg0ly"]
+[ext_resource type="Texture2D" uid="uid://ba4de07ooqetu" path="res://Assets/Jumpscares/ToyBonnie/703.png" id="62_gvkab"]
+[ext_resource type="Texture2D" uid="uid://dfeqa4kj124x7" path="res://Assets/Jumpscares/ToyBonnie/704.png" id="63_jv4qg"]
+[ext_resource type="Texture2D" uid="uid://jbpinu3n837m" path="res://Assets/Jumpscares/ToyBonnie/705.png" id="64_t0mge"]
+[ext_resource type="Texture2D" uid="uid://3whctxk8klbd" path="res://Assets/Jumpscares/ToyBonnie/706.png" id="65_ylwl1"]
+[ext_resource type="Texture2D" uid="uid://j2p5r3xvp824" path="res://Assets/Jumpscares/ToyBonnie/707.png" id="66_5kaf5"]
+[ext_resource type="Texture2D" uid="uid://ci6x6v7m5krm4" path="res://Assets/Jumpscares/ToyBonnie/708.png" id="67_7lyik"]
+[ext_resource type="Texture2D" uid="uid://crvtpwvlufrsn" path="res://Assets/Jumpscares/ToyBonnie/709.png" id="68_ymb5g"]
+[ext_resource type="Texture2D" uid="uid://j7t15dxoyqyq" path="res://Assets/Jumpscares/ToyBonnie/710.png" id="69_60xv0"]
+[ext_resource type="Texture2D" uid="uid://bk7xkoo32ihm2" path="res://Assets/Jumpscares/ToyBonnie/711.png" id="70_i6iat"]
+[ext_resource type="Texture2D" uid="uid://dkyi3l8luplyd" path="res://Assets/Jumpscares/ToyChica/745.png" id="71_oh2pv"]
+[ext_resource type="Texture2D" uid="uid://bo1g5qw702hub" path="res://Assets/Jumpscares/ToyChica/757.png" id="72_pyic6"]
+[ext_resource type="Texture2D" uid="uid://e050iy0310sk" path="res://Assets/Jumpscares/ToyChica/759.png" id="73_ducau"]
+[ext_resource type="Texture2D" uid="uid://caxe3dmvrnmnl" path="res://Assets/Jumpscares/ToyChica/747.png" id="74_i60bk"]
+[ext_resource type="Texture2D" uid="uid://8g41avu7js13" path="res://Assets/Jumpscares/ToyChica/748.png" id="75_ciqva"]
+[ext_resource type="Texture2D" uid="uid://bpv0lobpop1cl" path="res://Assets/Jumpscares/ToyChica/749.png" id="76_mne43"]
+[ext_resource type="Texture2D" uid="uid://c17ylqx85lkt1" path="res://Assets/Jumpscares/ToyChica/750.png" id="77_582h7"]
+[ext_resource type="Texture2D" uid="uid://cvebe8ghp08tx" path="res://Assets/Jumpscares/ToyChica/751.png" id="78_gtnpt"]
+[ext_resource type="Texture2D" uid="uid://dmf7uro85domx" path="res://Assets/Jumpscares/ToyChica/752.png" id="79_uje4q"]
+[ext_resource type="Texture2D" uid="uid://do7fcfmt84wsy" path="res://Assets/Jumpscares/ToyChica/753.png" id="80_1h6ox"]
+[ext_resource type="Texture2D" uid="uid://v0pk345864tx" path="res://Assets/Jumpscares/ToyChica/754.png" id="81_d2f4v"]
+[ext_resource type="Texture2D" uid="uid://bimh83rhha7hm" path="res://Assets/Jumpscares/ToyChica/755.png" id="82_1ayei"]
+[ext_resource type="Texture2D" uid="uid://bltr2xt7jvj6e" path="res://Assets/Jumpscares/ToyChica/756.png" id="83_wtssy"]
+[ext_resource type="AudioStream" uid="uid://cf102p76w1fiu" path="res://Assets/Sounds/Jumpscare.wav" id="84_6k0f2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -249,6 +277,97 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_efkts"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("58_3cycd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_6k0f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_i1u5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_jg0ly")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_gvkab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_jv4qg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_t0mge")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_ylwl1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_5kaf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_7lyik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_ymb5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_60xv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_i6iat")
+}],
+"loop": false,
+"name": &"ToyBonnie",
+"speed": 36.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("71_oh2pv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_pyic6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_ducau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_i60bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_ciqva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_mne43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_582h7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_gtnpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_uje4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_1h6ox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_d2f4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_1ayei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_wtssy")
+}],
+"loop": false,
+"name": &"ToyChica",
+"speed": 24.0
+}]
+
 [node name="Office" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -260,6 +379,7 @@ script = ExtResource("1_htt5u")
 desk_offset_x = 1000.0
 parralax_factor_desk = 1.1
 toy_bonnie_slide_texture = ExtResource("2_cv0at")
+toy_chica_slide_texture = ExtResource("3_i1u5s")
 office_dark_default = ExtResource("2_htt5u")
 office_lit_hall_empty = ExtResource("5_hdvqv")
 office_lit_hall_fail = ExtResource("6_5shf0")
@@ -292,6 +412,7 @@ offset_bottom = 740.0
 color = Color(0.007843138, 0, 0.08235294, 0.90588236)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cn4xo")
@@ -299,11 +420,6 @@ offset_right = 1152.0
 offset_bottom = 649.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.12156863)
-
-[node name="Animatronic_Slide_View" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="MaskView" type="Control" parent="."]
 clip_children = 2
@@ -328,6 +444,7 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 568.0
+offset_bottom = -54.0
 grow_vertical = 2
 
 [node name="RightMove" type="TextureButton" parent="."]
@@ -337,6 +454,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -566.0
+offset_bottom = -54.0
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -382,6 +500,11 @@ grow_vertical = 0
 scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("19_1cyro")
 
+[node name="Animatronic_Slide_View" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="FreddyMask" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(572, 350)
@@ -407,6 +530,18 @@ scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("17_3frok")
 
 [node name="FlashlightFailTimer" type="Timer" parent="."]
+
+[node name="JumpscarePlayer" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(575.00006, 327.50003)
+scale = Vector2(1.1230469, 0.95963544)
+sprite_frames = SubResource("SpriteFrames_efkts")
+animation = &"ToyBonnie"
+frame = 12
+frame_progress = 1.0
+
+[node name="JumpscareSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("84_6k0f2")
 
 [connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
 [connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]

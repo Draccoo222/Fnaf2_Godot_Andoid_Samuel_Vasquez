@@ -1,0 +1,126 @@
+[gd_scene load_steps=18 format=3 uid="uid://dw4uy5vh5alxg"]
+
+[ext_resource type="Script" uid="uid://bqgds0kojab04" path="res://game_over.gd" id="1_y26ei"]
+[ext_resource type="Texture2D" uid="uid://dxuk1v6tegxs2" path="res://Assets/GameOver/226.png" id="2_745m4"]
+[ext_resource type="AudioStream" uid="uid://c60vxe0kktuv8" path="res://Assets/Sounds/staticDeath.wav" id="2_kjrwi"]
+[ext_resource type="Texture2D" uid="uid://yavkkd3sb11v" path="res://Assets/GameOver/328.png" id="3_kjrwi"]
+[ext_resource type="Texture2D" uid="uid://b7s0tve2rh3l8" path="res://Assets/GameOver/329.png" id="4_olga5"]
+[ext_resource type="Texture2D" uid="uid://b8mgicrxtvq7e" path="res://Assets/GameOver/330.png" id="5_13ri0"]
+[ext_resource type="Texture2D" uid="uid://b8uvuk1odhaw1" path="res://Assets/GameOver/331.png" id="6_lmfuw"]
+[ext_resource type="Texture2D" uid="uid://3rkcemy0upw0" path="res://Assets/GameOver/332.png" id="7_k7c8f"]
+[ext_resource type="Texture2D" uid="uid://bcvumh3eok6hq" path="res://Assets/GameOver/334.png" id="8_y0fv6"]
+[ext_resource type="Texture2D" uid="uid://on2s0h2e7gsu" path="res://Assets/GameOver/357.png" id="9_jhou3"]
+[ext_resource type="Texture2D" uid="uid://c70hp3rktpydc" path="res://Assets/GameOver/358.png" id="10_3xhsb"]
+[ext_resource type="Texture2D" uid="uid://oytmim6bpxm2" path="res://Assets/GameOver/359.png" id="11_7eg23"]
+[ext_resource type="Texture2D" uid="uid://i4dbpdp1q83a" path="res://Assets/GameOver/360.png" id="12_0o5rp"]
+[ext_resource type="Texture2D" uid="uid://bd5neyrk1o8dr" path="res://Assets/GameOver/361.png" id="13_didoo"]
+[ext_resource type="Texture2D" uid="uid://b0p4h5dffaktv" path="res://Assets/GameOver/363.png" id="14_psfuu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pi44w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_kjrwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_olga5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_13ri0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lmfuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_k7c8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_y0fv6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jhou3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3xhsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7eg23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_0o5rp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_didoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_psfuu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_olga5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_jhou3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3xhsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7eg23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_didoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_psfuu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="game_over" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y26ei")
+
+[node name="MenuTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="AudioPlayerS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_kjrwi")
+
+[node name="GameOverImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -60.0
+offset_right = 1152.0
+offset_bottom = 708.0
+texture = ExtResource("2_745m4")
+
+[node name="SequenceTimer" type="Timer" parent="."]
+wait_time = 6.0
+
+[node name="StaticOverlay" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.24313726)
+position = Vector2(573.5, 313)
+scale = Vector2(1.1279297, 1)
+sprite_frames = SubResource("SpriteFrames_pi44w")
+frame_progress = 0.6487334
+
+[node name="StaticBefore" type="AnimatedSprite2D" parent="."]
+position = Vector2(576.5, 321)
+scale = Vector2(1.1259766, 1)
+sprite_frames = SubResource("SpriteFrames_olga5")
+frame_progress = 0.9859057
+
+[node name="StaticBeforeTimer" type="Timer" parent="."]
+wait_time = 6.0

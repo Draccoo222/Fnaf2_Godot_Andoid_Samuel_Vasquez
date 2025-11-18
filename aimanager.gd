@@ -24,6 +24,16 @@ var has_left_stage = {
 	"ToyFreddy": false
 }
 
+const RESET_LOCATIONS = {
+	"ToyBonnie": "CAM_03",  # Vuelve a Party Room 3
+	"ToyChica": "CAM_07",   # Vuelve al Main Hall
+	"ToyFreddy": "CAM_09"   # El único que vuelve al Show Stage
+	# (Añadiremos más aquí)
+}
+
+# Track who's at each camera (for shared cameras)
+var camera_content_tracker = {}
+
 var location_locks = {
 	"RightVent": null,
 	"LeftVent": null,
@@ -33,33 +43,32 @@ var location_locks = {
 
 const PATHS = {
 	"ToyBonnie": {
-		"CAM_09": "CAM_03", 
-		"CAM_03": "CAM_04", 
-		"CAM_04": "CAM_02",
-		"CAM_02": "CAM_06", 
-		"CAM_06": "RightVent", 
-		"RightVent": "Office"
+		"CAM_09": ["CAM_03"], 
+		"CAM_03": ["CAM_04"], 
+		"CAM_04": ["CAM_02"],
+		"CAM_02": ["CAM_06"], 
+		"CAM_06": ["RightVent"],
 	},
 	"ToyChica": {
-		"CAM_09": "CAM_07", 
-		"CAM_07": "CAM_05", 
-		"CAM_05": "CAM_03",
-		"CAM_03": "CAM_01", 
-		"CAM_01": "Hallway",
-		"Hallway": "LeftVent",
-		"LeftVent": "Office"
+		"CAM_09": ["CAM_07"], 
+		"CAM_07": ["CAM_04", "Hallway"], # ¡BIFURCACIÓN! Ruta de Ventilación O Ruta de Pasillo
+		"CAM_04": ["CAM_01"],          # -> Ruta de Ventilación
+		"CAM_01": ["CAM_05"],        # -> Ruta de Ventilación
+		"CAM_05": ["LeftVent"],
+		"Hallway": ["CAM_07", "CAM_04"]          # -> Ataque de Pasillo
 	},
 	"ToyFreddy": {
-		"CAM_09": "CAM_10", 
-		"CAM_10": "CAM_07", 
-		"CAM_07": "Hallway",
-		"Hallway": "Office"
+		"CAM_09": ["CAM_10"], 
+		"CAM_10": ["CAM_07"], 
+		"CAM_07": ["Hallway"],
+		"Hallway": ["Office"]
 	}
 }
 
 func _ready():
 	ai_tick_timer.timeout.connect(_on_ai_tick_timer_timeout)
 	right_vent_attack_timer.timeout.connect(_on_right_vent_attack_timer_timeout)
+
 
 func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	aggression_levels = levels
@@ -78,6 +87,8 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 		"ToyChica": false,
 		"ToyFreddy": false
 	}
+	
+	camera_content_tracker = {}
 	
 	toy_bonnie_attack_pending = false
 	toy_chica_attack_pending = false
@@ -98,31 +109,44 @@ func attempt_move(name: String):
 		return
 
 	var current_loc = locations[name]
-	var next_loc = PATHS[name].get(current_loc)
+	var next_loc: String # Declaramos la variable vacía
+
+	# --- LÓGICA DE MOVIMIENTO ---
+	var next_loc_options = PATHS[name].get(current_loc)
 	
-	if next_loc == null:
-		return 
+	# Si no hay opciones (llegó al final o es un error)
+	if next_loc_options == null or next_loc_options.is_empty():
+		print("AIManager: %s no tiene siguiente ubicación desde %s" % [name, current_loc])
+		return
 	
-	# Special rule: Toy Chica can only leave if Toy Bonnie has already left
+	# ¡Elige un camino al azar de las opciones!
+	next_loc = next_loc_options.pick_random()
+	# --- FIN DE LA LÓGICA DE MOVIMIENTO ---
+	
+	print("AIManager: %s intentando moverse de %s a %s" % [name, current_loc, next_loc])
+
+	# (El resto de tu lógica de 'Special rule' (cola del stage) es perfecta)
 	if name == "ToyChica" and current_loc == "CAM_09":
 		if not has_left_stage["ToyBonnie"]:
+			print("AIManager: Toy Chica no puede salir - Toy Bonnie aún no se ha ido")
 			return
-	
-	# Special rule: Toy Freddy can only leave if both have left
 	if name == "ToyFreddy" and current_loc == "CAM_09":
 		if not has_left_stage["ToyBonnie"] or not has_left_stage["ToyChica"]:
+			print("AIManager: Toy Freddy no puede salir - otros animatrónicos aún en el escenario")
 			return
 	
-	# Check if next location is locked
+	# (El resto de tu lógica de 'location_locks' es perfecta)
 	if location_locks.has(next_loc):
 		if location_locks[next_loc] != null:
+			print("AIManager: %s está bloqueado por %s" % [next_loc, location_locks[next_loc]])
 			return
 	
-	# Unlock current location
+	# (El resto de tu función para actualizar cámaras y oficina es perfecto)
+	# Unlock current location (only if it's a locked location)
 	if location_locks.has(current_loc):
 		location_locks[current_loc] = null
 	
-	# Lock next location
+	# Lock next location (only if it's a lockable location)
 	if location_locks.has(next_loc):
 		location_locks[next_loc] = name
 	
@@ -131,7 +155,6 @@ func attempt_move(name: String):
 		has_left_stage[name] = true
 	
 	locations[name] = next_loc
-	print("AIManager: ¡%s se movió de %s a %s!" % [name, current_loc, next_loc])
 	emit_signal("animatronic_moved")
 	update_camera_visuals(current_loc, next_loc, name)
 	
@@ -154,19 +177,30 @@ func update_camera_visuals(old_loc, new_loc, name):
 	
 	# Clear old office notification FIRST if it was in a special location
 	if old_loc == "Hallway":
-		print("DEBUG: Limpiando Hallway de la oficina")
+		print("DEBUG: Limpiando Hallway de la oficina (animatronic se fue)")
 		office_node.set_hall_occupant("Empty")
 	elif old_loc == "LeftVent":
-		print("DEBUG: Limpiando LeftVent de la oficina")
+		print("DEBUG: Limpiando LeftVent de la oficina (animatronic se fue)")
 		office_node.set_vent_occupant("LeftVent", "Empty")
 	elif old_loc == "RightVent":
-		print("DEBUG: Limpiando RightVent de la oficina")
+		print("DEBUG: Limpiando RightVent de la oficina (animatronic se fue)")
 		office_node.set_vent_occupant("RightVent", "Empty")
 	
-	# Clear old camera location (except CAM_09 and special locations)
+	# Clear old camera location - BUT handle shared cameras!
 	if old_loc != "CAM_09" and old_loc not in ["LeftVent", "RightVent", "Hallway", "Office"]:
-		print("DEBUG: Limpiando cámara antigua: %s" % old_loc)
-		camera_system.set_camera_content(old_loc, "Empty")
+		# Check if another animatronic is at this camera
+		var someone_else_here = false
+		for other_name in locations.keys():
+			if other_name != name and locations[other_name] == old_loc:
+				print("DEBUG: %s también está en %s, no limpiar" % [other_name, old_loc])
+				someone_else_here = true
+				# Update camera to show the other animatronic
+				camera_system.set_camera_content(old_loc, other_name)
+				break
+		
+		if not someone_else_here:
+			print("DEBUG: Limpiando cámara antigua: %s" % old_loc)
+			camera_system.set_camera_content(old_loc, "Empty")
 	
 	# Update CAM_09 (Show Stage) based on who's LEFT on stage
 	if old_loc == "CAM_09" or new_loc == "CAM_09":
@@ -174,8 +208,19 @@ func update_camera_visuals(old_loc, new_loc, name):
 	
 	# Show animatronic at NEW location (if it's a camera)
 	if new_loc not in ["CAM_09", "LeftVent", "RightVent", "Hallway", "Office"]:
-		print("DEBUG: Mostrando %s en cámara: %s" % [name, new_loc])
-		camera_system.set_camera_content(new_loc, name)
+		# Check if someone is already at this camera (shared camera)
+		var current_occupant = camera_content_tracker.get(new_loc, "Empty")
+		if current_occupant != "Empty" and current_occupant != name:
+			print("DEBUG: %s ya está en %s, %s también aparece aquí (cámara compartida)" % [current_occupant, new_loc, name])
+			# For shared cameras, we could show "Multiple" or just the newest one
+			# In FNAF 2, usually shows the newest arrival
+			camera_system.set_camera_content(new_loc, name)
+		else:
+			print("DEBUG: Mostrando %s en cámara: %s" % [name, new_loc])
+			camera_system.set_camera_content(new_loc, name)
+		
+		# Track who's at this camera
+		camera_content_tracker[new_loc] = name
 
 func update_show_stage():
 	# Determine what to show based on the EXACT order: All -> ToyBonnie Left -> ToyBonnie+ToyChica Left -> ToyFreddy Left -> Empty
@@ -232,23 +277,27 @@ func reset_animatronic(name: String):
 	var old_loc = locations[name]
 	print("AIManager: Ubicación antigua de %s: %s" % [name, old_loc])
 	
-	# IMPORTANT: Check if animatronic is actually in a vent/hallway
-	# If not, don't reset (prevents weird behavior)
 	if old_loc not in ["RightVent", "LeftVent", "Hallway"]:
 		print("AIManager: ADVERTENCIA - %s no está en una posición de ataque (%s), cancelando reset" % [name, old_loc])
 		return
 	
-	# FIRST: Update the location IMMEDIATELY
-	locations[name] = "CAM_09"
-	has_left_stage[name] = false
-	print("AIManager: %s ahora está en CAM_09 (locations actualizado)" % name)
+	# --- LÓGICA DE RESETEO MODIFICADA ---
 	
-	# SECOND: Clear the location lock
+	# 1. Obtiene la nueva ubicación de reseteo
+	var reset_loc = RESET_LOCATIONS.get(name, "CAM_09") # Vuelve a CAM_09 si no se encuentra
+	locations[name] = reset_loc
+	print("AIManager: %s ahora está en %s (locations actualizado)" % [name, reset_loc])
+	
+	# 2. Limpia el rastreador de cámaras
+	if camera_content_tracker.has(old_loc):
+		camera_content_tracker.erase(old_loc)
+	
+	# 3. Limpia el bloqueo de ubicación
 	if location_locks.has(old_loc):
 		print("AIManager: Desbloqueando: %s" % old_loc)
 		location_locks[old_loc] = null
 	
-	# THIRD: Reset attack flags BEFORE clearing office
+	# 4. Resetea las banderas de ataque
 	if name == "ToyBonnie":
 		print("AIManager: Reseteando flags de ataque de Toy Bonnie")
 		toy_bonnie_attack_pending = false
@@ -257,8 +306,8 @@ func reset_animatronic(name: String):
 		print("AIManager: Reseteando flags de ataque de Toy Chica")
 		toy_chica_attack_pending = false
 		left_vent_attack_timer.stop()
-	
-	# FOURTH: Clear office notifications
+		
+	# 5. Limpia la oficina
 	if old_loc == "RightVent":
 		print("AIManager: Limpiando RightVent de la oficina")
 		office_node.set_vent_occupant("RightVent", "Empty")
@@ -269,9 +318,15 @@ func reset_animatronic(name: String):
 		print("AIManager: Limpiando Hallway de la oficina")
 		office_node.set_hall_occupant("Empty")
 	
-	# FINALLY: Update show stage display
-	print("AIManager: Actualizando Show Stage")
-	update_show_stage()
+	# 6. Si es Toy Freddy, resetea el estado del escenario
+	if name == "ToyFreddy":
+		has_left_stage[name] = false
+		# (Opcional: podrías añadirlo de nuevo a la cola del stage si quieres)
+		# if not "ToyFreddy" in location_locks["CAM_09_Queue"]:
+		# 	location_locks["CAM_09_Queue"].push_back(name)
+	
+	# 7. Actualiza las cámaras
+	update_camera_visuals(old_loc, reset_loc, name)
 	print("AIManager: ===== RESETEO COMPLETO =====")
 
 func on_cameras_lowered():
@@ -316,3 +371,9 @@ func check_mask_and_attack(animatronic_name: String):
 		toy_chica_attack_pending = false
 	
 	print("AIManager: ===== CHECK_MASK_AND_ATTACK COMPLETADO =====")
+
+func stop():
+	ai_tick_timer.stop()
+	right_vent_attack_timer.stop()
+	left_vent_attack_timer.stop()
+	set_process(false) # Detiene su _process si lo tuviera

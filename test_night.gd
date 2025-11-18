@@ -12,6 +12,8 @@ extends Control
 @onready var flashlight_fail_timer = $FlashlightFailTimer
 @onready var animatronic_slide_view = $Animatronic_Slide_View
 @onready var office_darken_overlay = $OfficeDarkenOverlay
+@onready var jumpscare_player = $JumpscarePlayer # <-- AÑADE ESTO
+@onready var jumpscare_sound = $JumpscareSound # <-- AÑADE ESTO
 
 # --- Texture Exports ---
 @export var desk_offset_x: float = 0.0
@@ -49,6 +51,8 @@ extends Control
 @export var office_lit_right_toybonnie: Texture2D
 @export var office_lit_right_mangle: Texture2D
 
+
+
 # --- State Variables ---
 var hall_light_textures = {}
 var left_vent_light_textures = {}
@@ -71,11 +75,17 @@ var mask_is_fully_on = false
 var idle_time_counter: float = 0.0
 var initial_mask_pos: Vector2
 
+var flicker_tween: Tween 
 var slide_tween: Tween
 var is_playing_defense_cinematic = false
 
 func _ready():
 	await ready
+	
+	ai_manager.jumpscare.connect(_on_ai_manager_jumpscare)
+	
+	# 2. Escucha cuando la animación del jumpscare termina
+	jumpscare_player.animation_finished.connect(_on_jumpscare_animation_finished)
 	
 	# Panning setup
 	widthScreen = get_viewport_rect().size.x
@@ -131,8 +141,8 @@ func _ready():
 	
 	# START THE AI!
 	var night_1_levels = {
-		"ToyBonnie": 5,
-		"ToyChica": 5,
+		"ToyBonnie": 20,
+		"ToyChica": 30,
 		"ToyFreddy": 0
 	}
 	ai_manager.start_night(night_1_levels, camera_system, self)
@@ -181,14 +191,15 @@ func _on_mask_button_pressed() -> void:
 		# TOY BONNIE: Has slide cinematic
 		if right_vent_occupant == "ToyBonnie":
 			print("Office: ¡Toy Bonnie detectado en RightVent! Iniciando cinemática...")
+			# Wait a bit before starting cinematic (like FNAF 2)
+			await get_tree().create_timer(1.0).timeout
 			play_defense_cinematic("ToyBonnie", toy_bonnie_slide_texture)
 		
-		# TOY CHICA: NO cinematic, just instant reset
+		# TOY CHICA: NO cinematic, but waits before leaving
 		elif left_vent_occupant == "ToyChica":
-			print("Office: ¡Toy Chica detectada en LeftVent! Reseteando sin cinemática...")
-			ai_manager.reset_animatronic("ToyChica")
-			print("Office: Reset de Toy Chica completado")
-		
+			print("Office: ¡Toy Chica detectada en LeftVent! Iniciando cinemática...")
+			# Llama a la misma función que Toy Bonnie, pero con la textura de Toy Chica
+			play_defense_cinematic("ToyChica", toy_chica_slide_texture)		
 		# BB: Special, doesn't leave
 		elif left_vent_occupant == "BB":
 			print("Office: BB detectado (no hace nada)")
@@ -218,47 +229,54 @@ func play_defense_cinematic(animatronic_name: String, slide_texture: Texture2D):
 	is_playing_defense_cinematic = true
 	print("Office: ===== INICIANDO CINEMÁTICA DE %s =====" % animatronic_name)
 	
-	# 1. Darken the office gradually
+	# 1. ¡INICIA EL PARPADEO!
+	# Detiene cualquier parpadeo anterior
+	if flicker_tween and flicker_tween.is_running():
+		flicker_tween.kill()
+		
 	office_darken_overlay.show()
-	var darken_tween = create_tween()
-	darken_tween.tween_property(office_darken_overlay, "color:a", 0.75, 0.5)
-	await darken_tween.finished
-	print("Office: Oficina oscurecida")
+	
+	# Crea un tween en bucle para el parpadeo
+	flicker_tween = create_tween().set_loops()
+	# (Puedes ajustar los tiempos 0.1 y 0.05 para un parpadeo más rápido o lento)
+	flicker_tween.tween_property(office_darken_overlay, "color:a", 0.75, 0.1) # Oscuro
+	flicker_tween.tween_property(office_darken_overlay, "color:a", 0.0, 0.15)  # Claro (parpadeo rápido)
 	
 	# 2. Setup slide texture
 	animatronic_slide_view.texture = slide_texture
-	animatronic_slide_view.position.x = get_viewport_rect().size.x # Start off-screen right
+	if animatronic_name == "ToyBonnie":
+		animatronic_slide_view.position.y = animatronic_slide_view.position.y - 120
+		animatronic_slide_view.position.x = get_viewport_rect().size.x # Start off-screen right
+	else:
+		animatronic_slide_view.position.y = animatronic_slide_view.position.y + 60
+		animatronic_slide_view.position.x = -get_viewport_rect().size.x # Start off-screen right
 	animatronic_slide_view.modulate.a = 1.0
-	animatronic_slide_view.z_index = 15 # Above everything
 	animatronic_slide_view.visible = true
 	print("Office: Iniciando deslizamiento de %s" % animatronic_name)
 	
 	# 3. SLOW slide across office (4 seconds like original)
 	slide_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	slide_tween.tween_property(animatronic_slide_view, "position:x", -animatronic_slide_view.size.x, 4.0)
+	if animatronic_name == "ToyBonnie":
+		slide_tween.tween_property(animatronic_slide_view, "position:x", -animatronic_slide_view.size.x, 8.0)
+	else:
+		slide_tween.tween_property(animatronic_slide_view, "position:x", animatronic_slide_view.size.x, 8.0)
 	await slide_tween.finished
 	print("Office: Deslizamiento completado")
 	
 	# 4. Hide animatronic
 	animatronic_slide_view.hide()
-	
-	# 5. Brighten office again
-	var brighten_tween = create_tween()
-	brighten_tween.tween_property(office_darken_overlay, "color:a", 0.0, 0.5)
-	await brighten_tween.finished
+	# 5. DETÉN EL PARPADEO y limpia
+	flicker_tween.kill()
+	office_darken_overlay.color.a = 0.0
 	office_darken_overlay.hide()
-	print("Office: Oficina iluminada de nuevo")
+	animatronic_slide_view.hide()
 	
-	# 6. Reset animatronic in AI - THIS IS CRITICAL!
+	# 6. Resetea el animatrónico (como antes)
 	print("Office: Llamando a reset_animatronic para %s" % animatronic_name)
 	ai_manager.reset_animatronic(animatronic_name)
 	
-	# Force update the office background if lights were on
 	if not is_flashlight_failing:
 		officeBG.texture = office_dark_default
-	
-	# Small delay to ensure reset completes
-	await get_tree().create_timer(0.1).timeout
 	
 	is_playing_defense_cinematic = false
 	print("Office: ===== CINEMÁTICA COMPLETADA =====")
@@ -346,11 +364,10 @@ func is_mask_on(animatronic_name: String) -> bool:
 			return false
 			
 	elif animatronic_name == "ToyChica":
-		print("Office: ¡La máscara funcionó contra Toy Chica! (sin cinemática)")
-		# Toy Chica just gets reset instantly, no cinematic
-		ai_manager.reset_animatronic("ToyChica")
-		return true # Toy Chica is always fooled
-	
+		print("Office: ¡La máscara funcionó contra Toy Chica! (llamado desde check_mask)")
+		# Llama a la cinemática
+		play_defense_cinematic("ToyChica", toy_chica_slide_texture)
+		return true # Toy Chica siempre es engañada
 	return true
 
 func set_hall_occupant(occupant_name: String):
@@ -367,3 +384,52 @@ func set_vent_occupant(vent_name: String, occupant_name: String):
 		print("Office: Ventilación Derecha cambiando de '%s' a '%s'" % [right_vent_occupant, occupant_name])
 		right_vent_occupant = occupant_name
 		print("Office: ===== Ventilación Derecha ahora ocupada por: '%s' =====" % right_vent_occupant)
+
+# --- LÓGICA DE JUMPSCARE Y GAME OVER ---
+
+# Esta función es llamada por la señal del AIManager
+func _on_ai_manager_jumpscare(animatronic_name: String):
+	print("¡¡¡JUMPSCARE RECIBIDO DE: %s!!!" % animatronic_name)
+	
+	# 1. Detiene la IA y el movimiento del jugador
+	ai_manager.stop()
+	set_process(false) # Detiene el _process (paneo, máscara idle)
+	
+	# (Opcional: Detén otros sonidos de ambiente aquí)
+
+	# 2. Reproduce la animación de jumpscare SOBRE la oficina
+	jumpscare_sound.play()
+	jumpscare_player.animation = animatronic_name
+	jumpscare_player.visible = true
+	jumpscare_player.z_index = 100 # <-- Importante: Pone el jumpscare encima de todo
+	jumpscare_player.play()
+	
+	# 3. Reproduce el sonido
+	
+	
+func _on_jumpscare_animation_finished():
+	# 1. AHORA ocultamos toda la interfaz de la oficina
+	hide_all_game_activity()
+	
+	# 2. Cambia a la escena de Game Over
+	get_tree().change_scene_to_file("res://game_over.tscn")
+
+# Una función de ayuda para "apagar" la oficina
+func hide_all_game_activity(): # Antes se llamaba stop_all_game_activity
+	# (Las líneas 'ai_manager.stop()' y 'set_process(false)' ya no van aquí)
+	
+	# Oculta toda la interfaz de la oficina
+	officeBG.hide()
+	desk.hide()
+	maskAnim.hide()
+	monitorAnim.hide()
+	camera_system.hide()
+	$CanvasLayer.hide() 
+	
+	leftBtn.hide()
+	rightBtn.hide()
+	$LeftLight.hide()
+	$RightLight.hide()
+	$HallLight.hide()
+	$MaskButton.hide()
+	$CameraToggle.hide()
