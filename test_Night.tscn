@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=104 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://wktkar54tqky" path="res://Assets/Office/animatronics/186.png" id="3_i1u5s"]
 [ext_resource type="Shader" uid="uid://dojmgscp3hgb8" path="res:// cam_effect.gdshader" id="3_lntdq"]
 [ext_resource type="Texture2D" uid="uid://dd1uyfrfbc0mk" path="res://Assets/Office/officeLeftVentEmpty.png" id="3_xs7ii"]
+[ext_resource type="Texture2D" uid="uid://mgts8ppfhiwo" path="res://Assets/Office/animatronics/512.png" id="4_jg0ly"]
 [ext_resource type="Texture2D" uid="uid://bhployudbm6s0" path="res://Assets/Office/desk1.png" id="4_q0ib7"]
 [ext_resource type="Texture2D" uid="uid://r4aauvef7hm3" path="res://Assets/Office/officeRightVentEmpty.png" id="4_t8eq0"]
 [ext_resource type="Texture2D" uid="uid://cvsl6x5qlrpp6" path="res://Assets/Office/officeHallEmpty.png" id="5_hdvqv"]
@@ -85,6 +86,18 @@
 [ext_resource type="Texture2D" uid="uid://bimh83rhha7hm" path="res://Assets/Jumpscares/ToyChica/755.png" id="82_1ayei"]
 [ext_resource type="Texture2D" uid="uid://bltr2xt7jvj6e" path="res://Assets/Jumpscares/ToyChica/756.png" id="83_wtssy"]
 [ext_resource type="AudioStream" uid="uid://cf102p76w1fiu" path="res://Assets/Sounds/Jumpscare.wav" id="84_6k0f2"]
+[ext_resource type="Texture2D" uid="uid://827v8v1mdb5v" path="res://Assets/Jumpscares/ToyFreddy/446.png" id="86_ducau"]
+[ext_resource type="Texture2D" uid="uid://tw8np2hhv4kq" path="res://Assets/Jumpscares/ToyFreddy/414.png" id="87_i60bk"]
+[ext_resource type="Texture2D" uid="uid://ggodkavx5l63" path="res://Assets/Jumpscares/ToyFreddy/448.png" id="88_ciqva"]
+[ext_resource type="Texture2D" uid="uid://dnld1adfcqswj" path="res://Assets/Jumpscares/ToyFreddy/415.png" id="89_mne43"]
+[ext_resource type="Texture2D" uid="uid://jile5a6rv4dg" path="res://Assets/Jumpscares/ToyFreddy/416.png" id="90_582h7"]
+[ext_resource type="Texture2D" uid="uid://kkd0qycby3rp" path="res://Assets/Jumpscares/ToyFreddy/419.png" id="91_gtnpt"]
+[ext_resource type="Texture2D" uid="uid://2y7eg7a1vfe1" path="res://Assets/Jumpscares/ToyFreddy/420.png" id="92_uje4q"]
+[ext_resource type="Texture2D" uid="uid://b7beodcmc63o7" path="res://Assets/Jumpscares/ToyFreddy/421.png" id="93_1h6ox"]
+[ext_resource type="Texture2D" uid="uid://dqim6gb10micm" path="res://Assets/Jumpscares/ToyFreddy/422.png" id="94_d2f4v"]
+[ext_resource type="Texture2D" uid="uid://63ytkrcvbxrp" path="res://Assets/Jumpscares/ToyFreddy/423.png" id="95_1ayei"]
+[ext_resource type="Texture2D" uid="uid://drxhin46t2xso" path="res://Assets/Jumpscares/ToyFreddy/424.png" id="96_wtssy"]
+[ext_resource type="Texture2D" uid="uid://cunc8g5oy3s0x" path="res://Assets/Jumpscares/ToyFreddy/445.png" id="97_efkts"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -321,7 +334,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ToyBonnie",
-"speed": 36.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -366,6 +379,47 @@ animations = [{
 "loop": false,
 "name": &"ToyChica",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("86_ducau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_i60bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_ciqva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_mne43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_582h7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_gtnpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_uje4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_1h6ox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_d2f4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_1ayei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_wtssy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_efkts")
+}],
+"loop": false,
+"name": &"ToyFreddy",
+"speed": 30.0
 }]
 
 [node name="Office" type="Control"]
@@ -393,6 +447,7 @@ office_lit_hall_witheredbonnie_foxy = ExtResource("12_6tyjn")
 office_lit_hall_witheredfreddy = ExtResource("13_lal4i")
 office_lit_hall_toyChica = ExtResource("14_feyaa")
 office_lit_hall_goldenFreddy = ExtResource("15_ejlp1")
+office_img_toyfreddy = ExtResource("4_jg0ly")
 office_lit_left_empty = ExtResource("3_xs7ii")
 office_lit_left_toychica = ExtResource("16_1gvqh")
 office_lit_left_bb = ExtResource("17_8a8fy")
@@ -412,7 +467,6 @@ offset_bottom = 740.0
 color = Color(0.007843138, 0, 0.08235294, 0.90588236)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cn4xo")
@@ -434,10 +488,49 @@ offset_right = 1600.0
 offset_bottom = 733.0
 texture = ExtResource("2_htt5u")
 
+[node name="OfficeAnimatronicView" type="TextureRect" parent="MaskView"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="desk" type="AnimatedSprite2D" parent="MaskView"]
 position = Vector2(870, 455)
 sprite_frames = SubResource("SpriteFrames_3cpb0")
 frame_progress = 0.72190934
+
+[node name="MaskButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.000001
+offset_top = -52.99994
+offset_right = -650.0
+offset_bottom = -12.999939
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.15, 1.15)
+texture_normal = ExtResource("19_1cyro")
+
+[node name="SlideView_Right" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SlideView_Left" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 93.0
+offset_right = 261.0
+offset_bottom = 133.0
+
+[node name="FreddyMask" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 20
+position = Vector2(572, 350)
+sprite_frames = SubResource("SpriteFrames_ik11a")
+animation = &"idle"
 
 [node name="LeftMove" type="TextureButton" parent="."]
 layout_mode = 1
@@ -485,33 +578,8 @@ offset_right = 930.0
 offset_bottom = 459.0
 texture_normal = ExtResource("15_fyhlp")
 
-[node name="MaskButton" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 2.000001
-offset_top = -45.99994
-offset_right = -650.0
-offset_bottom = -5.999939
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1.15, 1.15)
-texture_normal = ExtResource("19_1cyro")
-
-[node name="Animatronic_Slide_View" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="FreddyMask" type="AnimatedSprite2D" parent="."]
-visible = false
-position = Vector2(572, 350)
-sprite_frames = SubResource("SpriteFrames_ik11a")
-animation = &"idle"
-
 [node name="Monitor" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(579, 350)
 sprite_frames = SubResource("SpriteFrames_yavs6")
 animation = &"monitorOn"
@@ -523,9 +591,9 @@ layout_mode = 1
 [node name="CameraToggle" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 575.0
-offset_top = 602.00006
+offset_top = 595.00006
 offset_right = 1075.0
-offset_bottom = 642.00006
+offset_bottom = 635.00006
 scale = Vector2(1.15, 1.15)
 texture_normal = ExtResource("17_3frok")
 
@@ -536,20 +604,24 @@ visible = false
 position = Vector2(575.00006, 327.50003)
 scale = Vector2(1.1230469, 0.95963544)
 sprite_frames = SubResource("SpriteFrames_efkts")
-animation = &"ToyBonnie"
-frame = 12
-frame_progress = 1.0
+animation = &"ToyFreddy"
 
 [node name="JumpscareSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("84_6k0f2")
 
+[node name="OfficeFlickerTimer" type="Timer" parent="."]
+
+[node name="HallFlickerLockTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
+[connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]
 [connection signal="button_down" from="LeftLight" to="." method="_on_left_light_button_down"]
 [connection signal="button_up" from="LeftLight" to="." method="_on_left_light_button_up"]
 [connection signal="button_down" from="RightLight" to="." method="_on_right_light_button_down"]
 [connection signal="button_up" from="RightLight" to="." method="_on_right_light_button_up"]
 [connection signal="button_down" from="HallLight" to="." method="_on_hall_light_button_down"]
 [connection signal="button_up" from="HallLight" to="." method="_on_hall_light_button_up"]
-[connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
-[connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]
 [connection signal="animation_finished" from="Monitor" to="." method="_on_monitor_animation_finished"]
 [connection signal="pressed" from="CameraToggle" to="." method="_on_camera_toggle_pressed"]

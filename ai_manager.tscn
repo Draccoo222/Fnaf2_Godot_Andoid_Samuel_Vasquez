@@ -16,4 +16,18 @@ wait_time = 5.010000000000001
 [node name="LeftVentAttackTimer" type="Timer" parent="."]
 wait_time = 5.010000000000001
 
+[node name="OfficeAttackTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="FakeOutTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="OfficeMaskTimer" type="Timer" parent="."]
+wait_time = 1.25
+one_shot = true
+
 [connection signal="timeout" from="LeftVentAttackTimer" to="." method="_on_left_vent_attack_timer_timeout"]
+[connection signal="timeout" from="FakeOutTimer" to="." method="_on_fake_out_timer_timeout"]
+[connection signal="timeout" from="OfficeMaskTimer" to="." method="_on_office_mask_timer_timeout"]

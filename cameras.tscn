@@ -221,9 +221,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("95_e3q5h")
 }],
-"loop": false,
+"loop": true,
 "name": &"default",
-"speed": 30.0
+"speed": 24.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bo10g"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dw4uy5vh5alxg"]
+[gd_scene load_steps=19 format=3 uid="uid://dw4uy5vh5alxg"]
 
 [ext_resource type="Script" uid="uid://bqgds0kojab04" path="res://game_over.gd" id="1_y26ei"]
 [ext_resource type="Texture2D" uid="uid://dxuk1v6tegxs2" path="res://Assets/GameOver/226.png" id="2_745m4"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://i4dbpdp1q83a" path="res://Assets/GameOver/360.png" id="12_0o5rp"]
 [ext_resource type="Texture2D" uid="uid://bd5neyrk1o8dr" path="res://Assets/GameOver/361.png" id="13_didoo"]
 [ext_resource type="Texture2D" uid="uid://b0p4h5dffaktv" path="res://Assets/GameOver/363.png" id="14_psfuu"]
+[ext_resource type="Texture2D" uid="uid://b1qrjq1t8bcbx" path="res://Assets/GameOver/228.png" id="16_olga5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pi44w"]
 animations = [{
@@ -115,6 +116,14 @@ position = Vector2(573.5, 313)
 scale = Vector2(1.1279297, 1)
 sprite_frames = SubResource("SpriteFrames_pi44w")
 frame_progress = 0.6487334
+
+[node name="GameOver" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 565.0
+offset_right = 691.0
+offset_bottom = 605.0
+texture = ExtResource("16_olga5")
 
 [node name="StaticBefore" type="AnimatedSprite2D" parent="."]
 position = Vector2(576.5, 321)

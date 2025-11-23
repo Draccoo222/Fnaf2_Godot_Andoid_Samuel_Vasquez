@@ -11,6 +11,8 @@ extends Control
 @onready var static_transition = $Static2
 @onready var cam_buttons_root = $CamButtons
 @onready var grace_period_timer = $CamUI/GracePeriodTimer
+@onready var signal_lost_screen = $SignalInterrupted # <-- AÑADE ESTA REFERENCIA
+@onready var static_anim = $StaticTransition # Tu nodo de estática (AnimatedSprite2D)
 var curCam: TextureRect
 
 @export_group("Camera Panning")
@@ -280,15 +282,16 @@ func _ready():
 			"Lit_ToyBonnie": cam09_lit_toybonnie,
 			"Dark_ToyChica": cam09_dark_toychica,
 			"Lit_ToyChica": cam09_lit_toychica,
-			"Dark_ToyFreddy": cam09_dark_toyfreddy
+			"Dark_ToyFreddy": cam09_dark_toyfreddy,
+			"Lit_ToyFreddy": cam09_dark_toyfreddy
 		},
 		"CAM_10": {
 			"Dark_Empty": cam10_dark_empty,
 			"Lit_Empty": cam10_lit_empty,
 			"Dark_BB": cam10_dark_bb,
 			"Lit_BB": cam10_lit_bb,
-			"Lit_ToyFreddyBB": cam10_lit_toyfreddybb,
-			"Lit_ToyFreddy": cam10_lit_toyfreddy
+			"Lit_ToyFreddy": cam10_lit_toyfreddybb,
+			"Lit_ToyFreddyBB": cam10_lit_toyfreddy
 		},
 		"CAM_11": {
 			"Dark_Empty": cam11_dark_empty,
@@ -518,14 +521,22 @@ func _on_grace_period_timer_timeout():
 		emit_signal("puppet_is_loose")
 		stop_all_warnings()
 		
-func on_animatronic_moved():
-	if not self.visible:
-		return 
-	$StaticTransition.show()
-	$StaticTransition.play()
-	$SignalInterrupted.show()
+func on_animatronic_moved(loc_from, loc_to):
+	if not visible:
+		return
+	var current_camera_name = curCam.name
+	if current_camera_name == loc_from or current_camera_name == loc_to:
+		trigger_signal_interruption()
 	
-	if $StaticTransition.animation_finished:
-		$StaticTransition.hide()
-		$SignalInterrupted.hide()
+func trigger_signal_interruption():
+	print("CameraSystem: ¡Movimiento detectado en cámara actual! Interrumpiendo señal.")
 	
+	signal_lost_screen.visible = true
+	static_anim.visible = true
+	static_anim.play()
+	
+	var duration = randf_range(0.5, 1.0)
+	await get_tree().create_timer(duration).timeout
+	
+	signal_lost_screen.visible = false
+	static_anim.visible = false
