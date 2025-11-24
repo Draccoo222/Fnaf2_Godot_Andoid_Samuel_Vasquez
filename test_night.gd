@@ -175,7 +175,8 @@ func _ready():
 		"ToyBonnie": 0,
 		"ToyChica": 0,
 		"ToyFreddy": 0,
-		"Mangle": 20
+		"Mangle": 0,
+		"Foxy": 20
 	}
 	ai_manager.start_night(night_1_levels, camera_system, self)
 

@@ -277,20 +277,22 @@ func attempt_move(name: String):
 func update_camera_visuals(old_loc, new_loc, name):
 	
 	if name == "Mangle":
-		# 1. SIEMPRE actualizamos la ubicación en el sistema de overlays
-		# Esto fuerza a 'cameras.gd' a ocultar los PNGs anteriores (como el de CAM_02)
+	
 		camera_system.set_mangle_location(new_loc)
 		
-		# 2. Si la NUEVA cámara es de fondo, cambiamos el fondo
+		
 		var background_cameras = ["CAM_06", "CAM_12", "RightVent"]
 		if new_loc in background_cameras:
 			camera_system.set_camera_content(new_loc, "Mangle")
-			
-		# 3. Si la ANTIGUA cámara era de fondo, la limpiamos
+	
 		if old_loc in background_cameras:
 			camera_system.set_camera_content(old_loc, "Empty")
 			
 		return
+	
+	if new_loc == "CAM_06" or old_loc == "CAM_06":
+		update_parts_service_camera()
+		if new_loc == "CAM_06": return
 		
 	print("DEBUG: Actualizando visuales - %s movió de %s a %s" % [name, old_loc, new_loc])
 	
@@ -366,6 +368,14 @@ func on_hall_flashlight_success(occupant_name: String):
 	
 	camera_system.set_camera_content("Hallway", "Empty")
 	camera_system.set_camera_content("CAM_08", occupant_name)
+	
+	if occupant_name == "Foxy" or occupant_name == "Foxy_Mangle":
+		print("AIManager: Foxy flasheado. Reduciendo ira...")
+		foxy_anger -= foxy_drain_speed
+	
+		if foxy_anger <= 0:
+			foxy_anger = 0
+			reset_foxy_to_parts_service()
 
 func _on_right_vent_attack_timer_timeout():
 	if location_locks["RightVent"] == "ToyBonnie":
@@ -514,7 +524,21 @@ func _on_office_attack_timer_timeout():
 	toy_freddy_attack_pending = false
 		
 
-
+func update_parts_service_camera():
+	var bonnie_here = false 
+	var freddy_here = false
+	var chica_here = false
+	
+	var content = "Empty"
+	
+	if bonnie_here or freddy_here or chica_here:
+		content = "Withered_Group"
+	else:
+		if locations["Foxy"] == "CAM_08" and foxy_is_active_easteregg:
+			content = "Foxy" 
+		else:
+			content = "Empty" 
+	camera_system.set_camera_content("CAM_08", content)
 
 func is_toy_freddy_doomed() -> bool:
 	return toy_freddy_is_doomed
@@ -560,13 +584,8 @@ func mangle_enters_office():
 	mangle_entry_pending = true
 	locations["Mangle"] = "Office"
 	
-	
-	
-	# Limpia la ventilación en la OFICINA (Luz)
 	office_node.set_vent_occupant("RightVent", "Empty")
 	
-	# Limpia la ventilación en la CÁMARA (Fondo)
-	# Esto evita que se vea en la cámara RightVent y en el techo a la vez
 	camera_system.set_camera_content("RightVent", "Empty")
 	
 	office_node.activate_mangle_inside()
@@ -584,8 +603,17 @@ func move_foxy_to_hallway():
 	foxy_is_active_easteregg = false 
 	
 	
-	update_camera_visuals("CAM_06", "Hallway", "Foxy")
+	update_camera_visuals("CAM_08", "Hallway", "Foxy")
 	update_hallway_state() 
+	
+func reset_foxy_to_parts_service():
+	print("AIManager: Foxy regresa a Parts & Service (Easter Egg Activado).")
+	locations["Foxy"] = "CAM_08"
+	
+	foxy_is_active_easteregg = true
+	
+	update_hallway_state()
+	update_camera_visuals("Hallway", "CAM_08", "Foxy")
 
 func _on_office_mask_timer_timeout():
 	if office_node.get_mask_state():

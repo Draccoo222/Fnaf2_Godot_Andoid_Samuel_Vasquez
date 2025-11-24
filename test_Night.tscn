@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=133 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
@@ -65,33 +65,47 @@
 [ext_resource type="Texture2D" uid="uid://d1wk4xhslmsaq" path="res://Assets/Jumpscares/ToyBonnie/700.png" id="59_6k0f2"]
 [ext_resource type="Texture2D" uid="uid://bapl1ffe4f0re" path="res://Assets/Jumpscares/ToyBonnie/712.png" id="60_i1u5s"]
 [ext_resource type="Texture2D" uid="uid://i53l0h8n883s" path="res://Assets/Jumpscares/ToyBonnie/702.png" id="61_jg0ly"]
+[ext_resource type="Texture2D" uid="uid://dqmyd5pd4duy0" path="res://Assets/Jumpscares/Foxy/401.png" id="62_4avnq"]
 [ext_resource type="Texture2D" uid="uid://ba4de07ooqetu" path="res://Assets/Jumpscares/ToyBonnie/703.png" id="62_gvkab"]
 [ext_resource type="Texture2D" uid="uid://dnngtvmh1ogi7" path="res://Assets/Jumpscares/Mangle/387.png" id="62_viku4"]
+[ext_resource type="Texture2D" uid="uid://co1r4kh446xp4" path="res://Assets/Jumpscares/Foxy/385.png" id="63_dwlq6"]
 [ext_resource type="Texture2D" uid="uid://dfeqa4kj124x7" path="res://Assets/Jumpscares/ToyBonnie/704.png" id="63_jv4qg"]
 [ext_resource type="Texture2D" uid="uid://c0hw0xs2tswts" path="res://Assets/Jumpscares/Mangle/404.png" id="63_vaxc8"]
+[ext_resource type="Texture2D" uid="uid://dr702hltsge5l" path="res://Assets/Jumpscares/Foxy/386.png" id="64_h1kx8"]
 [ext_resource type="Texture2D" uid="uid://dt085chxuar0r" path="res://Assets/Jumpscares/Mangle/785.png" id="64_qsgy4"]
 [ext_resource type="Texture2D" uid="uid://jbpinu3n837m" path="res://Assets/Jumpscares/ToyBonnie/705.png" id="64_t0mge"]
 [ext_resource type="Texture2D" uid="uid://brcxup73hn2j8" path="res://Assets/Jumpscares/Mangle/792.png" id="65_pyg7q"]
+[ext_resource type="Texture2D" uid="uid://3scwbuo5mig5" path="res://Assets/Jumpscares/Foxy/388.png" id="65_t8y4w"]
 [ext_resource type="Texture2D" uid="uid://3whctxk8klbd" path="res://Assets/Jumpscares/ToyBonnie/706.png" id="65_ylwl1"]
 [ext_resource type="Texture2D" uid="uid://j2p5r3xvp824" path="res://Assets/Jumpscares/ToyBonnie/707.png" id="66_5kaf5"]
+[ext_resource type="Texture2D" uid="uid://c62pbnlowpl4o" path="res://Assets/Jumpscares/Foxy/389.png" id="66_p5mp2"]
 [ext_resource type="Texture2D" uid="uid://bbgk8wp0qmbff" path="res://Assets/Jumpscares/Mangle/802.png" id="66_tdyp1"]
 [ext_resource type="Texture2D" uid="uid://ci6x6v7m5krm4" path="res://Assets/Jumpscares/ToyBonnie/708.png" id="67_7lyik"]
+[ext_resource type="Texture2D" uid="uid://ctwu03bavm4in" path="res://Assets/Jumpscares/Foxy/390.png" id="67_53cnq"]
 [ext_resource type="Texture2D" uid="uid://3y7n8dnfv2fe" path="res://Assets/Jumpscares/Mangle/803.png" id="67_vl1ql"]
 [ext_resource type="Texture2D" uid="uid://w8houo8fhyg5" path="res://Assets/Jumpscares/Mangle/804.png" id="68_7w1fo"]
+[ext_resource type="Texture2D" uid="uid://dbt0j526r8guu" path="res://Assets/Jumpscares/Foxy/391.png" id="68_ygyue"]
 [ext_resource type="Texture2D" uid="uid://crvtpwvlufrsn" path="res://Assets/Jumpscares/ToyBonnie/709.png" id="68_ymb5g"]
 [ext_resource type="Texture2D" uid="uid://j7t15dxoyqyq" path="res://Assets/Jumpscares/ToyBonnie/710.png" id="69_60xv0"]
 [ext_resource type="Texture2D" uid="uid://ccv7inq1xltjd" path="res://Assets/Jumpscares/Mangle/805.png" id="69_al2uk"]
+[ext_resource type="Texture2D" uid="uid://dh6r545xfhpmt" path="res://Assets/Jumpscares/Foxy/392.png" id="69_q8ev1"]
+[ext_resource type="Texture2D" uid="uid://xdmgbjl2m1ql" path="res://Assets/Jumpscares/Foxy/393.png" id="70_71l8s"]
 [ext_resource type="Texture2D" uid="uid://bk7xkoo32ihm2" path="res://Assets/Jumpscares/ToyBonnie/711.png" id="70_i6iat"]
 [ext_resource type="Texture2D" uid="uid://bnfsmr38fu8xt" path="res://Assets/Jumpscares/Mangle/806.png" id="70_k2a0f"]
+[ext_resource type="Texture2D" uid="uid://dr6h2h6jonp3b" path="res://Assets/Jumpscares/Foxy/394.png" id="71_b0wl3"]
 [ext_resource type="Texture2D" uid="uid://dhdgqkixfe6wy" path="res://Assets/Jumpscares/Mangle/807.png" id="71_hig7n"]
 [ext_resource type="Texture2D" uid="uid://dkyi3l8luplyd" path="res://Assets/Jumpscares/ToyChica/745.png" id="71_oh2pv"]
 [ext_resource type="Texture2D" uid="uid://bo1g5qw702hub" path="res://Assets/Jumpscares/ToyChica/757.png" id="72_pyic6"]
 [ext_resource type="Texture2D" uid="uid://cjvludjqlichi" path="res://Assets/Jumpscares/Mangle/808.png" id="72_tg106"]
+[ext_resource type="Texture2D" uid="uid://dtm0c4yyq25d4" path="res://Assets/Jumpscares/Foxy/395.png" id="72_ytl3i"]
+[ext_resource type="Texture2D" uid="uid://be4wydgdm46ss" path="res://Assets/Jumpscares/Foxy/396.png" id="73_2sul3"]
 [ext_resource type="Texture2D" uid="uid://e050iy0310sk" path="res://Assets/Jumpscares/ToyChica/759.png" id="73_ducau"]
 [ext_resource type="Texture2D" uid="uid://dbk205vhlxuw5" path="res://Assets/Jumpscares/Mangle/809.png" id="73_p4ycy"]
+[ext_resource type="Texture2D" uid="uid://lxyli3ugy4w5" path="res://Assets/Jumpscares/Foxy/397.png" id="74_22nyy"]
 [ext_resource type="Texture2D" uid="uid://caxe3dmvrnmnl" path="res://Assets/Jumpscares/ToyChica/747.png" id="74_i60bk"]
 [ext_resource type="Texture2D" uid="uid://dvqrcl4jyur2a" path="res://Assets/Jumpscares/Mangle/810.png" id="74_kpwkk"]
 [ext_resource type="Texture2D" uid="uid://8g41avu7js13" path="res://Assets/Jumpscares/ToyChica/748.png" id="75_ciqva"]
+[ext_resource type="Texture2D" uid="uid://d05afrdfwyydr" path="res://Assets/Jumpscares/Foxy/398.png" id="75_ryvn2"]
 [ext_resource type="Texture2D" uid="uid://bpv0lobpop1cl" path="res://Assets/Jumpscares/ToyChica/749.png" id="76_mne43"]
 [ext_resource type="Texture2D" uid="uid://c17ylqx85lkt1" path="res://Assets/Jumpscares/ToyChica/750.png" id="77_582h7"]
 [ext_resource type="Texture2D" uid="uid://cvebe8ghp08tx" path="res://Assets/Jumpscares/ToyChica/751.png" id="78_gtnpt"]
@@ -309,6 +323,53 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("62_4avnq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_dwlq6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_h1kx8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_t8y4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_p5mp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_53cnq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_ygyue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_q8ev1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_71l8s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_b0wl3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_ytl3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_2sul3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_22nyy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_ryvn2")
+}],
+"loop": false,
+"name": &"Foxy",
+"speed": 26.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("62_viku4")
 }, {
 "duration": 1.0,
@@ -349,7 +410,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Mangle",
-"speed": 30.0
+"speed": 26.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -393,7 +454,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ToyBonnie",
-"speed": 24.0
+"speed": 26.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -437,7 +498,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ToyChica",
-"speed": 24.0
+"speed": 26.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -475,10 +536,13 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("97_efkts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_wtssy")
 }],
 "loop": false,
 "name": &"ToyFreddy",
-"speed": 30.0
+"speed": 26.0
 }]
 
 [node name="Office" type="Control"]
@@ -526,6 +590,7 @@ offset_bottom = 740.0
 color = Color(0.007843138, 0, 0.08235294, 0.90588236)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cn4xo")
@@ -675,8 +740,8 @@ visible = false
 position = Vector2(575.00006, 327.50003)
 scale = Vector2(1.1230469, 0.95963544)
 sprite_frames = SubResource("SpriteFrames_efkts")
-animation = &"Mangle"
-frame = 12
+animation = &"Foxy"
+frame = 13
 frame_progress = 1.0
 
 [node name="JumpscareSound" type="AudioStreamPlayer2D" parent="."]
