@@ -1,4 +1,4 @@
-[gd_scene load_steps=155 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=160 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
@@ -116,7 +116,12 @@
 [ext_resource type="Texture2D" uid="uid://6qos4mwsh5aa" path="res://Assets/Cameras/CamNames/57.png" id="76_qekr6"]
 [ext_resource type="Texture2D" uid="uid://baiwc3w88h5u1" path="res://Assets/Cameras/CamNames/60.png" id="77_otgl3"]
 [ext_resource type="Texture2D" uid="uid://bplewq2yko4bv" path="res://Assets/Cameras/CamNames/61.png" id="78_bujwu"]
+[ext_resource type="Texture2D" uid="uid://bqdkgbr5sdf5h" path="res://Assets/Cameras/mangleCams/219.png" id="79_knndu"]
+[ext_resource type="Texture2D" uid="uid://jnyeya2youal" path="res://Assets/Cameras/mangleCams/217.png" id="80_e3q5h"]
 [ext_resource type="Texture2D" uid="uid://cpnunrptr742x" path="res://Assets/Cameras/Buttons/recDot.png" id="80_l5gvo"]
+[ext_resource type="Texture2D" uid="uid://bohk8stdxk5ao" path="res://Assets/Cameras/mangleCams/218.png" id="81_la3bp"]
+[ext_resource type="Texture2D" uid="uid://dxtywaj0elwte" path="res://Assets/Cameras/mangleCams/78.png" id="82_cftqn"]
+[ext_resource type="AudioStream" uid="uid://cwqbvx35qcdxp" path="res://Assets/Sounds/Mangle.wav" id="83_e3q5h"]
 [ext_resource type="Texture2D" uid="uid://d2o2enpn2gt4w" path="res://Assets/Cameras/Err/357.png" id="90_hadlr"]
 [ext_resource type="Texture2D" uid="uid://dpofb6ct70ajw" path="res://Assets/Cameras/Err/358.png" id="91_vaejf"]
 [ext_resource type="Texture2D" uid="uid://b4qdwvqsvt04c" path="res://Assets/Cameras/Err/359.png" id="92_yf6dx"]
@@ -460,7 +465,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CAM_01" type="TextureRect" parent="CamViews"]
-visible = false
 layout_mode = 0
 offset_top = -20.000008
 offset_right = 1440.0
@@ -544,6 +548,7 @@ texture = ExtResource("9_v3sgr")
 expand_mode = 1
 
 [node name="CAM_09" type="TextureRect" parent="CamViews" groups=["panning_cameras"]]
+visible = false
 layout_mode = 0
 offset_left = 4.0
 offset_top = -20.0
@@ -585,6 +590,59 @@ offset_bottom = 748.0
 scale = Vector2(0.8, 0.9)
 texture = ExtResource("12_hj0gf")
 expand_mode = 1
+
+[node name="ManglePoses" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Pose_CAM02" type="TextureRect" parent="ManglePoses"]
+visible = false
+layout_mode = 0
+offset_left = 1.0
+offset_top = 57.0
+offset_right = 343.0
+offset_bottom = 648.0
+texture = ExtResource("79_knndu")
+
+[node name="Pose_CAM10" type="TextureRect" parent="ManglePoses"]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_top = -21.0
+offset_right = 608.0
+offset_bottom = 377.0
+texture = ExtResource("80_e3q5h")
+
+[node name="Pose_CAM11" type="TextureRect" parent="ManglePoses"]
+visible = false
+layout_mode = 0
+offset_left = 385.0
+offset_top = -20.0
+offset_right = 1284.0
+offset_bottom = 369.0
+texture = ExtResource("81_la3bp")
+
+[node name="Pose_CAM07" type="TextureRect" parent="ManglePoses"]
+visible = false
+layout_mode = 0
+offset_left = 532.0
+offset_top = 356.0
+offset_right = 1282.0
+offset_bottom = 669.0
+texture = ExtResource("82_cftqn")
+
+[node name="Pose_CAM01" type="TextureRect" parent="ManglePoses"]
+visible = false
+layout_mode = 0
+offset_left = 777.0
+offset_top = 356.0
+offset_right = 1527.0
+offset_bottom = 669.0
+texture = ExtResource("82_cftqn")
+
+[node name="MangleStaticSound" type="AudioStreamPlayer2D" parent="ManglePoses"]
+stream = ExtResource("83_e3q5h")
 
 [node name="Static" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.23529412)

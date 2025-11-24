@@ -13,6 +13,11 @@ extends Control
 @onready var grace_period_timer = $CamUI/GracePeriodTimer
 @onready var signal_lost_screen = $SignalInterrupted # <-- AÑADE ESTA REFERENCIA
 @onready var static_anim = $StaticTransition # Tu nodo de estática (AnimatedSprite2D)
+@onready var mangle_static_sound = $ManglePoses/MangleStaticSound
+@onready var mangle_poses_root = $ManglePoses
+
+
+
 var curCam: TextureRect
 
 @export_group("Camera Panning")
@@ -168,6 +173,27 @@ var camTween: Tween;
 
 var is_flashlight_on = false;
 
+var mangle_poses = {}
+
+var mangle_location = "CAM_12"
+var mangle_initial_x = {}
+
+var mangle_offsets = {
+	"CAM_11": 0.0,
+	"CAM_10": 0.0, 
+	"CAM_07": 0.0,
+	"CAM_01": 0.0,
+	"CAM_02": 0.0
+}
+
+var mangle_parallax_factors = {
+	"CAM_11": 1.0,
+	"CAM_10": 1.0,
+	"CAM_07": 1.0,
+	"CAM_01": 1.0,
+	"CAM_02": 1.0
+}
+
 func _ready():
 	static_overlay.play()
 	static_transition.hide() 
@@ -182,6 +208,23 @@ func _ready():
 	grace_period_timer.timeout.connect(_on_grace_period_timer_timeout)
 	
 	static_transition.animation_finished.connect(_on_static_2_animation_finished)
+	
+	if mangle_poses_root:
+		mangle_poses = {
+			"CAM_11": mangle_poses_root.get_node_or_null("Pose_CAM11"),
+			"CAM_10": mangle_poses_root.get_node_or_null("Pose_CAM10"),
+			"CAM_07": mangle_poses_root.get_node_or_null("Pose_CAM07"),
+			"CAM_01": mangle_poses_root.get_node_or_null("Pose_CAM01"),
+			"CAM_02": mangle_poses_root.get_node_or_null("Pose_CAM02"),
+		}
+	else:
+		print("ERROR: No se encontró el nodo ManglePoses en CameraSystem")
+		
+	for key in mangle_poses:
+			var node = mangle_poses[key]
+			if node:
+				mangle_initial_x[key] = node.position.x # Guardamos donde lo pusiste en el editor
+				#node.visible = false
 	
 	camera_name_textures = {
 		"CAM_01": name_img_cam01,
@@ -327,6 +370,8 @@ func _ready():
 	music_box_circle.play("reload") 
 	update_circle_animation()
 	
+	
+	
 
 func buttongroup_pressed(button : TextureButton):
 		cambiar_vista_a(button.name)
@@ -350,6 +395,17 @@ func _process(delta):
 	music_box_bar.value = clamp(music_box_bar.value, 0, 100)
 
 	update_circle_animation()
+	
+	if curCam and curCam.is_in_group("panning_cameras"):
+		curCam.position.x = pan_value
+		
+		if mangle_poses.has(curCam.name):
+			var pose = mangle_poses[curCam.name]
+			if pose and pose.visible:
+				var base_x = mangle_initial_x[curCam.name]
+				var offset = mangle_offsets.get(curCam.name, 0.0)
+				var factor = mangle_parallax_factors.get(curCam.name, 1.0)
+				pose.position.x = base_x + offset + (pan_value * factor)
 
 	if music_box_bar.value <= 0:
 		if not is_in_grace_period:
@@ -397,6 +453,8 @@ func cambiar_vista_a(nombre_camara: String):
 		music_box_circle.visible = false
 		music_box_button.visible = false
 		music_box_button.disabled = true
+	
+	update_mangle_presence()
 	
 func _on_static_2_animation_finished():
 	static_transition.hide()
@@ -540,3 +598,44 @@ func trigger_signal_interruption():
 	
 	signal_lost_screen.visible = false
 	static_anim.visible = false
+	
+func set_mangle_location(new_location: String):
+	print("CameraSystem: Mangle se movió a " + new_location)
+	mangle_location = new_location
+	update_mangle_presence()
+	
+	
+func update_mangle_presence():
+	# 1. Ocultamos TODAS las poses primero
+	for pose in mangle_poses.values():
+		if pose: pose.visible = false
+	
+	# Si no hay cámara activa, salimos (pero ya ocultamos todo, que es bueno)
+	if not curCam: 
+		mangle_static_sound.stop()
+		return
+
+	var current_cam_name = curCam.name
+	
+	# 2. ¿Debe estar Mangle aquí?
+	if current_cam_name == mangle_location:
+		
+		# A. VISUALES (Se ejecutan SIEMPRE, aunque el monitor esté bajando)
+		if mangle_poses.has(current_cam_name):
+			var pose_node = mangle_poses[current_cam_name]
+			if pose_node:
+				pose_node.visible = true
+				# Forzamos la posición inmediatamente para evitar parpadeos
+				var base = mangle_initial_x.get(current_cam_name, 0.0)
+				pose_node.position.x = base + pan_value
+		
+		# B. AUDIO (Solo suena si el sistema es visible)
+		if is_visible_in_tree():
+			if not mangle_static_sound.playing:
+				mangle_static_sound.play()
+		else:
+			mangle_static_sound.stop()
+			
+	else:
+		# No está en esta cámara
+		mangle_static_sound.stop()

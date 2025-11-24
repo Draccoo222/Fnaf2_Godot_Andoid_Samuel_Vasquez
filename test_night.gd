@@ -17,12 +17,17 @@ extends Control
 @onready var office_animatronic_view = $MaskView/OfficeAnimatronicView
 @onready var office_flicker_timer = $OfficeFlickerTimer
 @onready var hall_flicker_lock_timer = $HallFlickerLockTimer
+@onready var mangle_ceiling_view = $MaskView/MangeGotYou
+@onready var mangle_office_sound = $MaskView/MangleStatic
 
 @export var desk_offset_x: float = 0.0
 @export var parralax_factor_desk: float = 1.2
 
 @export var toy_bonnie_slide_texture: Texture2D
 @export var toy_chica_slide_texture: Texture2D
+
+@export_group("Mangle Settings")
+@export var mangle_parallax_factor: float = 1.05
 
 @export_group("Idle Mask Movement")
 @export var idle_amplitude_x: float = 8.0
@@ -85,6 +90,8 @@ var idle_time_counter: float = 0.0
 var initial_mask_pos: Vector2
 var initial_toy_freddy_pos: Vector2
 
+var initial_mangle_pos: Vector2
+
 var is_flash_lock_active = false 
 
 var flicker_tween: Tween 
@@ -94,6 +101,8 @@ var active_cinematics = 0
 
 func _ready():
 	await ready
+	
+	initial_mangle_pos = mangle_ceiling_view.position
 	
 	ai_manager.animatronic_moved.connect(camera_system.on_animatronic_moved)
 	ai_manager.jumpscare.connect(_on_ai_manager_jumpscare)
@@ -163,9 +172,10 @@ func _ready():
 	office_flicker_timer.timeout.connect(_on_office_flicker_timer_timeout)
 	
 	var night_1_levels = {
-		"ToyBonnie": 20,
-		"ToyChica": 20,
-		"ToyFreddy": 20
+		"ToyBonnie": 0,
+		"ToyChica": 0,
+		"ToyFreddy": 0,
+		"Mangle": 20
 	}
 	ai_manager.start_night(night_1_levels, camera_system, self)
 
@@ -180,6 +190,11 @@ func _process(delta):
 		$LeftLight.position.x = (officeBG.position.x) + 100
 		$RightLight.position.x = (officeBG.position.x) + 1425
 		
+		if mangle_ceiling_view.visible:
+			mangle_ceiling_view.position.y = 0
+			mangle_ceiling_view.position.x = (officeBG.position.x * mangle_parallax_factor) + initial_mangle_pos.x + 220
+			
+		
 		if office_occupant == "ToyFreddy":
 			office_animatronic_view.position.y = -75
 			office_animatronic_view.position.x = (officeBG.position.x * toy_freddy_parallax_factor) + initial_toy_freddy_pos.x + 850
@@ -189,6 +204,7 @@ func _process(delta):
 		var offset_x = sin(idle_time_counter) * idle_amplitude_x
 		var offset_y = cos(idle_time_counter * 2.0) * idle_amplitude_y
 		maskAnim.position = initial_mask_pos + Vector2(offset_x, offset_y)
+	
 
 func _on_mask_button_pressed() -> void:
 	if CAM_ON or active_cinematics > 0:
@@ -227,6 +243,12 @@ func _on_mask_button_pressed() -> void:
 			play_defense_cinematic("ToyChica", toy_chica_slide_texture, slide_view_left, slide_tween_left, "left")
 			ai_manager.reset_animatronic("ToyChica")
 			cinematic_started = true
+			
+		elif right_vent_occupant == "Mangle":
+			print("Office: ¡Mangle detectada en RightVent! Ahuyentándola con la máscara...")
+			# Mangle no tiene cinemática de deslizamiento, solo se va (audio stop)
+			ai_manager.reset_animatronic("Mangle")
+			# Opcional: Reproducir sonido de estática disminuyendo o pasos
 			
 		if cinematic_started:
 			start_flicker_effect()
@@ -343,6 +365,9 @@ func _on_right_light_button_down() -> void:
 	if MASK_ON or is_flashlight_failing or active_cinematics > 0:
 		return
 	officeBG.texture = right_vent_light_textures.get(right_vent_occupant, office_lit_right_empty)
+	if right_vent_occupant == "Mangle":
+		if not mangle_office_sound.playing:
+			mangle_office_sound.play()
 
 func _on_hall_light_button_up() -> void:
 	if is_flashlight_failing or active_cinematics > 0 or is_flash_lock_active:
@@ -355,10 +380,9 @@ func _on_hall_light_button_up() -> void:
 func _on_hall_light_button_down() -> void:
 	if MASK_ON or is_flashlight_failing or active_cinematics > 0:
 			return
-	is_hall_light_on = true # <-- Establece que la luz está físicamente encendida
-
+	is_hall_light_on = true 
+	
 	if hall_occupant in STROBE_ANIMATRONICS:
-	# ... (Tu lógica existente para Foxy)
 		is_flashlight_failing = true
 		officeBG.texture = hall_light_textures["Fail"]
 		flashlight_fail_timer.start()
@@ -468,23 +492,33 @@ func set_office_occupant(name: String):
 func _on_ai_manager_jumpscare(animatronic_name: String):
 	print("¡¡¡JUMPSCARE RECIBIDO DE: %s!!!" % animatronic_name)
 	
-	if animatronic_name == "ToyFreddy":
-		office_animatronic_view.hide()
-		
 	if CAM_ON:
-		await _on_monitor_animation_finished()
+		await $Monitor.animation_finished
 	elif MASK_ON:
 		await maskAnim.animation_finished
 	
 	ai_manager.stop()
 	set_process(false) 
 	stop_flicker_effect()
-	officeBG.visible = true
+	
+	camera_system.hide() 
+	monitorAnim.hide()
+	
+	# --- CORRECCIONES VISUALES ---
+	officeBG.visible = true # Aseguramos que el fondo se vea
+	officeBG.modulate = Color(1, 1, 1, 1) # Aseguramos que no esté oscuro
+	
+	
+	# Ocultamos animatrónicos estáticos para que no estorben al jumpscare
+	office_animatronic_view.hide() 
+	$MaskView/MangeGotYou.visible = false # Ocultamos a Mangle del techo
+	if has_node("MangleOfficeSound"): $MaskView/MangleStatic.stop()
+	# -----------------------------
 
 	jumpscare_sound.play()
 	jumpscare_player.animation = animatronic_name
 	jumpscare_player.visible = true
-	jumpscare_player.z_index = 100
+	jumpscare_player.z_index = 100 # Encima de todo
 	jumpscare_player.play()
 	
 func _on_jumpscare_animation_finished():
@@ -495,13 +529,17 @@ func _on_jumpscare_animation_finished():
 func _on_hall_flicker_lock_timer_timeout():
 	is_flash_lock_active = false 
 	
-	# 2. Restaura el estado visual (exactamente como lo diseñamos antes)
 	if is_hall_light_on:
-		# Si el jugador la sigue teniendo encendida, muestra la textura de pasillo vacío.
 		officeBG.texture = hall_light_textures.get(hall_occupant, office_lit_hall_empty)
 	else:
-		# Si el jugador la apagó (is_hall_light_on = false), apágala ahora.
+	
 		officeBG.texture = office_dark_default
+		
+func activate_mangle_inside():
+	mangle_ceiling_view.visible = true
+	
+	
+	mangle_office_sound.play()
 
 func hide_all_game_activity():
 	officeBG.hide()

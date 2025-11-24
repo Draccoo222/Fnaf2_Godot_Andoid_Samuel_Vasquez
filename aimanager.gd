@@ -7,6 +7,7 @@ signal animatronic_moved(loc_from, loc_to)
 @onready var right_vent_attack_timer = $RightVentAttackTimer
 @onready var left_vent_attack_timer = $LeftVentAttackTimer
 @onready var office_attack_timer = $OfficeAttackTimer
+@onready var mangle_vent_timer = $MangleVentTimer
 
 var camera_system: Control
 var office_node: Control 
@@ -16,10 +17,21 @@ var toy_chica_attack_pending = false
 var toy_freddy_attack_pending = false
 var toy_freddy_is_doomed = false
 
+var mangle_inside_office = true
+
 var toy_freddy_is_saved = false
+var mangle_entry_pending = false
 
 var aggression_levels = {}
 var locations = {}
+
+var foxy_anger: float = 0.0
+var foxy_threshold: float = 50.0
+var foxy_attack_threshold: float = 100.0
+var foxy_drain_speed: float = 15.0 
+
+
+var foxy_is_active_easteregg = false
 
 var has_left_stage = {
 	"ToyBonnie": false,
@@ -27,15 +39,24 @@ var has_left_stage = {
 	"ToyFreddy": false
 }
 
+var has_left_service = {
+	"Bonnie": false,
+	"Chica": false,
+	"Freddy": false
+}
+
 const RESET_LOCATIONS = {
 	"ToyBonnie": "CAM_03",
 	"ToyChica": "CAM_07",
-	"ToyFreddy": "CAM_09"
+	"ToyFreddy": "CAM_09",
+	"Mangle": "CAM_11",
+	"Foxy": "CAM_08"
 }
 
 var camera_content_tracker = {}
 
 var location_locks = {
+	"CAM_08_Queue":["Foxy","Bonnie", "Freddy", "Chica"],
 	"CAM_09_Queue": ["ToyBonnie", "ToyChica", "ToyFreddy"],
 	"RightVent": null,
 	"LeftVent": null,
@@ -64,12 +85,27 @@ const PATHS = {
 		"CAM_09": ["CAM_10"], 
 		"CAM_10": ["Hallway"], 
 		"Hallway": ["Hallway2"],
+	},
+	"Mangle":{
+		"CAM_12": ["CAM_11"], 
+		"CAM_11": ["CAM_10"],
+		"CAM_10": ["CAM_07"],
+		"CAM_07": ["Hallway", "CAM_01"],
+		"CAM_01": ["CAM_02"],
+		"CAM_02": ["CAM_06"],
+		"Hallway": ["CAM_07", "CAM_01"],
+		"CAM_06": ["RightVent"],
+		"RightVent": ["RightVent"]
+	},
+	"Foxy":{
+		"CAM_06":["Hallway"],
 	}
 }
 
 func _ready():
 	ai_tick_timer.timeout.connect(_on_ai_tick_timer_timeout)
 	right_vent_attack_timer.timeout.connect(_on_right_vent_attack_timer_timeout)
+	mangle_vent_timer.timeout.connect(_on_mangle_vent_timer_timeout)
 	
 	office_attack_timer.timeout.connect(_on_office_attack_timer_timeout)
 
@@ -78,10 +114,19 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	camera_system = cam_sys
 	office_node = office 
 	
+	mangle_inside_office = false
+	office_node.mangle_ceiling_view.visible = false
+	office_node.mangle_office_sound.stop()
+	
+	foxy_anger = 0.0
+	foxy_is_active_easteregg = false
+	
 	locations = {
 		"ToyBonnie": "CAM_09",
 		"ToyChica": "CAM_09",
-		"ToyFreddy": "CAM_09"
+		"ToyFreddy": "CAM_09",
+		"Mangle": "CAM_12",
+		"Foxy": "CAM_08"
 	}
 	
 	has_left_stage = {
@@ -105,13 +150,37 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	toy_chica_attack_pending = false
 	toy_freddy_attack_pending = false
 	toy_freddy_is_doomed = false
+	mangle_entry_pending = false
 	
 	camera_system.set_camera_content("CAM_09", "All")
 	ai_tick_timer.start()
+	
 
 func _on_ai_tick_timer_timeout():
 	for name in aggression_levels.keys():
-		attempt_move(name)
+		if name != "Foxy":
+			attempt_move(name)
+	
+	var foxy_lvl = aggression_levels.get("Foxy", 0)
+	
+	if foxy_lvl > 0:
+		# Foxy se enfada más rápido si el monitor está ABAJO
+		if not office_node.CAM_ON:
+			foxy_anger += foxy_lvl * 1.5
+		else:
+			foxy_anger += foxy_lvl * 0.5
+			
+		print("AIManager: Ira de Foxy: %d / %d" % [foxy_anger, foxy_attack_threshold])
+		
+		
+		if foxy_anger > foxy_threshold and locations["Foxy"] == "CAM_06":
+			move_foxy_to_hallway()
+			
+
+		if foxy_anger > foxy_attack_threshold and locations["Foxy"] == "Hallway":
+			print("AIManager: ¡JUMPSCARE DE FOXY!")
+			emit_signal("jumpscare", "Foxy")
+	
 
 func attempt_move(name: String):
 	var aggression = aggression_levels.get(name, 0)
@@ -122,6 +191,9 @@ func attempt_move(name: String):
 
 	var current_loc = locations[name]
 	var next_loc: String
+	
+
+	
 
 	if name == "ToyFreddy" and current_loc == "Hallway2":
 		if office_node.CAM_ON:
@@ -136,6 +208,8 @@ func attempt_move(name: String):
 		return
 	
 	next_loc = next_loc_options.pick_random()
+	
+
 	
 	print("AIManager: %s intentando moverse de %s a %s" % [name, current_loc, next_loc])
 
@@ -166,6 +240,25 @@ func attempt_move(name: String):
 	emit_signal("animatronic_moved", current_loc, next_loc)
 	update_camera_visuals(current_loc, next_loc, name)
 	
+	if name == "Mangle" and next_loc == "Office":
+		mangle_enters_office()
+		return
+		
+	if name == "Mangle" or name == "Foxy": # (Añade Foxy cuando lo tengas)
+		update_hallway_state()
+	
+	if name == "Mangle" and next_loc == "CAM_11":
+		camera_system.set_camera_content("CAM_12", "Mangle") 
+		return
+		
+	if name == "Mangle" and next_loc == "RightVent":
+		print("AIManager: Mangle llegó a la ventila. Iniciando cuenta atrás...")
+		# YA NO comprobamos si CAM_ON es true para entrar directo.
+		# Simplemente iniciamos su timer de paciencia.
+		# (Asegúrate de tener un timer llamado MangleVentTimer en la escena AIManager)
+		if has_node("MangleVentTimer"):
+			$MangleVentTimer.start()
+	
 	if next_loc == "LeftVent":
 		office_node.set_vent_occupant("LeftVent", name)
 	elif next_loc == "RightVent":
@@ -182,6 +275,23 @@ func attempt_move(name: String):
 			office_node.set_hall_occupant(name)
 
 func update_camera_visuals(old_loc, new_loc, name):
+	
+	if name == "Mangle":
+		# 1. SIEMPRE actualizamos la ubicación en el sistema de overlays
+		# Esto fuerza a 'cameras.gd' a ocultar los PNGs anteriores (como el de CAM_02)
+		camera_system.set_mangle_location(new_loc)
+		
+		# 2. Si la NUEVA cámara es de fondo, cambiamos el fondo
+		var background_cameras = ["CAM_06", "CAM_12", "RightVent"]
+		if new_loc in background_cameras:
+			camera_system.set_camera_content(new_loc, "Mangle")
+			
+		# 3. Si la ANTIGUA cámara era de fondo, la limpiamos
+		if old_loc in background_cameras:
+			camera_system.set_camera_content(old_loc, "Empty")
+			
+		return
+		
 	print("DEBUG: Actualizando visuales - %s movió de %s a %s" % [name, old_loc, new_loc])
 	
 	if old_loc == "Hallway" or old_loc == "Hallway2":
@@ -220,6 +330,8 @@ func update_camera_visuals(old_loc, new_loc, name):
 			camera_system.set_camera_content(new_loc, name)
 		
 		camera_content_tracker[new_loc] = name
+		
+	
 
 func update_show_stage():
 	# Verificamos quién está en el escenario
@@ -305,7 +417,9 @@ func reset_animatronic(name: String):
 		has_left_stage[name] = false
 		if not "ToyFreddy" in location_locks["CAM_09_Queue"]:
 			location_locks["CAM_09_Queue"].push_back(name)
-	
+	if name == "Mangle": 
+		print("AIManager: Reseteando Mangle desde la ventila")
+		if has_node("MangleVentTimer"): $MangleVentTimer.stop()
 	update_camera_visuals(old_loc, reset_loc, name)
 	print("AIManager: ===== RESETEO COMPLETO =====")
 
@@ -321,6 +435,15 @@ func on_cameras_lowered():
 	
 	if toy_freddy_is_doomed:
 		check_mask_and_attack("ToyFreddy")
+		
+	if mangle_inside_office:
+		emit_signal("jumpscare", "Mangle")
+	
+	# 2. Confirmación de Entrada (Para el SIGUIENTE turno)
+	if mangle_entry_pending:
+		print("AIManager: Monitor bajado. Mangle ahora es hostil.")
+		mangle_inside_office = true
+		mangle_entry_pending = false
 	
 func on_cameras_raised():
 	if location_locks["RightVent"] == "ToyBonnie":
@@ -332,6 +455,11 @@ func on_cameras_raised():
 	if locations.get("ToyFreddy") == "Hallway2":
 		print("AIManager: ¡El jugador subió las cámaras! Toy Freddy entra a la oficina.")
 		toy_freddy_enters_office()
+		
+	if locations["Mangle"] == "RightVent": # O location_locks["RightVent"] == "Mangle"
+		print("AIManager: ¡Monitor subido con Mangle en Ventila! Entrando al techo...")
+		if has_node("MangleVentTimer"): $MangleVentTimer.stop()
+		mangle_enters_office()   # Entra a la oficina
 		
 func check_mask_and_attack(animatronic_name: String):
 	print("AIManager: ===== CHECK_MASK_AND_ATTACK para %s =====" % animatronic_name)
@@ -407,6 +535,57 @@ func _on_fake_out_timer_timeout() -> void:
 	office_node.stop_flicker_effect()
 	toy_freddy_attack_pending = false
 
+func update_hallway_state():
+	var foxy_in_hall = locations.get("Foxy") == "Hallway"
+	var mangle_in_hall = locations.get("Mangle") == "Hallway"
+	
+	var hall_state = "Empty"
+	
+	if foxy_in_hall and mangle_in_hall:
+		hall_state = "Foxy_Mangle"
+	elif foxy_in_hall:
+		hall_state = "Foxy"
+	elif mangle_in_hall:
+		hall_state = "Mangle"
+	
+	office_node.set_hall_occupant(hall_state)
+	
+	
+func mangle_enters_office():
+	if not office_node.CAM_ON:
+		print("AIManager: BLOQUEADO - Mangle intentó entrar sin monitor.")
+		return
+		
+		
+	mangle_entry_pending = true
+	locations["Mangle"] = "Office"
+	
+	
+	
+	# Limpia la ventilación en la OFICINA (Luz)
+	office_node.set_vent_occupant("RightVent", "Empty")
+	
+	# Limpia la ventilación en la CÁMARA (Fondo)
+	# Esto evita que se vea en la cámara RightVent y en el techo a la vez
+	camera_system.set_camera_content("RightVent", "Empty")
+	
+	office_node.activate_mangle_inside()
+	
+func _on_mangle_vent_timer_timeout():
+	if location_locks["RightVent"] == "Mangle":
+		print("AIManager: Mangle se cansó de esperar en la ventila. Entrando al techo...")
+		mangle_enters_office()
+		
+func move_foxy_to_hallway():
+	print("AIManager: Foxy sale de Parts & Service al Pasillo.")
+	locations["Foxy"] = "Hallway"
+	
+	
+	foxy_is_active_easteregg = false 
+	
+	
+	update_camera_visuals("CAM_06", "Hallway", "Foxy")
+	update_hallway_state() 
 
 func _on_office_mask_timer_timeout():
 	if office_node.get_mask_state():
