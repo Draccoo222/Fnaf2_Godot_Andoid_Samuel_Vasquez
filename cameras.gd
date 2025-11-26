@@ -260,7 +260,7 @@ func _ready():
 		"CAM_01": {
 			"Dark_Empty": cam01_dark_empty,
 			"Lit_Empty": cam01_lit_empty,
-			"Lit_Bonnie": cam01_lit_bonnie,
+			"Lit_WitheredBonnie": cam01_lit_bonnie,
 			"Lit_ToyChica": cam01_lit_toychica
 		},
 		"CAM_02": {
@@ -289,7 +289,7 @@ func _ready():
 			"Dark_Empty": cam05_dark_empty,
 			"Lit_Empty": cam05_lit_empty,
 			"Lit_ToyChica": cam05_lit_toychica,
-			"Lit_Bonnie": cam05_lit_bonnie,
+			"Lit_WitheredBonnie": cam05_lit_bonnie,
 			"Lit_BB": cam05_lit_bb,
 			"Lit_Endo": cam05_lit_endo
 		},
@@ -305,7 +305,7 @@ func _ready():
 			"Lit_Empty": cam07_lit_empty,
 			"Dark_ToyChica": cam07_dark_toychica,
 			"Lit_ToyChica": cam07_lit_toychica,
-			"Lit_Bonnie": cam07_lit_bonnie,
+			"Lit_WitheredBonnie": cam07_lit_bonnie,
 			"Lit_Freddy": cam07_lit_freddy
 		},
 		"CAM_08": {
@@ -313,7 +313,7 @@ func _ready():
 			"Lit_Empty": cam08_lit_empty,
 			"Dark_Chica": cam08_dark_chica,
 			"Lit_Chica": cam08_lit_chica,
-			"Lit_Bonnie": cam08_lit_bonnie,
+			"Lit_WitheredBonnie": cam08_lit_bonnie,
 			"Lit_Freddy": cam08_lit_freddy,
 			"Lit_Foxy": cam08_lit_foxy,
 			"Lit_ShadowFreddy": cam08_lit_shadowfreddy

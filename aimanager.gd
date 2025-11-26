@@ -14,6 +14,7 @@ var office_node: Control
 
 var toy_bonnie_attack_pending = false
 var toy_chica_attack_pending = false
+
 var toy_freddy_attack_pending = false
 var toy_freddy_is_doomed = false
 
@@ -30,8 +31,17 @@ var foxy_threshold: float = 50.0
 var foxy_attack_threshold: float = 100.0
 var foxy_drain_speed: float = 15.0 
 
+var foxy_d_counter: float = 0.0 
+var foxy_flash_counter: int = 0 
+var foxy_attack_timer: float = 50.0  
+
 
 var foxy_is_active_easteregg = false
+
+var withered_bonnie_attack_pending = false
+var withered_bonnie_is_doomed = false
+var withered_bonnie_is_saved = false
+
 
 var has_left_stage = {
 	"ToyBonnie": false,
@@ -40,8 +50,8 @@ var has_left_stage = {
 }
 
 var has_left_service = {
-	"Bonnie": false,
-	"Chica": false,
+	"WitheredBonnie": false,
+	"WitheredChica": false,
 	"Freddy": false
 }
 
@@ -50,13 +60,14 @@ const RESET_LOCATIONS = {
 	"ToyChica": "CAM_07",
 	"ToyFreddy": "CAM_09",
 	"Mangle": "CAM_11",
-	"Foxy": "CAM_08"
+	"Foxy": "CAM_08",
+	"WitheredBonnie": "CAM_07"
 }
 
 var camera_content_tracker = {}
 
 var location_locks = {
-	"CAM_08_Queue":["Foxy","Bonnie", "Freddy", "Chica"],
+	"CAM_08_Queue":["Foxy","WitheredBonnie", "Freddy", "Chica"],
 	"CAM_09_Queue": ["ToyBonnie", "ToyChica", "ToyFreddy"],
 	"RightVent": null,
 	"LeftVent": null,
@@ -97,8 +108,15 @@ const PATHS = {
 		"CAM_06": ["RightVent"],
 		"RightVent": ["RightVent"]
 	},
+	"WitheredBonnie": {
+		"CAM_08":["CAM_07"],
+		"CAM_07":["Hallway"],
+		"Hallway":["CAM_01"],
+		"CAM_01":["CAM_05"],
+		"CAM_05":["OFFICE"]
+	},
 	"Foxy":{
-		"CAM_06":["Hallway"],
+		"CAM_08":["Hallway"],
 	}
 }
 
@@ -108,8 +126,22 @@ func _ready():
 	mangle_vent_timer.timeout.connect(_on_mangle_vent_timer_timeout)
 	
 	office_attack_timer.timeout.connect(_on_office_attack_timer_timeout)
+	set_process(false)
+
+func _process(delta: float) -> void:
+	if locations["Foxy"] == "Hallway":
+		if office_node.get_mask_state() and no_threats_present():
+			foxy_d_counter += 2.0 * delta
+		else:
+			foxy_d_counter += 1.0 * delta
+	
+		foxy_attack_timer -= delta
+		if foxy_attack_timer <= 0:
+			emit_signal("jumpscare", "Foxy")
+
 
 func start_night(levels: Dictionary, cam_sys: Control, office: Control):
+	set_process(true)
 	aggression_levels = levels
 	camera_system = cam_sys
 	office_node = office 
@@ -118,7 +150,10 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	office_node.mangle_ceiling_view.visible = false
 	office_node.mangle_office_sound.stop()
 	
-	foxy_anger = 0.0
+	foxy_d_counter = 0.0
+	foxy_flash_counter = 0
+	foxy_attack_timer = 50.0
+	
 	foxy_is_active_easteregg = false
 	
 	locations = {
@@ -126,7 +161,8 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 		"ToyChica": "CAM_09",
 		"ToyFreddy": "CAM_09",
 		"Mangle": "CAM_12",
-		"Foxy": "CAM_08"
+		"Foxy": "CAM_08",
+		"WitheredBonnie": "CAM_08"
 	}
 	
 	has_left_stage = {
@@ -135,8 +171,15 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 		"ToyFreddy": false
 	}
 	
+	has_left_service = {
+		"WitheredBonnie": false,
+		"Chica": false,
+		"Freddy": false
+	}
+	
 	location_locks = {
 		"CAM_09_Queue": ["ToyBonnie", "ToyChica", "ToyFreddy"],
+		"CAM_08_Queue": ["Foxy", "WitheredBonnie", "Chica", "Freddy"],
 		"RightVent": null,
 		"LeftVent": null,
 		"Hallway": null,
@@ -150,6 +193,10 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	toy_chica_attack_pending = false
 	toy_freddy_attack_pending = false
 	toy_freddy_is_doomed = false
+	
+	withered_bonnie_attack_pending = false
+	withered_bonnie_is_doomed = false
+	withered_bonnie_is_saved = false
 	mangle_entry_pending = false
 	
 	camera_system.set_camera_content("CAM_09", "All")
@@ -157,29 +204,38 @@ func start_night(levels: Dictionary, cam_sys: Control, office: Control):
 	
 
 func _on_ai_tick_timer_timeout():
+	
 	for name in aggression_levels.keys():
-		if name != "Foxy":
+		if name != "Foxy": 
 			attempt_move(name)
+			
+	check_foxy_movement()
 	
 	var foxy_lvl = aggression_levels.get("Foxy", 0)
-	
 	if foxy_lvl > 0:
-		# Foxy se enfada más rápido si el monitor está ABAJO
-		if not office_node.CAM_ON:
-			foxy_anger += foxy_lvl * 1.5
-		else:
-			foxy_anger += foxy_lvl * 0.5
-			
-		print("AIManager: Ira de Foxy: %d / %d" % [foxy_anger, foxy_attack_threshold])
+		var current = locations["Foxy"]
 		
 		
-		if foxy_anger > foxy_threshold and locations["Foxy"] == "CAM_06":
-			move_foxy_to_hallway()
-			
-
-		if foxy_anger > foxy_attack_threshold and locations["Foxy"] == "Hallway":
-			print("AIManager: ¡JUMPSCARE DE FOXY!")
-			emit_signal("jumpscare", "Foxy")
+		if current == "CAM_08":
+			var chance = randi_range(1, 20)
+			if foxy_lvl >= chance:
+				move_foxy_to_hallway()
+		
+	
+		elif current == "Hallway":	
+			if is_foxy_blocked():	
+				pass
+			else:
+				if not office_node.CAM_ON:
+					foxy_anger += foxy_lvl * 1.5
+				else:
+					foxy_anger += foxy_lvl * 0.5
+				
+				print("AIManager: Ira de Foxy: %d / %d" % [foxy_anger, foxy_attack_threshold])
+		
+			if foxy_anger > foxy_attack_threshold:
+				print("AIManager: ¡JUMPSCARE DE FOXY!")
+				emit_signal("jumpscare", "Foxy")
 	
 
 func attempt_move(name: String):
@@ -192,7 +248,17 @@ func attempt_move(name: String):
 	var current_loc = locations[name]
 	var next_loc: String
 	
-
+	if name == "WitheredBonnie" and current_loc ==  "CAM_08":
+		if location_locks.has("CAM_08_Queue"):
+			if "WitheredBonnie" not in location_locks["CAM_08_Queue"]:
+				print("Withered Bonnie bloqueado")
+		location_locks["CAM_08_Queue"].erase("WitheredBonnie")
+		has_left_service["WitheredBonnie"] = true
+		
+	if name == "WitheredBonnie" and current_loc == "CAM_05":
+		print("AIManager: ¡Withered Bonnie BYPASS! Entrando directo a la oficina...")
+		withered_bonnie_enters_office()
+		return
 	
 
 	if name == "ToyFreddy" and current_loc == "Hallway2":
@@ -208,8 +274,6 @@ func attempt_move(name: String):
 		return
 	
 	next_loc = next_loc_options.pick_random()
-	
-
 	
 	print("AIManager: %s intentando moverse de %s a %s" % [name, current_loc, next_loc])
 
@@ -244,7 +308,7 @@ func attempt_move(name: String):
 		mangle_enters_office()
 		return
 		
-	if name == "Mangle" or name == "Foxy": # (Añade Foxy cuando lo tengas)
+	if name == "Mangle" or name == "Foxy": 
 		update_hallway_state()
 	
 	if name == "Mangle" and next_loc == "CAM_11":
@@ -253,11 +317,12 @@ func attempt_move(name: String):
 		
 	if name == "Mangle" and next_loc == "RightVent":
 		print("AIManager: Mangle llegó a la ventila. Iniciando cuenta atrás...")
-		# YA NO comprobamos si CAM_ON es true para entrar directo.
-		# Simplemente iniciamos su timer de paciencia.
-		# (Asegúrate de tener un timer llamado MangleVentTimer en la escena AIManager)
+
 		if has_node("MangleVentTimer"):
 			$MangleVentTimer.start()
+			
+	if name == "Bonnie":
+		update_hallway_state()
 	
 	if next_loc == "LeftVent":
 		office_node.set_vent_occupant("LeftVent", name)
@@ -275,11 +340,8 @@ func attempt_move(name: String):
 			office_node.set_hall_occupant(name)
 
 func update_camera_visuals(old_loc, new_loc, name):
-	
 	if name == "Mangle":
-	
 		camera_system.set_mangle_location(new_loc)
-		
 		
 		var background_cameras = ["CAM_06", "CAM_12", "RightVent"]
 		if new_loc in background_cameras:
@@ -336,7 +398,6 @@ func update_camera_visuals(old_loc, new_loc, name):
 	
 
 func update_show_stage():
-	# Verificamos quién está en el escenario
 	var bonnie_on_stage = locations["ToyBonnie"] == "CAM_09"
 	var chica_on_stage = locations["ToyChica"] == "CAM_09"
 	var freddy_on_stage = locations["ToyFreddy"] == "CAM_09"
@@ -361,22 +422,16 @@ func update_show_stage():
 func on_hall_flashlight_success(occupant_name: String):
 	print("AIManager: ¡El flash en %s funcionó!" % occupant_name)
 	
-	locations[occupant_name] = "CAM_08"
-	location_locks["Hallway"] = null
-	
-	office_node.set_hall_occupant("Empty")
-	
-	camera_system.set_camera_content("Hallway", "Empty")
-	camera_system.set_camera_content("CAM_08", occupant_name)
-	
-	if occupant_name == "Foxy" or occupant_name == "Foxy_Mangle":
-		print("AIManager: Foxy flasheado. Reduciendo ira...")
-		foxy_anger -= foxy_drain_speed
-	
-		if foxy_anger <= 0:
-			foxy_anger = 0
-			reset_foxy_to_parts_service()
+	if "Foxy" in occupant_name:
+		foxy_flash_counter += 1
+		foxy_attack_timer = 50.0  
 
+		print("AIManager: Foxy flasheado (%d veces)" % foxy_flash_counter)
+		var threshold = 5 * 1
+		if foxy_flash_counter >= threshold:
+			print("AIManager: ¡Foxy se rinde después de %d flashes!" % foxy_flash_counter)
+			reset_foxy_to_parts_service()
+		return
 func _on_right_vent_attack_timer_timeout():
 	if location_locks["RightVent"] == "ToyBonnie":
 		print("AIManager: ¡Ataque de Toy Bonnie PENDIENTE!")
@@ -386,7 +441,7 @@ func _on_left_vent_attack_timer_timeout():
 	if location_locks["LeftVent"] == "ToyChica":
 		print("AIManager: ¡Ataque de Toy Chica PENDIENTE!")
 		toy_chica_attack_pending = true
-
+		
 func reset_animatronic(name: String):
 	print("AIManager: ===== RESETEANDO %s =====" % name)
 	var old_loc = locations[name]
@@ -403,7 +458,6 @@ func reset_animatronic(name: String):
 	if location_locks.has(old_loc):
 		location_locks[old_loc] = null
 	
-	# --- NUEVA LÓGICA DE LIMPIEZA EXPLÍCITA ---
 	if old_loc == "RightVent":
 		office_node.set_vent_occupant("RightVent", "Empty")
 	elif old_loc == "LeftVent":
@@ -413,7 +467,6 @@ func reset_animatronic(name: String):
 	elif old_loc == "Office":
 		office_node.set_office_occupant("Empty")
 	
-	# --- Resetea banderas de ataque (tu código original) ---
 	if name == "ToyBonnie":
 		toy_bonnie_attack_pending = false
 		right_vent_attack_timer.stop()
@@ -427,6 +480,11 @@ func reset_animatronic(name: String):
 		has_left_stage[name] = false
 		if not "ToyFreddy" in location_locks["CAM_09_Queue"]:
 			location_locks["CAM_09_Queue"].push_back(name)
+	elif name == "WitheredBonnie":  
+		withered_bonnie_attack_pending = false
+		withered_bonnie_is_doomed = false
+		withered_bonnie_is_saved = false
+		$WitheredBonnieAttackTimer.stop()
 	if name == "Mangle": 
 		print("AIManager: Reseteando Mangle desde la ventila")
 		if has_node("MangleVentTimer"): $MangleVentTimer.stop()
@@ -434,11 +492,12 @@ func reset_animatronic(name: String):
 	print("AIManager: ===== RESETEO COMPLETO =====")
 
 func on_cameras_lowered():
+	
 	right_vent_attack_timer.stop()
 	left_vent_attack_timer.stop()
 	
 	if toy_bonnie_attack_pending:
-		check_mask_and_attack("ToyBonnie") 
+		check_mask_and_attack("ToyBonnie")
 	
 	if toy_chica_attack_pending:
 		check_mask_and_attack("ToyChica")
@@ -446,10 +505,12 @@ func on_cameras_lowered():
 	if toy_freddy_is_doomed:
 		check_mask_and_attack("ToyFreddy")
 		
+	if withered_bonnie_is_doomed:
+		check_mask_and_attack("WitheredBonnie")
+	
 	if mangle_inside_office:
 		emit_signal("jumpscare", "Mangle")
 	
-	# 2. Confirmación de Entrada (Para el SIGUIENTE turno)
 	if mangle_entry_pending:
 		print("AIManager: Monitor bajado. Mangle ahora es hostil.")
 		mangle_inside_office = true
@@ -458,18 +519,38 @@ func on_cameras_lowered():
 func on_cameras_raised():
 	if location_locks["RightVent"] == "ToyBonnie":
 		right_vent_attack_timer.start()
-		
+	
 	if location_locks["LeftVent"] == "ToyChica":
 		left_vent_attack_timer.start()
+	
+	
+	if location_locks["RightVent"] == "ToyBonnie":
 		
+		var instant_attack_chance = randi_range(1, 3)
+		if instant_attack_chance == 1:
+			print("Office: ¡Toy Bonnie ataca al subir cámaras!")
+			check_mask_and_attack("ToyBonnie")
+			return
+	
+	if location_locks["LeftVent"] == "ToyChica":
+		var instant_attack_chance = randi_range(1, 3)
+		if instant_attack_chance == 1:
+			print("Office: ¡Toy Chica ataca al subir cámaras!")
+			check_mask_and_attack("ToyChica")
+			return
+	
+	
 	if locations.get("ToyFreddy") == "Hallway2":
 		print("AIManager: ¡El jugador subió las cámaras! Toy Freddy entra a la oficina.")
 		toy_freddy_enters_office()
-		
-	if locations["Mangle"] == "RightVent": # O location_locks["RightVent"] == "Mangle"
+	
+	
+	if locations["Mangle"] == "RightVent":
 		print("AIManager: ¡Monitor subido con Mangle en Ventila! Entrando al techo...")
-		if has_node("MangleVentTimer"): $MangleVentTimer.stop()
-		mangle_enters_office()   # Entra a la oficina
+		if has_node("MangleVentTimer"):
+			$MangleVentTimer.stop()
+		mangle_enters_office()
+
 		
 func check_mask_and_attack(animatronic_name: String):
 	print("AIManager: ===== CHECK_MASK_AND_ATTACK para %s =====" % animatronic_name)
@@ -499,8 +580,8 @@ func toy_freddy_enters_office():
 	office_node.force_cameras_down()
 	office_node.set_office_occupant("ToyFreddy")
 
-	office_attack_timer.start() # Duración total (ej. 5s)
-	$OfficeMaskTimer.start()   # Ventana de reacción (ej. 1.5s)
+	office_attack_timer.start() 
+	$OfficeMaskTimer.start() 
 	
 	toy_freddy_attack_pending = true
 	toy_freddy_is_doomed = false
@@ -525,7 +606,7 @@ func _on_office_attack_timer_timeout():
 		
 
 func update_parts_service_camera():
-	var bonnie_here = false 
+	var bonnie_here = locations.get("WitheredBonnie") == "CAM_08"
 	var freddy_here = false
 	var chica_here = false
 	
@@ -555,24 +636,61 @@ func stop():
 
 
 func _on_fake_out_timer_timeout() -> void:
-	office_node.office_animatronic_view.hide()
-	office_node.stop_flicker_effect()
-	toy_freddy_attack_pending = false
+	if  locations.get("ToyFreddy") == "Office":
+		office_node.office_animatronic_view.hide()
+		office_node.stop_flicker_effect()
+		toy_freddy_attack_pending = false
+	elif locations.get("WitheredBonnie") == "Office":
+		office_node.stop_flicker_effect()
+		withered_bonnie_attack_pending = false
+	
+func check_foxy_movement():
+	var foxy_lvl = aggression_levels.get("Foxy", 0)
+	if foxy_lvl == 0 or locations["Foxy"] != "CAM_08":
+		return
+	
+	var random_offset = randi_range(1, 4)
+	if foxy_lvl >= (foxy_d_counter - random_offset):
+		move_foxy_to_hallway()
+		foxy_d_counter = 0.0
 
 func update_hallway_state():
-	var foxy_in_hall = locations.get("Foxy") == "Hallway"
-	var mangle_in_hall = locations.get("Mangle") == "Hallway"
+	var foxy = locations.get("Foxy") == "Hallway"
+	var mangle = locations.get("Mangle") == "Hallway"
+	var toy_chica = locations.get("ToyChica") == "Hallway"
+	var toy_freddy_far = locations.get("ToyFreddy") == "Hallway"
+	var toy_freddy_close = locations.get("ToyFreddy") == "Hallway2"
+	var bonnie = locations.get("WitheredBonnie") == "Hallway"
+	var w_freddy = false
+	var golden = false
 	
-	var hall_state = "Empty"
+	var state = "Empty"
 	
-	if foxy_in_hall and mangle_in_hall:
-		hall_state = "Foxy_Mangle"
-	elif foxy_in_hall:
-		hall_state = "Foxy"
-	elif mangle_in_hall:
-		hall_state = "Mangle"
 	
-	office_node.set_hall_occupant(hall_state)
+	if golden:
+		state = "GoldenFreddy"
+	elif mangle and foxy:
+		state = "Foxy_Mangle"
+	elif mangle:
+		state = "Mangle"
+	elif toy_chica:
+		state = "ToyChica"
+	elif toy_freddy_far:
+		state = "ToyFreddy_Far"
+	elif bonnie and foxy:
+		state = "WitheredBonnie_Foxy"
+	elif bonnie:
+		state = "WitheredBonnie"
+	elif toy_freddy_close:
+		state = "ToyFreddy_Close"
+	elif w_freddy:
+		state = "WitheredFreddy"
+	elif foxy:
+		state = "Foxy"
+	
+	print("AIManager: Estado del Pasillo calculado: ", state)
+	office_node.set_hall_occupant(state)  
+	
 	
 	
 func mangle_enters_office():
@@ -606,14 +724,61 @@ func move_foxy_to_hallway():
 	update_camera_visuals("CAM_08", "Hallway", "Foxy")
 	update_hallway_state() 
 	
-func reset_foxy_to_parts_service():
-	print("AIManager: Foxy regresa a Parts & Service (Easter Egg Activado).")
-	locations["Foxy"] = "CAM_08"
+func withered_bonnie_enters_office():
+	print("AIManager: ===== WITHERED BONNIE ENTRA A LA OFICINA =====")
 	
-	foxy_is_active_easteregg = true
+	
+	locations["WitheredBonnie"] = "Office"
+	location_locks["LeftVent"] = null
+	location_locks["Office"] = "WitheredBonnie"
+	
+	
+	if office_node.CAM_ON:
+		office_node.force_cameras_down()
+	
+	
+	office_node.set_vent_occupant("LeftVent", "Empty")
+	office_node.set_office_occupant("WitheredBonnie")
+	
+   
+	office_node.start_flicker_effect()
+	
+	
+	$WitheredBonnieAttackTimer.start()    
+	$WitheredBonnieMaskTimer.start() 
+	
+	withered_bonnie_attack_pending = true
+	withered_bonnie_is_doomed = false
+	withered_bonnie_is_saved = false
+	
+func reset_foxy_to_parts_service():
+	print("AIManager: Foxy regresa a Parts & Service.")
+	locations["Foxy"] = "CAM_08"
+	foxy_anger = 0.0
+	foxy_flash_counter = 0
+	foxy_attack_timer = 50.0
+	
+	
+	var all_gone = (has_left_service.get("WitheredBonnie", true) and has_left_service.get("Chica", true) and has_left_service.get("Freddy", true))
+	
+	foxy_is_active_easteregg = all_gone
 	
 	update_hallway_state()
 	update_camera_visuals("Hallway", "CAM_08", "Foxy")
+
+
+func is_foxy_blocked() -> bool:
+	if locations.get("ToyFreddy") == "Office" or mangle_inside_office:
+		return true
+		
+	if locations.get("ToyFreddy") == "Hallway" or locations.get("ToyFreddy") == "Hallway2":
+		return true
+	if locations.get("ToyChica") == "Hallway": 
+		return true
+	return false
+	
+func no_threats_present() -> bool:
+	return (location_locks["LeftVent"] == null and location_locks["RightVent"] == null and location_locks["Office"] == null)
 
 func _on_office_mask_timer_timeout():
 	if office_node.get_mask_state():
@@ -624,3 +789,37 @@ func _on_office_mask_timer_timeout():
 		print("AIManager: Máscara NO puesta. Jugador CONDENADO.")
 		toy_freddy_is_saved = false
 		toy_freddy_is_doomed = true
+
+
+func _on_withered_bonnie_attack_timer_timeout():
+	if not withered_bonnie_attack_pending:
+		return
+	office_node.set_office_occupant("Empty")
+
+	if withered_bonnie_is_saved:
+		print("AIManager: Ejecutando reset de Withered Bonnie.")
+		reset_animatronic("WitheredBonnie")
+	elif withered_bonnie_is_doomed:
+		print("AIManager: Jugador condenado. Jumpscare pendiente.")
+	else:
+	
+		if office_node.get_mask_state():
+			reset_animatronic("WitheredBonnie")
+		else:
+			emit_signal("jumpscare", "WitheredBonnie")
+	
+	withered_bonnie_attack_pending = false
+
+func is_withered_bonnie_doomed() -> bool:
+	return withered_bonnie_is_doomed
+
+func _on_withered_bonnie_mask_timer_timeout():
+	if office_node.get_mask_state():
+		print("AIManager: ¡Máscara puesta a tiempo! Jugador SALVADO (esperando fin de cinemática).")
+		withered_bonnie_is_saved = true
+		withered_bonnie_is_doomed = false
+	else:
+		print("AIManager: ¡Máscara NO puesta! Jugador CONDENADO.")
+		withered_bonnie_is_saved = false
+		withered_bonnie_is_doomed = true
+		

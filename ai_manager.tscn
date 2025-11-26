@@ -11,27 +11,36 @@ script = ExtResource("1_fs0f7")
 wait_time = 5.010000000000001
 
 [node name="RightVentAttackTimer" type="Timer" parent="."]
-wait_time = 5.010000000000001
+wait_time = 15.0
 
 [node name="LeftVentAttackTimer" type="Timer" parent="."]
-wait_time = 5.010000000000001
+wait_time = 15.0
 
 [node name="OfficeAttackTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
 [node name="FakeOutTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 one_shot = true
 
 [node name="OfficeMaskTimer" type="Timer" parent="."]
-wait_time = 1.25
+wait_time = 1.5
 one_shot = true
 
 [node name="MangleVentTimer" type="Timer" parent="."]
+wait_time = 12.5
+
+[node name="WitheredBonnieAttackTimer" type="Timer" parent="."]
 wait_time = 5.0
+one_shot = true
+
+[node name="WitheredBonnieMaskTimer" type="Timer" parent="."]
+wait_time = 1.2
 one_shot = true
 
 [connection signal="timeout" from="LeftVentAttackTimer" to="." method="_on_left_vent_attack_timer_timeout"]
 [connection signal="timeout" from="FakeOutTimer" to="." method="_on_fake_out_timer_timeout"]
 [connection signal="timeout" from="OfficeMaskTimer" to="." method="_on_office_mask_timer_timeout"]
+[connection signal="timeout" from="WitheredBonnieAttackTimer" to="." method="_on_withered_bonnie_attack_timer_timeout"]
+[connection signal="timeout" from="WitheredBonnieMaskTimer" to="." method="_on_withered_bonnie_mask_timer_timeout"]
