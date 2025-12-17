@@ -1,0 +1,105 @@
+[gd_scene load_steps=19 format=3 uid="uid://d3qr7cskxyeh2"]
+
+[ext_resource type="Script" uid="uid://dyphyxsqi6qt8" path="res://victory.gd" id="1_7bnjr"]
+[ext_resource type="SpriteFrames" uid="uid://nqo1uswd7apc" path="res://Assets/confetti.tres" id="2_mp2je"]
+[ext_resource type="Texture2D" uid="uid://beoj7uwq0psyv" path="res://Assets/Text/297.png" id="15_wrdiq"]
+[ext_resource type="Texture2D" uid="uid://bqmyecalvbxwn" path="res://Assets/Text/290.png" id="16_eykby"]
+[ext_resource type="Texture2D" uid="uid://c611s8vr8d5ow" path="res://Assets/Text/300.png" id="17_an0yt"]
+[ext_resource type="Texture2D" uid="uid://c03ualrvepl0h" path="res://Assets/Text/295.png" id="17_qs43y"]
+[ext_resource type="Texture2D" uid="uid://dcg0v166cpdqq" path="res://Assets/Text/302.png" id="18_2kocx"]
+[ext_resource type="Texture2D" uid="uid://c3siilcntgspt" path="res://Assets/Text/304.png" id="19_eh6u6"]
+[ext_resource type="Texture2D" uid="uid://csom4kyw1q6n2" path="res://Assets/Text/440.png" id="20_t1h25"]
+[ext_resource type="Texture2D" uid="uid://bdi6v6pivgv8p" path="res://Assets/Text/441.png" id="21_ny1o3"]
+[ext_resource type="Texture2D" uid="uid://bf4vvw6nqyv6s" path="res://Assets/Text/336.png" id="22_mtyox"]
+[ext_resource type="Texture2D" uid="uid://dfkrlxnstndo8" path="res://Assets/Text/335.png" id="23_p8owr"]
+[ext_resource type="Texture2D" uid="uid://bmw171gpecvl" path="res://Assets/Text/427.png" id="24_ght4r"]
+[ext_resource type="Texture2D" uid="uid://ryd6jbyjck0u" path="res://Assets/Text/364.png" id="25_fln2w"]
+[ext_resource type="Texture2D" uid="uid://ep0j8nwsel7n" path="res://Assets/Text/432.png" id="26_bwij5"]
+[ext_resource type="AudioStream" uid="uid://bkxh3us8boc4p" path="res://Assets/Sounds/[19] Clocks_Chimes_Cl_02480702.wav" id="27_an0yt"]
+[ext_resource type="AudioStream" uid="uid://b4p6b3y82ii7f" path="res://Assets/Sounds/[18] CROWD_SMALL_CHIL_EC049202.wav" id="28_2kocx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nahtd"]
+animations = [{
+"frames": [{
+"duration": 1.31,
+"texture": ExtResource("15_wrdiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_eykby")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_an0yt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_2kocx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_eh6u6")
+}, {
+"duration": 2.01,
+"texture": ExtResource("20_t1h25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ny1o3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_mtyox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_p8owr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_ght4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_fln2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_bwij5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7bnjr")
+confetti_frames = ExtResource("2_mp2je")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1166.0
+offset_bottom = 652.0
+color = Color(0, 0, 0, 1)
+
+[node name="ConfettiAnim" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("2_mp2je")
+frame = 7
+frame_progress = 0.49569896
+
+[node name="ClockAnim" type="AnimatedSprite2D" parent="."]
+position = Vector2(490, 320)
+sprite_frames = SubResource("SpriteFrames_nahtd")
+frame = 11
+frame_progress = 1.0
+
+[node name="ClockChime" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_an0yt")
+
+[node name="CheerSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("28_2kocx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 557.0
+offset_top = 281.0
+offset_right = 736.0
+offset_bottom = 365.0
+texture = ExtResource("17_qs43y")

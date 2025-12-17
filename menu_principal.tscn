@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://kbsv76i35fis"]
+[gd_scene load_steps=18 format=3 uid="uid://kbsv76i35fis"]
 
 [ext_resource type="Script" uid="uid://dtkbqkhf3vvr0" path="res://Assets/Menu/control.gd" id="1_dcvsf"]
 [ext_resource type="Texture2D" uid="uid://cim000mf6oe87" path="res://Assets/Menu/321.png" id="2_kcxxd"]
@@ -12,43 +12,46 @@
 [ext_resource type="Texture2D" uid="uid://ca8fw8aw6yrov" path="res://Assets/Menu/332.png" id="10_dfnfp"]
 [ext_resource type="Texture2D" uid="uid://dxh4pymv16inq" path="res://Assets/Menu/334.png" id="11_pj3pu"]
 [ext_resource type="Texture2D" uid="uid://dv3y0e3l38j3a" path="res://Assets/Menu/469.png" id="12_xmm6j"]
+[ext_resource type="Texture2D" uid="uid://dq2ninttshg5t" path="res://Assets/Menu/303.png" id="13_kcxxd"]
 [ext_resource type="Texture2D" uid="uid://b2j87scwigv1x" path="res://Assets/Menu/301.png" id="13_xd7cn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mshha"]
 animations = [{
 "frames": [{
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("6_v520y")
 }, {
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("7_2mtc3")
 }, {
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("8_w0cmo")
 }, {
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("9_oim03")
 }, {
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("10_dfnfp")
 }, {
-"duration": 0.51,
+"duration": 1.0,
 "texture": ExtResource("11_pj3pu")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 16.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ahb2d"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_831ug"]
 
-[node name="MenuPrincipal" type="Node2D"]
-position = Vector2(-5, 0)
+[node name="MenuPrincipal" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -5.0
+offset_right = -5.0
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -84,17 +87,20 @@ texture = ExtResource("5_jwgco")
 
 [node name="Animatronics" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_left = 73.0
-offset_right = 1097.0
-offset_bottom = 768.0
+offset_left = 7.0
+offset_top = -54.0
+offset_right = 1160.0
+offset_bottom = 745.0
 texture = ExtResource("2_kcxxd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control"]
 modulate = Color(1, 1, 1, 0.6)
 clip_children = 2
 z_index = 1
-position = Vector2(586, 379)
+position = Vector2(583, 379)
+scale = Vector2(1.125, 1)
 sprite_frames = SubResource("SpriteFrames_mshha")
+frame_progress = 0.37818152
 
 [node name="Glitch" type="AnimatedSprite2D" parent="Control"]
 sprite_frames = SubResource("SpriteFrames_ahb2d")
@@ -113,7 +119,12 @@ offset_right = 406.0
 offset_bottom = 289.0
 texture = ExtResource("12_xmm6j")
 
-[node name="New Game" type="TextureButton" parent="Control"]
+[node name="Timer2" type="Timer" parent="Control"]
+wait_time = 3.1999999999999997
+one_shot = true
+ignore_time_scale = true
+
+[node name="NewGame" type="TextureButton" parent="Control"]
 z_index = 1
 layout_mode = 0
 offset_left = 105.0
@@ -125,10 +136,24 @@ action_mode = 0
 button_group = SubResource("ButtonGroup_831ug")
 texture_normal = ExtResource("13_xd7cn")
 
-[node name="Timer2" type="Timer" parent="Control"]
-wait_time = 3.1999999999999997
-one_shot = true
-ignore_time_scale = true
+[node name="Continue" type="TextureButton" parent="Control"]
+z_index = 1
+layout_mode = 0
+offset_left = 103.0
+offset_top = 433.0
+offset_right = 325.0
+offset_bottom = 473.0
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_831ug")
+texture_normal = ExtResource("13_kcxxd")
+
+[node name="NightLabel" type="TextureRect" parent="Control/Continue"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="timeout" from="Control/Timer" to="Control" method="_on_timer_timeout"]
 [connection signal="timeout" from="Control/Timer2" to="Control" method="_on_timer_2_timeout"]
+[connection signal="pressed" from="Control/NewGame" to="Control" method="_on_new_game_pressed"]
+[connection signal="pressed" from="Control/Continue" to="Control" method="_on_continue_pressed"]

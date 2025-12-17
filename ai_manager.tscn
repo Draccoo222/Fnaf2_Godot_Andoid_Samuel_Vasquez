@@ -39,8 +39,28 @@ one_shot = true
 wait_time = 1.2
 one_shot = true
 
+[node name="WitheredChicaAttackTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="WitheredChicaMaskTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="WitheredFreddyAttackTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="WitheredFreddyMaskTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
 [connection signal="timeout" from="LeftVentAttackTimer" to="." method="_on_left_vent_attack_timer_timeout"]
 [connection signal="timeout" from="FakeOutTimer" to="." method="_on_fake_out_timer_timeout"]
 [connection signal="timeout" from="OfficeMaskTimer" to="." method="_on_office_mask_timer_timeout"]
 [connection signal="timeout" from="WitheredBonnieAttackTimer" to="." method="_on_withered_bonnie_attack_timer_timeout"]
 [connection signal="timeout" from="WitheredBonnieMaskTimer" to="." method="_on_withered_bonnie_mask_timer_timeout"]
+[connection signal="timeout" from="WitheredChicaAttackTimer" to="." method="_on_withered_chica_attack_timer_timeout"]
+[connection signal="timeout" from="WitheredChicaMaskTimer" to="." method="_on_withered_chica_mask_timer_timeout"]
+[connection signal="timeout" from="WitheredFreddyAttackTimer" to="." method="_on_withered_freddy_attack_timer_timeout"]
+[connection signal="timeout" from="WitheredFreddyMaskTimer" to="." method="_on_withered_freddy_mask_timer_timeout"]

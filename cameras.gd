@@ -15,7 +15,13 @@ extends Control
 @onready var static_anim = $StaticTransition # Tu nodo de estática (AnimatedSprite2D)
 @onready var mangle_static_sound = $ManglePoses/MangleStaticSound
 @onready var mangle_poses_root = $ManglePoses
+@onready var music_box_melody = $MusicBoxMelody
+@onready var wind_sound = $WindSound
 
+
+signal flashlight_toggled(is_on)
+
+var is_flashlight_blocked = false
 
 
 var curCam: TextureRect
@@ -152,6 +158,8 @@ var camera_content = {
 @export var drain_rate: float = 0.2
 @export var wind_rate: float = 5.0
 
+var music_box_drain_rate: float = 1.0
+
 @onready var warning_sign_1 = $CamUI/WarningSign1
 @onready var warning_sign_2 = $CamUI/WarningSign2
 @onready var warning_timer_1 = $CamUI/WarningTimer1
@@ -178,6 +186,8 @@ var mangle_poses = {}
 var mangle_location = "CAM_12"
 var mangle_initial_x = {}
 
+var music_box_playback_pos: float = 0.0
+
 var mangle_offsets = {
 	"CAM_11": 0.0,
 	"CAM_10": 0.0, 
@@ -194,9 +204,18 @@ var mangle_parallax_factors = {
 	"CAM_02": 1.0
 }
 
+var current_puppet_phase: int = 0 
+var puppet_safe_threshold: float = 20.0 
+
+var mangle_camera_sound_position: float = 0.0
+var mangle_vent_sound_position: float = 0.0
+
 func _ready():
 	static_overlay.play()
 	static_transition.hide() 
+	
+	grace_period_timer.wait_time = 3.0 
+	grace_period_timer.one_shot = true
 	
 	var group: ButtonGroup = ButtonGroup.new()
 	group.pressed.connect(buttongroup_pressed)
@@ -266,22 +285,22 @@ func _ready():
 		"CAM_02": {
 			"Dark_Empty": cam02_dark_empty,
 			"Lit_Empty": cam02_lit_empty,
-			"Dark_Chica": cam02_dark_chica,
-			"Lit_Chica": cam02_lit_chica,
+			"Dark_WitheredChica": cam02_dark_chica,
+			"Lit_WitheredChica": cam02_lit_chica,
 			"Lit_ToyBonnie": cam02_lit_toybonnie
 		},
 		"CAM_03": {
 			"Dark_Empty": cam03_dark_empty,
 			"Lit_Empty": cam03_lit_empty,
-			"Dark_Freddy": cam03_dark_freddy,
-			"Lit_Freddy": cam03_lit_freddy,
+			"Dark_WitheredFreddy": cam03_dark_freddy,
+			"Lit_WitheredFreddy": cam03_lit_freddy,
 			"Lit_ToyBonnie": cam03_lit_toybonnie
 		},
 		"CAM_04": {
 			"Dark_Empty": cam04_dark_empty,
 			"Lit_Empty": cam04_lit_empty,
 			"Lit_ToyChica": cam04_lit_toychica,
-			"Lit_Chica": cam04_lit_chica,
+			"Lit_WitheredChica": cam04_lit_chica,
 			"Dark_ToyBonnie": cam04_dark_toybonnie,
 			"Lit_ToyBonnie": cam04_lit_toybonnie
 		},
@@ -298,7 +317,7 @@ func _ready():
 			"Lit_Empty": cam06_lit_empty,
 			"Lit_ToyBonnie": cam06_lit_toybonnie,
 			"Lit_Mangle": cam06_lit_mangle,
-			"Lit_Chica": cam06_lit_chica
+			"Lit_WitheredChica": cam06_lit_chica
 		},
 		"CAM_07": {
 			"Dark_Empty": cam07_dark_empty,
@@ -306,15 +325,15 @@ func _ready():
 			"Dark_ToyChica": cam07_dark_toychica,
 			"Lit_ToyChica": cam07_lit_toychica,
 			"Lit_WitheredBonnie": cam07_lit_bonnie,
-			"Lit_Freddy": cam07_lit_freddy
+			"Lit_WitheredFreddy": cam07_lit_freddy
 		},
 		"CAM_08": {
 			"Dark_Empty": cam08_dark_empty,
 			"Lit_Empty": cam08_lit_empty,
-			"Dark_Chica": cam08_dark_chica,
-			"Lit_Chica": cam08_lit_chica,
+			"Dark_WitheredChica": cam08_dark_chica,
+			"Lit_WitheredChica": cam08_lit_chica,
 			"Lit_WitheredBonnie": cam08_lit_bonnie,
-			"Lit_Freddy": cam08_lit_freddy,
+			"Lit_WitheredFreddy": cam08_lit_freddy,
 			"Lit_Foxy": cam08_lit_foxy,
 			"Lit_ShadowFreddy": cam08_lit_shadowfreddy
 		},
@@ -372,16 +391,28 @@ func _ready():
 	
 	
 	
+	
 
 func buttongroup_pressed(button : TextureButton):
 		cambiar_vista_a(button.name)
 
 func _process(delta):
 	if music_box_locked:
+		if music_box_melody.playing: music_box_melody.stop()
+		if wind_sound.playing: wind_sound.stop()
 		return
+		
+	if is_visible_in_tree() and curCam and curCam.name == "CAM_11" and music_box_bar.value > 0:
+		if not music_box_melody.playing:
+			music_box_melody.play(music_box_playback_pos)
+	else:
+		if music_box_melody.playing:
+			music_box_playback_pos = music_box_melody.get_playback_position()
+			music_box_melody.stop()
 
 	if music_box_button.is_pressed():
-
+		if not wind_sound.playing:
+			wind_sound.play()
 		if is_in_grace_period:
 			grace_period_timer.stop()
 			is_in_grace_period = false
@@ -390,7 +421,11 @@ func _process(delta):
 		music_box_bar.value = clamp(music_box_bar.value, 0, 100)
 		
 	else:
-		music_box_bar.value -= drain_rate * delta
+		if wind_sound.playing:
+			wind_sound.stop()
+		if is_in_grace_period and curCam and curCam.name == "CAM_11":
+			update_puppet_escape_visuals()
+		music_box_bar.value -= (3.0 * delta) * music_box_drain_rate
 	
 	music_box_bar.value = clamp(music_box_bar.value, 0, 100)
 
@@ -409,18 +444,33 @@ func _process(delta):
 
 	if music_box_bar.value <= 0:
 		if not is_in_grace_period:
+			print("CameraSystem: ¡Caja vacía! Iniciando secuencia de escape.")
 			is_in_grace_period = true
 			grace_period_timer.start()
-			print("¡PERIODO DE GRACIA INICIADO!")
-	else:
+		grace_period_timer.paused = false
+		
+	elif music_box_bar.value > puppet_safe_threshold:
 		if is_in_grace_period:
-			grace_period_timer.stop()
+			print("CameraSystem: Caja recargada a nivel seguro. Puppet se esconde.")
 			is_in_grace_period = false
+			grace_period_timer.stop()
+			current_puppet_phase = 0 
+	else:
+		if is_in_grace_period and not grace_period_timer.is_stopped():
+			grace_period_timer.paused = true
+
+	
+	if is_in_grace_period and curCam and curCam.name == "CAM_11":
+		update_puppet_escape_visuals()
 
 	if curCam and curCam.is_in_group("panning_cameras"):
 		curCam.position.x = pan_value
 
 func cambiar_vista_a(nombre_camara: String):
+	if mangle_static_sound.playing:
+		mangle_camera_sound_position = mangle_static_sound.get_playback_position()
+		mangle_static_sound.stop()
+	
 	static_transition.show()
 	static_transition.play()
 	
@@ -432,6 +482,8 @@ func cambiar_vista_a(nombre_camara: String):
 	curCam.show()
 	
 	update_camera_view()
+	
+	
 	
 	if curCam.is_in_group("panning_cameras"):
 		curCam.position.x = pan_value
@@ -453,7 +505,6 @@ func cambiar_vista_a(nombre_camara: String):
 		music_box_circle.visible = false
 		music_box_button.visible = false
 		music_box_button.disabled = true
-	
 	update_mangle_presence()
 	
 func _on_static_2_animation_finished():
@@ -462,6 +513,10 @@ func _on_static_2_animation_finished():
 
 func update_camera_view():
 	if not curCam:
+		return
+		
+	if is_in_grace_period and curCam.name == "CAM_11":
+		update_puppet_escape_visuals()
 		return
 
 	var cam_name = curCam.name
@@ -491,12 +546,17 @@ func update_camera_view():
 
 
 func _on_flash_light_button_down() -> void:
+	if is_flashlight_blocked:
+		return
+		
 	is_flashlight_on = true
+	emit_signal("flashlight_toggled", true)
 	update_camera_view()
 
 func _on_flash_light_button_up() -> void:
 	is_flashlight_on = false
 	update_camera_view()
+	emit_signal("flashlight_toggled", false)
 	
 func set_camera_content(camera_name: String, content: String):
 	camera_content[camera_name] = content
@@ -606,36 +666,105 @@ func set_mangle_location(new_location: String):
 	
 	
 func update_mangle_presence():
-	# 1. Ocultamos TODAS las poses primero
 	for pose in mangle_poses.values():
-		if pose: pose.visible = false
+		if pose: 
+			pose.visible = false
 	
-	# Si no hay cámara activa, salimos (pero ya ocultamos todo, que es bueno)
-	if not curCam: 
-		mangle_static_sound.stop()
+	if not curCam:
+		if mangle_static_sound.playing:
+			mangle_camera_sound_position = mangle_static_sound.get_playback_position()
+			mangle_static_sound.stop()
 		return
-
 	var current_cam_name = curCam.name
-	
-	# 2. ¿Debe estar Mangle aquí?
 	if current_cam_name == mangle_location:
-		
-		# A. VISUALES (Se ejecutan SIEMPRE, aunque el monitor esté bajando)
 		if mangle_poses.has(current_cam_name):
 			var pose_node = mangle_poses[current_cam_name]
 			if pose_node:
 				pose_node.visible = true
-				# Forzamos la posición inmediatamente para evitar parpadeos
 				var base = mangle_initial_x.get(current_cam_name, 0.0)
 				pose_node.position.x = base + pan_value
-		
-		# B. AUDIO (Solo suena si el sistema es visible)
 		if is_visible_in_tree():
 			if not mangle_static_sound.playing:
-				mangle_static_sound.play()
+				print("CameraSystem: Reproduciendo sonido de Mangle")
+				if mangle_camera_sound_position > 0:
+					mangle_static_sound.play(mangle_camera_sound_position)
+				else:
+					mangle_static_sound.play()
 		else:
+			if mangle_static_sound.playing:
+				mangle_camera_sound_position = mangle_static_sound.get_playback_position()
+				mangle_static_sound.stop()
+	else:
+		if mangle_static_sound.playing:
+			mangle_camera_sound_position = mangle_static_sound.get_playback_position()
 			mangle_static_sound.stop()
 			
+func turn_off_flashlight():
+	if is_flashlight_on:
+		is_flashlight_on = false
+		update_camera_view()
+		emit_signal("flashlight_toggled", false)
+		
+func update_puppet_escape_visuals():
+	if not curCam: return
+	
+	var time_left = grace_period_timer.time_left
+	var total_time = grace_period_timer.wait_time
+	if total_time <= 0: return 
+	
+	var new_phase = 0
+	
+	if time_left > (total_time * 0.66):
+		new_phase = 1
+		curCam.texture = camera_textures["CAM_11"]["Lit_Puppet1"]
+	elif time_left > (total_time * 0.33):
+		new_phase = 2 
+		curCam.texture = camera_textures["CAM_11"]["Lit_Puppet2"]
 	else:
-		# No está en esta cámara
+		new_phase = 3 
+		curCam.texture = camera_textures["CAM_11"]["Lit_PuppetFinal"]
+		
+	
+	if new_phase != current_puppet_phase:
+		if current_puppet_phase != 0: 
+			print("CameraSystem: ¡Puppet se movió! Apagando linterna para tensión.")
+			
+			
+			turn_off_flashlight() 
+			
+		current_puppet_phase = new_phase
+
+
+func set_flashlight_blocked(blocked: bool):
+	is_flashlight_blocked = blocked
+	if blocked and is_flashlight_on:
+		turn_off_flashlight()
+
+
+
+func on_monitor_lowered():
+	
+	if music_box_melody.playing:
+		music_box_playback_pos = music_box_melody.get_playback_position()
+		music_box_melody.stop()
+		
+	
+	if mangle_static_sound.playing:
+		mangle_camera_sound_position = mangle_static_sound.get_playback_position()
 		mangle_static_sound.stop()
+		
+	
+	if wind_sound.playing:
+		wind_sound.stop()
+
+func on_monitor_raised():
+	
+	if curCam and curCam.name == "CAM_11" and music_box_bar.value > 0 and not music_box_locked:
+		music_box_melody.play(music_box_playback_pos)
+		
+	if curCam and curCam.name == mangle_location:
+		if not mangle_static_sound.playing:
+			if mangle_camera_sound_position > 0:
+				mangle_static_sound.play(mangle_camera_sound_position)
+			else:
+				mangle_static_sound.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=162 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
@@ -155,6 +155,8 @@
 [ext_resource type="Texture2D" uid="uid://ysw2ekx1i28h" path="res://Assets/Cameras/musicBox/494.png" id="116_l7n41"]
 [ext_resource type="Texture2D" uid="uid://cfganuu8nkj3o" path="res://Assets/Cameras/musicBox/496.png" id="117_tciy0"]
 [ext_resource type="Texture2D" uid="uid://cnc6j4tl0oroo" path="res://Assets/Cameras/Err/223.png" id="150_la3bp"]
+[ext_resource type="AudioStream" uid="uid://bgw1nnv8xy5u5" path="res://Assets/Sounds/[15] Music_Box_Melody_Playful.wav" id="156_la3bp"]
+[ext_resource type="AudioStream" uid="uid://cancdxex4ip1w" path="res://Assets/Sounds/[33] windup2.wav" id="157_cftqn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
 animations = [{
@@ -916,6 +918,12 @@ offset_top = 25.0
 offset_right = 822.0
 offset_bottom = 60.0
 texture = ExtResource("150_la3bp")
+
+[node name="MusicBoxMelody" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("156_la3bp")
+
+[node name="WindSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("157_cftqn")
 
 [connection signal="timeout" from="CamUI/RecTimer" to="." method="_on_rec_timer_timeout"]
 [connection signal="button_down" from="FlashLight" to="." method="_on_flash_light_button_down"]
