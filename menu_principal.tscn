@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://kbsv76i35fis"]
+[gd_scene load_steps=26 format=3 uid="uid://kbsv76i35fis"]
 
 [ext_resource type="Script" uid="uid://dtkbqkhf3vvr0" path="res://Assets/Menu/control.gd" id="1_dcvsf"]
 [ext_resource type="Texture2D" uid="uid://cim000mf6oe87" path="res://Assets/Menu/321.png" id="2_kcxxd"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dv3y0e3l38j3a" path="res://Assets/Menu/469.png" id="12_xmm6j"]
 [ext_resource type="Texture2D" uid="uid://dq2ninttshg5t" path="res://Assets/Menu/303.png" id="13_kcxxd"]
 [ext_resource type="Texture2D" uid="uid://b2j87scwigv1x" path="res://Assets/Menu/301.png" id="13_xd7cn"]
+[ext_resource type="AudioStream" uid="uid://b5twbpkc53wss" path="res://Assets/Sounds/[14] The_Sand_Temple_Loop_G.wav" id="22_dfnfp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mshha"]
 animations = [{
@@ -169,6 +170,9 @@ offset_top = 6.0
 offset_right = 269.0
 offset_bottom = 37.0
 texture = ExtResource("2_oim03")
+
+[node name="MainTheme" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("22_dfnfp")
 
 [connection signal="timeout" from="Control/Timer" to="Control" method="_on_timer_timeout"]
 [connection signal="timeout" from="Control/Timer2" to="Control" method="_on_timer_2_timeout"]

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5twbpkc53wss"
+path="res://.godot/imported/[14] The_Sand_Temple_Loop_G.wav-9ca68538ab63fc8aa4a8324b95b82ba4.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/[14] The_Sand_Temple_Loop_G.wav"
+dest_files=["res://.godot/imported/[14] The_Sand_Temple_Loop_G.wav-9ca68538ab63fc8aa4a8324b95b82ba4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -477,6 +477,7 @@ func _on_mask_button_pressed() -> void:
 		$RightLight.hide()
 		$HallLight.hide()
 		
+		$Breathe.play()
 		mask_on_sound.play()
 		
 		await get_tree().create_timer(0.3).timeout
@@ -512,6 +513,7 @@ func _on_mask_button_pressed() -> void:
 		$LeftLight.show()
 		$RightLight.show()
 		$HallLight.show()
+		$Breathe.stop()
 		mask_is_fully_on = false 
 		maskAnim.position = initial_mask_pos 
 		mask_off_sound.play()
@@ -866,7 +868,7 @@ func set_vent_occupant(vent_name: String, occupant_name: String):
 		print("Office: ===== Ventilación Derecha ahora ocupada por: '%s' =====" % right_vent_occupant)
 		
 		if occupant_name == "Mangle" and old_occupant != "Mangle":
-			# Mangle ENTERS vent - START sound
+			
 			print("Office: ¡Mangle en ventila! Iniciando estática automáticamente.")
 			if mangle_vent_sound_position > 0:
 				mangle_office_sound.play(mangle_vent_sound_position)
@@ -874,7 +876,7 @@ func set_vent_occupant(vent_name: String, occupant_name: String):
 				mangle_office_sound.play()
 		
 		elif old_occupant == "Mangle" and occupant_name != "Mangle":
-			# ✅ Mangle left the vent - STOP sound
+			
 			print("Office: Mangle salió de la ventila. Deteniendo estática.")
 			mangle_sound_playback_position = mangle_office_sound.get_playback_position()
 			mangle_office_sound.stop()
@@ -921,7 +923,7 @@ func _on_ai_manager_jumpscare(animatronic_name: String):
 		mangle_office_sound.stop()
 	mangle_sound_playback_position = 0.0
 	
-	# Hide Mangle visuals
+	
 	office_animatronic_view.hide()
 	mangle_ceiling_view.visible = false
 	
@@ -1134,7 +1136,7 @@ func get_night_ai_levels(night: int) -> Dictionary:
 				"BB": 20, "GoldenFreddy": 20
 			}
 		_:
-			# Por defecto (Noche 0 o pruebas)
+		
 			return {
 				"ToyBonnie": 0, "ToyChica": 0, "ToyFreddy": 0,
 				"Mangle": 0, "Foxy": 0,
@@ -1281,6 +1283,7 @@ func start_phone_call():
 		4: call_to_play = call_night_4
 		5: call_to_play = call_night_5
 		6: call_to_play = call_night_6
+		
 		
 	if call_to_play:
 		$PhoneSystem.stream = call_to_play

@@ -1,4 +1,4 @@
-[gd_scene load_steps=241 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=242 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
@@ -235,6 +235,7 @@
 [ext_resource type="AudioStream" uid="uid://cxajagp2rkls3" path="res://Assets/Sounds/Ambience/[17] ventwalk1.wav" id="227_m12em"]
 [ext_resource type="AudioStream" uid="uid://hs3m7muwn1en" path="res://Assets/Sounds/Ambience/[7] FENCING_43_GEN-HDF10954.wav" id="228_4wby0"]
 [ext_resource type="AudioStream" uid="uid://mxjkplnw6g4j" path="res://Assets/Sounds/Ambience/[8] FENCING_42_GEN-HDF10953.wav" id="229_0nrag"]
+[ext_resource type="AudioStream" uid="uid://becef2x5xno73" path="res://Assets/Sounds/Ambience/[9] deepbreaths.wav" id="236_2obbq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -1250,6 +1251,9 @@ stream = ExtResource("229_0nrag")
 volume_db = -10.0
 
 [node name="PhoneSystem" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Breathe" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("236_2obbq")
 
 [connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
 [connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]

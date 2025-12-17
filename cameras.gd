@@ -11,8 +11,8 @@ extends Control
 @onready var static_transition = $Static2
 @onready var cam_buttons_root = $CamButtons
 @onready var grace_period_timer = $CamUI/GracePeriodTimer
-@onready var signal_lost_screen = $SignalInterrupted # <-- AÑADE ESTA REFERENCIA
-@onready var static_anim = $StaticTransition # Tu nodo de estática (AnimatedSprite2D)
+@onready var signal_lost_screen = $SignalInterrupted 
+@onready var static_anim = $StaticTransition 
 @onready var mangle_static_sound = $ManglePoses/MangleStaticSound
 @onready var mangle_poses_root = $ManglePoses
 @onready var music_box_melody = $MusicBoxMelody
@@ -46,7 +46,6 @@ var camera_content = {
 	"CAM_12": "Empty"
 }
 
-#Texturas de camaras individuales
 @export_group("CAM_01 Textures")
 @export var cam01_dark_empty: Texture2D
 @export var cam01_lit_empty: Texture2D
@@ -242,8 +241,7 @@ func _ready():
 	for key in mangle_poses:
 			var node = mangle_poses[key]
 			if node:
-				mangle_initial_x[key] = node.position.x # Guardamos donde lo pusiste en el editor
-				#node.visible = false
+				mangle_initial_x[key] = node.position.x
 	
 	camera_name_textures = {
 		"CAM_01": name_img_cam01,
@@ -425,6 +423,7 @@ func _process(delta):
 			wind_sound.stop()
 		if is_in_grace_period and curCam and curCam.name == "CAM_11":
 			update_puppet_escape_visuals()
+		
 		music_box_bar.value -= (3.0 * delta) * music_box_drain_rate
 	
 	music_box_bar.value = clamp(music_box_bar.value, 0, 100)
@@ -467,6 +466,7 @@ func _process(delta):
 		curCam.position.x = pan_value
 
 func cambiar_vista_a(nombre_camara: String):
+	$Buzz.play()
 	if mangle_static_sound.playing:
 		mangle_camera_sound_position = mangle_static_sound.get_playback_position()
 		mangle_static_sound.stop()

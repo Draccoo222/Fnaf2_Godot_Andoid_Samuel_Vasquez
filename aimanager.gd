@@ -810,7 +810,7 @@ func _on_office_attack_timer_timeout():
 func update_parts_service_camera():
 	var bonnie_here = locations.get("WitheredBonnie") == "CAM_08"
 	var freddy_here = false
-	var chica_here = locations.get("WitheredChica") == "CAM_08"  # ✅ ADDQ
+	var chica_here = locations.get("WitheredChica") == "CAM_08"
 	
 	var content = "Empty"
 	
@@ -1099,14 +1099,14 @@ func _on_withered_chica_attack_timer_timeout() -> void:
 	elif withered_chica_is_doomed:
 		print("AIManager: Jugador condenado (Withered Chica). Jumpscare pendiente.")
 	else:
-		# Rare case: timer expired but no decision made
+	
 		if office_node.get_mask_state():
 			reset_animatronic("WitheredChica")
 		else:
 			trigger_jumpscare("WitheredChica")
 	withered_chica_attack_pending = false
 
-# 8. ADD is_withered_chica_doomed() FUNCTION:
+
 func is_withered_chica_doomed() -> bool:
 	return withered_chica_is_doomed
 
@@ -1125,7 +1125,7 @@ func withered_freddy_enters_office():
 	print("AIManager: ===== WITHERED FREDDY ENTRA A LA OFICINA =====")
 	if is_office_blocked_for("WitheredFreddy"):
 		print("AIManager: Withered Freddy NO PUEDE entrar - oficina ocupada")
-		locations["WitheredFreddy"] = "Hallway"  # Or wherever he comes from
+		locations["WitheredFreddy"] = "Hallway" 
 		return
 	
 	locations["WitheredFreddy"] = "Office"

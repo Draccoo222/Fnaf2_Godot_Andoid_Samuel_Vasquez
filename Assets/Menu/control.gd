@@ -18,7 +18,7 @@ var rand = 0
 @export var img_num_2: Texture2D
 @export var img_num_3: Texture2D
 @export var img_num_4: Texture2D
-@export var img_num_5: Texture2D # La estrella o noche 5
+@export var img_num_5: Texture2D 
 @export var img_num_6: Texture2D 
 @export var img_num_7: Texture2D
 
@@ -29,7 +29,7 @@ var rand = 0
 var transition_scene_path = "res://nigthTransition.tscn"
 
 func _ready():
-	
+	$MainTheme.play()
 	timer_twitch.start(5)
 	if static_anim: static_anim.play()
 	
@@ -59,6 +59,7 @@ func _ready():
 		printerr("ERROR CRÍTICO: No se detectó el script Global.")
 
 func ir_a_transicion():
+	$MainTheme.stop()
 	var transition_packed = load(transition_scene_path)
 	if transition_packed:
 		var transition_instance = transition_packed.instantiate()
@@ -100,7 +101,7 @@ func _on_new_game_button_down() -> void:
 func _on_new_game_pressed() -> void:
 	print("Menu: Nueva Partida iniciada.")
 	Global.current_night = 1
-	Global.save_data() # Guardamos para reiniciar progreso
+	Global.save_data() 
 	ir_a_transicion()
 
 

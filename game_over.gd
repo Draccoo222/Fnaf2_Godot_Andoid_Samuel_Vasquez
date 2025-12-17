@@ -28,19 +28,11 @@ func _on_sequence_timer_timeout():
 	$AudioPlayerS.stop()
 	$StaticBefore.hide()
 	
-	# Muestra y reproduce la estática
 	static_overlay.show()
 	static_overlay.play()
 	
-	# (Opcional: reproduce el sonido de estática)
-	# audio_player.play() 
-	
-	# 4. Inicia la transición al menú
-	# Usamos 'await' para crear una nueva espera de 3 segundos
-	# sin necesidad de otro timer.
 	await get_tree().create_timer(4.0).timeout
 	
-	# 5. Vuelve al menú principal
 	get_tree().change_scene_to_file("res://menu_principal.tscn")
 
 

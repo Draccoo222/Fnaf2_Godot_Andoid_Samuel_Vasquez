@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=3 uid="uid://bwlpk1p08i7ku"]
+[gd_scene load_steps=163 format=3 uid="uid://bwlpk1p08i7ku"]
 
 [ext_resource type="Texture2D" uid="uid://brhkngakwmr43" path="res://Assets/Menu/328.png" id="1_ctxfh"]
 [ext_resource type="Script" uid="uid://2lt271ruddqy" path="res://cameras.gd" id="1_fenfo"]
@@ -157,6 +157,7 @@
 [ext_resource type="Texture2D" uid="uid://cnc6j4tl0oroo" path="res://Assets/Cameras/Err/223.png" id="150_la3bp"]
 [ext_resource type="AudioStream" uid="uid://bgw1nnv8xy5u5" path="res://Assets/Sounds/[15] Music_Box_Melody_Playful.wav" id="156_la3bp"]
 [ext_resource type="AudioStream" uid="uid://cancdxex4ip1w" path="res://Assets/Sounds/[33] windup2.wav" id="157_cftqn"]
+[ext_resource type="AudioStream" uid="uid://deo7kfkixh3wd" path="res://Assets/Sounds/[13] blip3.wav" id="158_510xb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_15ilk"]
 animations = [{
@@ -924,6 +925,9 @@ stream = ExtResource("156_la3bp")
 
 [node name="WindSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("157_cftqn")
+
+[node name="Buzz" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("158_510xb")
 
 [connection signal="timeout" from="CamUI/RecTimer" to="." method="_on_rec_timer_timeout"]
 [connection signal="button_down" from="FlashLight" to="." method="_on_flash_light_button_down"]
