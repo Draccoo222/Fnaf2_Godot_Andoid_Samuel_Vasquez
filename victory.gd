@@ -88,7 +88,27 @@ func _spawn_single_confetti():
 func go_to_menu():
 	confetti_timer.stop()
 	
+	var tweens = get_tree().get_processed_tweens()
+	for t in tweens:
+		t.kill()
+	
+	Global.current_night += 1
+	
+	
+
+	if Global.current_night > Global.unlocked_night:
+		Global.unlocked_night = Global.current_night
+	
+	Global.save_data()
+	
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 3.0)
 	await tween.finished
-	get_tree().change_scene_to_file("res://menu_principal.tscn")
+	
+	if Global.current_night == 6: 
+		get_tree().change_scene_to_file("res://paycheck.tscn")
+	elif Global.current_night == 7:
+		get_tree().change_scene_to_file("res://paycheck.tscn")
+	else:
+		print("Victory: Volviendo continuando con la siguente noche.")
+		get_tree().change_scene_to_file("res://nigthTransition.tscn")

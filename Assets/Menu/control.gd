@@ -11,6 +11,16 @@ var rand = 0
 @onready var tex_bonnie = $AnimatronicsBunny.texture
 @onready var tex_chica = $AnimatronicsChica.texture
 @onready var tex_placeholder = $AnimsPlaceHolder.texture
+@onready var night_number_display = $Continue/NightLabel
+
+@export_group("Menu Numbers")
+@export var img_num_1: Texture2D
+@export var img_num_2: Texture2D
+@export var img_num_3: Texture2D
+@export var img_num_4: Texture2D
+@export var img_num_5: Texture2D # La estrella o noche 5
+@export var img_num_6: Texture2D 
+@export var img_num_7: Texture2D
 
 @onready var new_game_btn = $NewGame
 @onready var continue_btn = $Continue
@@ -28,9 +38,23 @@ func _ready():
 		if Global.unlocked_night > 1:
 			continue_btn.visible = true
 			continue_btn.disabled = false
-			if night_label: night_label.text = "Night " + str(Global.unlocked_night)
-		else:
-			continue_btn.visible = false
+			
+			var selected_texture = img_num_1
+		
+			match Global.unlocked_night:
+				1: selected_texture = img_num_1
+				2: selected_texture = img_num_2
+				3: selected_texture = img_num_3
+				4: selected_texture = img_num_4
+				5: selected_texture = img_num_5
+				6: selected_texture = img_num_6
+				7: selected_texture = img_num_7
+			
+		
+			if night_number_display and selected_texture:
+				night_number_display.texture = selected_texture
+			else:
+				continue_btn.visible = false
 	else:
 		printerr("ERROR CRÍTICO: No se detectó el script Global.")
 

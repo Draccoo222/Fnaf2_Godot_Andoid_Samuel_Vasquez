@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://hs3m7muwn1en"
+path="res://.godot/imported/[7] FENCING_43_GEN-HDF10954.wav-4dbf4d9d1f37046d8a8c1721c2e92dcb.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Ambience/[7] FENCING_43_GEN-HDF10954.wav"
+dest_files=["res://.godot/imported/[7] FENCING_43_GEN-HDF10954.wav-4dbf4d9d1f37046d8a8c1721c2e92dcb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dvqy4tpxkf3wj"
+path="res://.godot/imported/[41] musicbox2.wav-1ec28217210642c540d1a6a95bfc2984.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/[41] musicbox2.wav"
+dest_files=["res://.godot/imported/[41] musicbox2.wav-1ec28217210642c540d1a6a95bfc2984.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -334,6 +334,8 @@ func attempt_move(name: String):
 	var current_loc = locations[name]
 	var next_loc: String
 	
+	
+	
 	if name == "BB":
 		office_node.play_bb_sound()
 	
@@ -388,6 +390,10 @@ func attempt_move(name: String):
 	next_loc = next_loc_options.pick_random()
 	
 	print("AIManager: %s intentando moverse de %s a %s" % [name, current_loc, next_loc])
+	
+	if next_loc not in ["LeftVent", "RightVent", "Office"]:
+		if name in ["ToyBonnie", "ToyChica", "ToyFreddy", "WitheredBonnie", "WitheredChica", "WitheredFreddy"]:
+			office_node.play_random_footstep()
 
 
 	if name == "ToyChica" and current_loc == "CAM_09":
@@ -416,6 +422,11 @@ func attempt_move(name: String):
 	locations[name] = next_loc
 	emit_signal("animatronic_moved", current_loc, next_loc)
 	update_camera_visuals(current_loc, next_loc, name)
+	
+	if next_loc == "LeftVent" or next_loc == "RightVent":
+		if name == "ToyBonnie" or name == "ToyChica":
+			office_node.play_vent_sound("close")
+	
 	
 	if name == "Mangle" and next_loc == "Office":
 		mangle_enters_office()

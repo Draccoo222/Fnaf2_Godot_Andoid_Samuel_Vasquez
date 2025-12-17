@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://ducipmmaijpgp"]
+
+[ext_resource type="Script" uid="uid://j2ccaa5nrpwm" path="res://paycheck.gd" id="1_l166o"]
+[ext_resource type="Texture2D" uid="uid://d0sptk5wbws8f" path="res://Assets/End/1.png" id="2_xbfrd"]
+[ext_resource type="Texture2D" uid="uid://bcn7kbm1vq63" path="res://Assets/End/2.png" id="3_re5km"]
+[ext_resource type="Texture2D" uid="uid://bscx6e78tkwrb" path="res://Assets/End/3.png" id="4_6wp08"]
+[ext_resource type="AudioStream" uid="uid://dvqy4tpxkf3wj" path="res://Assets/Sounds/[41] musicbox2.wav" id="5_woh5u"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l166o")
+img_check_night_5 = ExtResource("2_xbfrd")
+img_check_night_6 = ExtResource("3_re5km")
+img_pink_slip = ExtResource("4_6wp08")
+
+[node name="CheckDisplay" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -91.0
+offset_right = 1151.0
+offset_bottom = 677.0
+texture = ExtResource("2_xbfrd")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_woh5u")

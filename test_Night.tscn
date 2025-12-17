@@ -1,4 +1,4 @@
-[gd_scene load_steps=225 format=3 uid="uid://hhckpc7kcygg"]
+[gd_scene load_steps=241 format=3 uid="uid://hhckpc7kcygg"]
 
 [ext_resource type="Script" uid="uid://bkuciop2mb7r7" path="res://test_night.gd" id="1_htt5u"]
 [ext_resource type="Texture2D" uid="uid://dw0cvexcb3j5q" path="res://Assets/Office/animatronics/toyBonnie.png" id="2_cv0at"]
@@ -80,8 +80,14 @@
 [ext_resource type="Texture2D" uid="uid://bwec8efbrdqbg" path="res://Assets/Office/animatronics/520.png" id="38_ltcyy"]
 [ext_resource type="Texture2D" uid="uid://bfttjxeeeaylb" path="res://Assets/Cameras/Monitor/114.png" id="39_3x0mc"]
 [ext_resource type="PackedScene" uid="uid://bwlpk1p08i7ku" path="res://cameras.tscn" id="40_3s3h7"]
+[ext_resource type="AudioStream" uid="uid://fe5lwq6bvael" path="res://Assets/Sounds/[35] call 1b.wav" id="45_d8hg8"]
+[ext_resource type="AudioStream" uid="uid://csg3cmhcckc2e" path="res://Assets/Sounds/[36] call 2b.wav" id="46_2obbq"]
 [ext_resource type="Texture2D" uid="uid://chut6r3wglk0x" path="res://Assets/UI/690.png" id="47_afo7l"]
+[ext_resource type="AudioStream" uid="uid://c6s3limftoqcb" path="res://Assets/Sounds/[37] call 3b.wav" id="47_ahq6h"]
 [ext_resource type="Texture2D" uid="uid://bf60a41q3vurr" path="res://Assets/UI/132.png" id="47_xx72j"]
+[ext_resource type="AudioStream" uid="uid://xhiwu6wavvet" path="res://Assets/Sounds/[38] call 4b.wav" id="48_f2wxw"]
+[ext_resource type="AudioStream" uid="uid://b5wjumaj0otkt" path="res://Assets/Sounds/[39] call 5b.wav" id="49_cghga"]
+[ext_resource type="AudioStream" uid="uid://08iv66n68b76" path="res://Assets/Sounds/[40] call 6b.wav" id="50_hbng4"]
 [ext_resource type="PackedScene" uid="uid://bnsxn2e4j0nu5" path="res://ai_manager.tscn" id="57_tse5j"]
 [ext_resource type="Texture2D" uid="uid://csc77wq2qvouk" path="res://Assets/Jumpscares/ToyBonnie/714.png" id="58_3cycd"]
 [ext_resource type="Texture2D" uid="uid://d1wk4xhslmsaq" path="res://Assets/Jumpscares/ToyBonnie/700.png" id="59_6k0f2"]
@@ -219,6 +225,16 @@
 [ext_resource type="Texture2D" uid="uid://dog6kvnfeqckc" path="res://Assets/Jumpscares/Freddy/375.png" id="169_ltcyy"]
 [ext_resource type="Texture2D" uid="uid://druk7di5u6gbr" path="res://Assets/Jumpscares/Freddy/376.png" id="170_y658m"]
 [ext_resource type="AudioStream" uid="uid://c6glwrikffe1h" path="res://Assets/Sounds/[43] jackinthebox.wav" id="196_oapvg"]
+[ext_resource type="AudioStream" uid="uid://baub2gntpctl" path="res://Assets/Sounds/Ambience/[1] In_The_Depths_C.wav" id="220_0vbai"]
+[ext_resource type="AudioStream" uid="uid://bppdhrafoxff2" path="res://Assets/Sounds/[60] With_S2.wav" id="221_v532g"]
+[ext_resource type="AudioStream" uid="uid://keknux2ih3um" path="res://Assets/Sounds/Ambience/[3] CMPTR_Low_Tech_Stat.wav" id="222_6gh7d"]
+[ext_resource type="AudioStream" uid="uid://ba0p60qje8w10" path="res://Assets/Sounds/Ambience/[25] walk1.wav" id="223_fxdgw"]
+[ext_resource type="AudioStream" uid="uid://cb31fqrxborst" path="res://Assets/Sounds/Ambience/[26] walk2.wav" id="224_m12em"]
+[ext_resource type="AudioStream" uid="uid://bea84pyvv88g4" path="res://Assets/Sounds/Ambience/[27] walk3.wav" id="225_ghice"]
+[ext_resource type="AudioStream" uid="uid://ogn7lmw1jd20" path="res://Assets/Sounds/Ambience/[28] walk4.wav" id="226_4wby0"]
+[ext_resource type="AudioStream" uid="uid://cxajagp2rkls3" path="res://Assets/Sounds/Ambience/[17] ventwalk1.wav" id="227_m12em"]
+[ext_resource type="AudioStream" uid="uid://hs3m7muwn1en" path="res://Assets/Sounds/Ambience/[7] FENCING_43_GEN-HDF10954.wav" id="228_4wby0"]
+[ext_resource type="AudioStream" uid="uid://mxjkplnw6g4j" path="res://Assets/Sounds/Ambience/[8] FENCING_42_GEN-HDF10953.wav" id="229_0nrag"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cn4xo"]
 shader = ExtResource("3_lntdq")
@@ -934,6 +950,12 @@ office_lit_left_bb = ExtResource("17_8a8fy")
 office_lit_right_empty = ExtResource("4_t8eq0")
 office_lit_right_toybonnie = ExtResource("18_6dkcs")
 office_lit_right_mangle = ExtResource("19_iepxu")
+call_night_1 = ExtResource("45_d8hg8")
+call_night_2 = ExtResource("46_2obbq")
+call_night_3 = ExtResource("47_ahq6h")
+call_night_4 = ExtResource("48_f2wxw")
+call_night_5 = ExtResource("49_cghga")
+call_night_6 = ExtResource("50_hbng4")
 metadata/_edit_horizontal_guides_ = [-363.0, -310.0]
 
 [node name="ai_manager" parent="." instance=ExtResource("57_tse5j")]
@@ -1180,6 +1202,54 @@ one_shot = true
 
 [node name="PuppetEscapeMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("196_oapvg")
+
+[node name="MainAmbience" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("220_0vbai")
+volume_db = -15.0
+
+[node name="HallwayAmbience" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("221_v532g")
+volume_db = -10.0
+
+[node name="CameraAmbience" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("222_6gh7d")
+volume_db = -20.0
+
+[node name="FootStep1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("223_fxdgw")
+
+[node name="FootStep2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("224_m12em")
+
+[node name="FootStep3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("225_ghice")
+
+[node name="FootStep4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("226_4wby0")
+
+[node name="VentCrawlFar" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("227_m12em")
+volume_db = -10.0
+
+[node name="VentCrawlClose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("227_m12em")
+
+[node name="CameraUp" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+
+[node name="CameraDown" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("227_m12em")
+
+[node name="MaskOn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("228_4wby0")
+
+[node name="MaskOff" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("229_0nrag")
+
+[node name="FlashlightClick" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+
+[node name="PhoneSystem" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="pressed" from="MaskButton" to="." method="_on_mask_button_pressed"]
 [connection signal="animation_finished" from="FreddyMask" to="." method="_on_freddy_mask_animation_finished"]

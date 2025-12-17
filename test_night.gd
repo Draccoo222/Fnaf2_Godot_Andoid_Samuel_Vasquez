@@ -1,6 +1,15 @@
 extends Control
 
-
+@onready var main_ambience = $MainAmbience
+@onready var flashlight_click = $FlashlightClick
+@onready var hallway_ambience = $HallwayAmbience
+@onready var camera_up_sound = $CameraUp
+@onready var camera_down_sound = $CameraDown
+@onready var mask_on_sound = $MaskOn
+@onready var mask_off_sound = $MaskOff
+@onready var camera_ambience = $CameraAmbience
+@onready var vent_crawl_far = $VentCrawlFar     
+@onready var vent_crawl_close = $VentCrawlClose 
 @onready var hour_display = $HourDisplay
 @onready var night_display = $NightNumDisplay
 @onready var puppet_escape_music = $PuppetEscapeMusic
@@ -119,6 +128,14 @@ var initial_gf_pos: Vector2
 @export_group("Balloon Boy Settings")
 @export var bb_parallax_factor: float = 1.05 
 
+@export_group("Phone Calls")
+@export var call_night_1: AudioStream
+@export var call_night_2: AudioStream
+@export var call_night_3: AudioStream
+@export var call_night_4: AudioStream
+@export var call_night_5: AudioStream
+@export var call_night_6: AudioStream
+
 
 var puppet_jumpscare_timer: float = 0.0
 var puppet_is_coming = false
@@ -210,8 +227,16 @@ var gf_is_dying_by_flashlight = false
 
 var current_hour: int = 0 
 var hour_timer: float = 0.0
-var seconds_per_hour: float = 5.0 
+var seconds_per_hour: float = 100.0 
 var night_finished = false
+
+@onready var footstep_sounds = [
+	$FootStep1, 
+	$FootStep2,
+	$FootStep3,
+	$FootStep4
+]
+
 
 func _ready():
 	await ready
@@ -332,25 +357,13 @@ func _ready():
 	flashlight_fail_timer.timeout.connect(_on_flashlight_fail_timer_timeout)
 	office_flicker_timer.timeout.connect(_on_office_flicker_timer_timeout)
 	
-	var night_1_levels = {
-		"ToyBonnie": 0,
-		"ToyChica": 0,
-		"ToyFreddy": 0,
-		"Mangle": 0,
-		"Foxy": 0,
-		"WitheredBonnie": 0,
-		"WitheredChica": 0,
-		"WitheredFreddy": 0,
-		"BB": 0,
-		"GoldenFreddy": 0,
-	}
-	ai_manager.start_night(night_1_levels, camera_system, self)
 	
 	current_hour = 0
 	hour_timer = 0.0
 	night_finished = false
 	update_night_display()
 	update_hour_display()
+	start_phone_call()
 
 
 func _process(delta):
@@ -464,6 +477,8 @@ func _on_mask_button_pressed() -> void:
 		$RightLight.hide()
 		$HallLight.hide()
 		
+		mask_on_sound.play()
+		
 		await get_tree().create_timer(0.3).timeout
 		
 		print("Office: Máscara puesta, revisando...")
@@ -499,6 +514,7 @@ func _on_mask_button_pressed() -> void:
 		$HallLight.show()
 		mask_is_fully_on = false 
 		maskAnim.position = initial_mask_pos 
+		mask_off_sound.play()
 		maskAnim.play("deactivate")
 		var scale_tween = create_tween()
 		scale_tween.tween_property(maskAnim, "scale:x", 1.0, 0.25)
@@ -668,6 +684,8 @@ func _on_hall_light_button_down() -> void:
 	if MASK_ON or active_cinematics > 0 or is_flash_lock_active or battery_level <= 0 or is_flashlight_blocked:
 		return
 		
+	flashlight_click.play()
+		
 	if gf_view.visible and not MASK_ON:
 		print("Office: ¡Error! Alumbraste a GF en la oficina. Iniciando secuencia de muerte.")
 		gf_is_dying_by_flashlight = true
@@ -737,7 +755,11 @@ func _on_camera_toggle_pressed() -> void:
 		return
 		
 	CAM_ON = not CAM_ON
-
+	
+	if CAM_ON:
+		camera_ambience.play()
+	else:
+		camera_ambience.stop()
 	
 	monitorAnim.show()
 	
@@ -1227,3 +1249,40 @@ func finish_night():
 	
 
 	get_tree().change_scene_to_file("res://victory.tscn")
+
+
+func play_hallway_ambience():
+	if not hallway_ambience.playing:
+		hallway_ambience.play()
+
+func stop_hallway_ambience():
+	if hallway_ambience.playing:
+		hallway_ambience.stop()
+		
+
+func play_random_footstep():
+	var footstep = footstep_sounds.pick_random()
+	footstep.play()
+
+
+func play_vent_sound(distance: String):
+	if distance == "far":
+		vent_crawl_far.play()
+	else:
+		vent_crawl_close.play()
+		
+func start_phone_call():
+	var call_to_play: AudioStream = null
+  
+	match current_night:
+		1: call_to_play = call_night_1
+		2: call_to_play = call_night_2
+		3: call_to_play = call_night_3
+		4: call_to_play = call_night_4
+		5: call_to_play = call_night_5
+		6: call_to_play = call_night_6
+		
+	if call_to_play:
+		$PhoneSystem.stream = call_to_play
+		$PhoneSystem.play()
+   

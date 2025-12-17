@@ -21,6 +21,9 @@ var game_scene_path = "res://test_night.tscn"
 
 func _ready():
 	
+	if has_node("/root/Global"):
+		night_number = Global.current_night
+	
 	transition_image.visible = false
 	newspaper_display.visible = false
 	
@@ -58,17 +61,16 @@ func start_newspaper_sequence():
 	print("Mostrando periódico...")
 	newspaper_display.visible = true
 	
-	# 1. Fade In (De negro a visible)
+	
 	var tween = create_tween()
-	tween.tween_property(fade_overlay, "color:a", 0.0, 2.0) # Tarda 2 segundos en aparecer
+	tween.tween_property(fade_overlay, "color:a", 0.0, 2.0) 
 	await tween.finished
 	
-	# 2. Lectura (Se queda en pantalla 5 segundos)
 	await get_tree().create_timer(5.0).timeout
 	
-	# 3. Fade Out (De visible a negro)
+	
 	var tween_out = create_tween()
-	tween_out.tween_property(fade_overlay, "color:a", 1.0, 1.5) # Tarda 1.5 seg en irse
+	tween_out.tween_property(fade_overlay, "color:a", 1.0, 1.5)
 	await tween_out.finished
 	
 	

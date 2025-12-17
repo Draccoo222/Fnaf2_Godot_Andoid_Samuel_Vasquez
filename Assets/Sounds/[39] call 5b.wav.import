@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5wjumaj0otkt"
+path="res://.godot/imported/[39] call 5b.wav-7fdba9c9c7b6f12a93e1440d1f06f6ee.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/[39] call 5b.wav"
+dest_files=["res://.godot/imported/[39] call 5b.wav-7fdba9c9c7b6f12a93e1440d1f06f6ee.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
